@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using My_Smart_Factory.Data;
 using My_Smart_Factory.Data.Dto.User;
 using My_Smart_Factory.Data.Enums;
+using My_Smart_Factory.Data.Vo;
 using My_Smart_Factory.Models;
 
 namespace My_Smart_Factory.Controllers
@@ -50,10 +51,10 @@ namespace My_Smart_Factory.Controllers
                 var newUserResponse = await _userManager.CreateAsync(newUser, model.Password);
                 if (newUserResponse.Succeeded)
                 {
-                    bool roleExists = await _roleManager.RoleExistsAsync(UserRoles.Membaer);
+                    bool roleExists = await _roleManager.RoleExistsAsync(UserRoles.Membaer.ToString());
                     if (!roleExists)
                     {
-                        var role = new IdentityRole(roleName);
+                        var role = new IdentityRole(UserRoles.Membaer.ToString());
                         await _roleManager.CreateAsync(role);
                     }
                 return Redirect("/user/login");
@@ -101,56 +102,49 @@ namespace My_Smart_Factory.Controllers
         }
         #endregion
 
+        #region 로그아웃
+        [HttpGet("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+        #endregion
+
         #region 유저리스트
         //[Authorize(Roles = UserRoles.Admin)]
         [HttpGet("userlist")]
         public async Task<IActionResult> UserList()
         {
-            // 유저의 해당 유저의 권한 리스트
-            var userList = await (from userRole in _dbContext.UserRoles
-                                  join role in _dbContext.Roles on userRole.RoleId equals role.Id
-                                  join user in _dbContext.Users on userRole.UserId equals user.Id
-                                  select new
-                                  {
-                                      Id = user.Id,
-                                      Role = role.Name,
-                                      UserName = user.UserName,
-                                  }).ToListAsync();
-            // List<SelectListItem> 타입에 유저 권한 정보들 저장
-            List<SelectListItem> roleList = new List<SelectListItem>();
-            roleList.Add(new SelectListItem { Text = "Admin", Value = UserRoles.Admin });
-            roleList.Add(new SelectListItem { Text = "Membaer", Value = UserRoles.Membaer });
-            roleList.Add(new SelectListItem { Text = "InventoryManager", Value = UserRoles.InventoryManager });
-            roleList.Add(new SelectListItem { Text = "MateralManager", Value = UserRoles.MateralManager });
-            roleList.Add(new SelectListItem { Text = "ProductManager", Value = UserRoles.ProductManager });
-            roleList.Add(new SelectListItem { Text = "OrderManager", Value = UserRoles.OrderManager });
-            roleList.Add(new SelectListItem { Text = "NoRole", Value = UserRoles.NoRole });
-            ViewBag.roleList = roleList;
-
-
-
+            // _dbContext에서 유저 정보들을 가져오고 List<UserVo>로 변환
+            List<UserVo> userList = await _dbContext.UserIdentities.Select(u => new UserVo
+            {
+                UserName = u.UserName,
+                Role = _userManager.GetRolesAsync(u).Result.FirstOrDefault(),
+            }).ToListAsync();
+            ViewBag.userList = userList;
             return View(userList);
         }
         #endregion
 
         #region 권한 승인
         //[Authorize(Roles = UserRoles.Admin)]
-        [HttpPost("rollaccept")]
-        public async Task<IActionResult> RollAccept(RollAccept_Model rollAccept_Model)
+        [HttpPost("updaterole")]
+        public async Task<IActionResult> RollAccept(UpdateRolesDto requestDto)
         {
 
-            for (int i = 0; i < rollAccept_Model.UserId.Length; i++)
+            for (int i = 0; i < requestDto.UserId.Length; i++)
             {
-                if (rollAccept_Model.Role[i] == rollAccept_Model.BeforeRole[i]) continue;
+                if (requestDto.Role[i] == requestDto.BeforeRole[i]) continue;
                 // 권한 변경
                 // 권한 변경 전 권한 삭제
-                var user = await _userManager.FindByIdAsync(rollAccept_Model.UserId[i]);
-                var result = await _userManager.RemoveFromRoleAsync(user, rollAccept_Model.BeforeRole[i]);
+                var user = await _userManager.FindByIdAsync(requestDto.UserId[i]);
+                var result = await _userManager.RemoveFromRoleAsync(user, requestDto.BeforeRole[i]);
                 // 권한 삭제 후 권한 추가
                 if (result.Succeeded)
                 {
                     // 권한 승인
-                    await _userManager.AddToRoleAsync(user, rollAccept_Model.Role[i]);
+                    await _userManager.AddToRoleAsync(user, requestDto.Role[i]);
                 }
             }
             // 로그인 페이지 이동
@@ -159,59 +153,38 @@ namespace My_Smart_Factory.Controllers
         #endregion
 
         #region 마이페이지
-        // 로그인 된 사용자만 들어올 수 있음
-        [Authorize]
-        [HttpGet("UpdateUser")]
-        public async Task<IActionResult> UpdateUser()
+        // 로그인 된 사용자만 들어올 수 있다
+        [HttpGet("mypage")]
+        public async Task<IActionResult> MyPage()
         {
             // 유저 정보 가져오기
             UserIdentity user = await _userManager.FindByNameAsync(User.Identity.Name);
-            if (user == null)
-            {
-                return Redirect("/user/Login");
-            }
+            return user == null ? Redirect("/user/Login") : View(user);
+            
+        }
+
+        [HttpPost("updateuser")]
+        public async Task<IActionResult> UpdateUser(String userName)
+        {
+            // 유저 정보 가져오기
+            UserIdentity user = await _userManager.FindByNameAsync(User.Identity.Name);
+            user.UserName = userName;
+            await _userManager.UpdateAsync(user);
             return View(user);
         }
-        [HttpPost("UpdateUser")]
-        public async Task<IActionResult> UpdateUser(UserIdentity user, string Password, IFormFile file)
+
+        [HttpGet("changepassword")]
+        public async Task<IActionResult> ChangePassword()
         {
-            var updateUser = await _userManager.FindByNameAsync(User.Identity.Name);
-            // 비밀번호 변경
-            if (Password != null)
-            {
-                var token = await _userManager.GeneratePasswordResetTokenAsync(updateUser);
-                var result = await _userManager.ResetPasswordAsync(updateUser, token, Password);
-                if (!result.Succeeded)
-                {
-                    ViewData["Error"] = "비밀번호 변경에 실패하였습니다.";
-                    return View(updateUser);
-                }
-            }
-            // 유저 정보 수정
-
-            updateUser.UserName = user.UserName;
-
-
-
-            // 이미지 변경
-            if (file != null)
-            {
-                updateUser.ImgUrl = await _fileService.FileUpdate(updateUser.Id, file, "user");
-            }
-            // 유저 업데이트
-            await _userManager.UpdateAsync(updateUser);
-
-            User_Edit_Log_Model user_Edit_Log_Model = new User_Edit_Log_Model()
-            {
-                UserIdentityId = updateUser.Id,
-                EditTime = DateTime.Today
-            };
-
-            _dbContext.User_Edit_Log_Models.Add(user_Edit_Log_Model);
-            await _userManager.FindByNameAsync(User.Identity.Name);
-            _dbContext.SaveChanges();
-
-            return View(updateUser);
+            return View();
+        }
+        [HttpPost("changepassword")]
+        public async Task<IActionResult> ChangePassword(string userId, string oldPassword, string newPassword)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            IdentityResult result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            ViewData["Error"] = result.Succeeded ? null : result.Errors;
+            return View(result.Succeeded ? "/user/login" : user);
         }
         #endregion        
 
@@ -220,20 +193,9 @@ namespace My_Smart_Factory.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            try
-            {
-
-                user.Status = Defult_StatusCategory.불가능;
-                await _userManager.UpdateAsync(user);
-                return Redirect("/user/login");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                ViewData["Error"] = "회원탈퇴에 실패하셨습니다";
-                return View(user);
-            }
-
+            var result = await _userManager.DeleteAsync(user);
+            ViewData["Error"] = result.Succeeded ? null : result.Errors;
+            return result.Succeeded ? Redirect("/user/login") : View(user);
         }
         #endregion
 

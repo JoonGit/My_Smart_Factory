@@ -1,0 +1,15 @@
+﻿@*@using My_Smart_Factory.Data.Static;*@
+
+@*@foreach(var user in Model)
+{
+   <form asp-controller="User" asp-action="RollAccept" method="post">
+
+        <input name="UserId" type="hidden" value="@user.Id">
+        <div name="Name">이름 :  @user.UserName</div>
+        <div>권한 수준 : @user.Role</div>
+        <select name="Role" class="form-control" asp-items="@ViewBag.roleList"> </select>
+        <input name="BeforeRole" type="hidden" value="@user.Role">
+        <input type="submit" value="전송">
+        <img src="@user.ImgUrl">
+    </form> 
+}*@
