@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,40 +32,50 @@ namespace My_Smart_Factory.Controllers
         }
 
         #region 회원가입
+        // 회원가입 페이지 전송
         [HttpGet("signup")]
         public async Task<IActionResult> SignUp()
         {
             return View();
         }
 
+        // 회원가입 동작
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp(SignUpDto model)
         {
-            // 유저 정보 입력
-            var newUser = new UserIdentity
+            try
             {
-                Id = model.Id,
-                UserName = model.UserName,
-            };
+                // 유저 정보 입력
+                var newUser = new UserIdentity
+                {
+                    Id = model.Id,
+                    UserName = model.UserName,
+                };
 
-            // 유저 생성
+                // 유저 생성
                 var newUserResponse = await _userManager.CreateAsync(newUser, model.Password);
                 if (newUserResponse.Succeeded)
                 {
-                    bool roleExists = await _roleManager.RoleExistsAsync(UserRoles.Membaer.ToString());
-                    if (!roleExists)
-                    {
-                        var role = new IdentityRole(UserRoles.Membaer.ToString());
-                        await _roleManager.CreateAsync(role);
-                    }
-                return Redirect("/user/login");
+                    // 유저 권한 부여
+                    await _userManager.AddToRoleAsync(newUser, UserRoles.Member.ToString());
+                    return Redirect("/user/login");
                 }
-                TempData["Error"] = "Wrong credentials. Please, try again!";
-                return View(model);
+                else
+                {
+                    ViewData["Error"] = "중복된 사용자가 있습니다";
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                ViewData["Error"] = "회원가입에 실패하였습니다";
+            }
+            return View(model);
         }
         #endregion
 
         #region 로그인
+        // 로그인 페이지 전송
         [HttpGet("login")]
         public async Task<IActionResult> Login(string ReturnUrl)
         {
@@ -72,6 +83,7 @@ namespace My_Smart_Factory.Controllers
             return View();
         }
 
+        // 로그인 동작
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto model, string? ReturnUrl)
         {
@@ -91,6 +103,10 @@ namespace My_Smart_Factory.Controllers
                     {
                         return Redirect("/");
                     }
+                }
+                else
+                {
+                    ViewData["Error"] = "ID, PW가 일치하지 않습니다";
                 }
             }
             catch (Exception e)
@@ -112,79 +128,138 @@ namespace My_Smart_Factory.Controllers
         #endregion
 
         #region 유저리스트
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = "Admin")]
         [HttpGet("userlist")]
         public async Task<IActionResult> UserList()
         {
-            // _dbContext에서 유저 정보들을 가져오고 List<UserVo>로 변환
-            List<UserVo> userList = await _dbContext.UserIdentities.Select(u => new UserVo
+            try
             {
-                UserName = u.UserName,
-                Role = _userManager.GetRolesAsync(u).Result.FirstOrDefault(),
-            }).ToListAsync();
-            ViewBag.userList = userList;
-            return View(userList);
+                // _dbContext에서 유저 정보들을 가져오고 List<UserVo>로 변환
+                var userList = await _dbContext.UserIdentities.ToListAsync();
+                List<UserVo> userVo = new List<UserVo>();
+                //userList를 userVo로 변환
+                foreach (var user in userList)
+                {
+                    var result = await _userManager.GetRolesAsync(user);
+                    userVo.Add(new UserVo
+                    {
+                        UserName = user.UserName,
+                        Role = result[0]
+                    });
+                }
+                ViewBag.userList = userVo;
+                return View(userList);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                ViewData["Error"] = "유저 리스트를 불러오는데 실패하였습니다";
+                return View();
+            }
         }
         #endregion
 
-        #region 권한 승인
-        //[Authorize(Roles = UserRoles.Admin)]
+        #region 권한 변경
+        [Authorize(Roles = "Admin")]
         [HttpPost("updaterole")]
-        public async Task<IActionResult> RollAccept(UpdateRolesDto requestDto)
+        public async Task<IActionResult> UpdateRole(UpdateRolesDto requestDto)
         {
-
-            for (int i = 0; i < requestDto.UserId.Length; i++)
+            try
             {
-                if (requestDto.Role[i] == requestDto.BeforeRole[i]) continue;
-                // 권한 변경
-                // 권한 변경 전 권한 삭제
-                var user = await _userManager.FindByIdAsync(requestDto.UserId[i]);
-                var result = await _userManager.RemoveFromRoleAsync(user, requestDto.BeforeRole[i]);
-                // 권한 삭제 후 권한 추가
+                if (requestDto.oldRole == requestDto.newRole) Redirect("/user/userlist");
+                var user = await _userManager.FindByNameAsync(requestDto.userName);
+                var result = await _userManager.RemoveFromRoleAsync(user, requestDto.oldRole);
+
                 if (result.Succeeded)
                 {
                     // 권한 승인
-                    await _userManager.AddToRoleAsync(user, requestDto.Role[i]);
+                    await _userManager.AddToRoleAsync(user, requestDto.newRole);
                 }
             }
-            // 로그인 페이지 이동
-            return Redirect("/user/login");
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                ViewData["Error"] = "권한 수정에 실패하였습니다";
+            }
+            return Redirect("/user/userlist");
         }
         #endregion
 
         #region 마이페이지
         // 로그인 된 사용자만 들어올 수 있다
+        [Authorize]
         [HttpGet("mypage")]
         public async Task<IActionResult> MyPage()
         {
             // 유저 정보 가져오기
             UserIdentity user = await _userManager.FindByNameAsync(User.Identity.Name);
             return user == null ? Redirect("/user/Login") : View(user);
-            
+
         }
 
+        [Authorize]
         [HttpPost("updateuser")]
-        public async Task<IActionResult> UpdateUser(String userName)
+        public async Task<IActionResult> UpdateUser(string newUserName)
         {
-            // 유저 정보 가져오기
-            UserIdentity user = await _userManager.FindByNameAsync(User.Identity.Name);
-            user.UserName = userName;
-            await _userManager.UpdateAsync(user);
-            return View(user);
+            try
+            {
+                // 유저 정보 가져오기
+                UserIdentity user = await _userManager.FindByNameAsync(User.Identity.Name);
+                user.UserName = newUserName;
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    // 사용자 정보 업데이트 후, 사용자를 다시 로그인 시킵니다.
+                    await _signInManager.RefreshSignInAsync(user);
+                }
+                else
+                {
+                    ViewData["Error"] = "유저 수정에 실패하였습니다";
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                ViewData["Error"] = "유저 수정에 실패하였습니다";
+            }
+            return RedirectToAction("mypage", "user");
+
+
         }
 
+        [Authorize]
         [HttpGet("changepassword")]
-        public async Task<IActionResult> ChangePassword()
+        public IActionResult ChangePassword()
         {
             return View();
         }
+
+        [Authorize]
         [HttpPost("changepassword")]
-        public async Task<IActionResult> ChangePassword(string userId, string oldPassword, string newPassword)
+        public async Task<IActionResult> ChangePassword(string userName, string oldPassword, string newPassword)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            IdentityResult result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
-            ViewData["Error"] = result.Succeeded ? null : result.Errors;
-            return View(result.Succeeded ? "/user/login" : user);
+            try
+            {
+                var user = await _userManager.FindByNameAsync(userName);
+                IdentityResult result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("login", "user");
+                }
+                else
+                {
+                    ViewData["Error"] = "비밀번호 변경에 실패하였습니다";
+                    return View();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                ViewData["Error"] = "비밀번호 변경에 실패하였습니다";
+                return View();
+            }
+
         }
         #endregion        
 

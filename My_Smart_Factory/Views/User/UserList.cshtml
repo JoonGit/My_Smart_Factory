@@ -1,15 +1,24 @@
-﻿@*@using My_Smart_Factory.Data.Static;*@
+﻿@using My_Smart_Factory.Data.Enums;
 
-@*@foreach(var user in Model)
+
+
+@foreach (var user in @ViewBag.userList)
 {
-   <form asp-controller="User" asp-action="RollAccept" method="post">
-
-        <input name="UserId" type="hidden" value="@user.Id">
-        <div name="Name">이름 :  @user.UserName</div>
-        <div>권한 수준 : @user.Role</div>
-        <select name="Role" class="form-control" asp-items="@ViewBag.roleList"> </select>
-        <input name="BeforeRole" type="hidden" value="@user.Role">
+    <form asp-controller="User" asp-action="UpdateRole" method="post">
+        <div name="userName">이름 :  @user.UserName</div>
+        <input name="userName" type="hidden" value="@user.UserName">
+        <div>
+            권한 수준: @user.Role
+        </div>
+        <input name="oldRole" type="hidden" value="@user.Role">
+        <div>
+            수정할 권한 : <select name="newRole" class="form-control">
+                @foreach (UserRoles role in Enum.GetValues(typeof(UserRoles)))
+                {
+                    <option value="@role.ToString()">@role.ToString()</option>
+                }
+            </select>
+        </div>
         <input type="submit" value="전송">
-        <img src="@user.ImgUrl">
     </form> 
-}*@
+}

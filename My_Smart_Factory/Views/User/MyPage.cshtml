@@ -3,7 +3,7 @@
     <div>@ViewData["Error"]</div>
 }
 <form asp-controller="User" asp-action="UpdateUser" method="post" >
-    <div>내 이름 : <input name=userName type="text" value="@Model.UserName" /></div>
+    <div>내 이름 : <input name=newUserName type="text" value="@Model.UserName" /></div>
     <input type="submit" value="전송">
 </form>
 <a class="nav-link text-dark" asp-controller="user" asp-action="ChangePassword">비밀번호 변경</a>
