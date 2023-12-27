@@ -1,0 +1,151 @@
+﻿<h1 class="text-center mb-4">출고 검사 입력</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="form-group">
+                    <label>관리번호</label>
+                    <input type="text" class="form-control" name="Controlnumber" id="Controlnumber" />
+                    <button type="button" class="btn btn-info mt-2" onclick="checkDB()">DB 확인</button>
+                </div>
+                <label>공정명</label> <input type="text" class="form-control" name="ProcessName" />
+                <label>검사일시</label> <input type="date" class="form-control" name="InspectionTime" />
+                <label>검사수량</label> <input type="number" class="form-control" name="InspectionResult" />
+                <label>작업자</label> <input type="text" class="form-control" name="Inspector" />
+                <label>불량처리 확인자</label> <input type="text" class="form-control" name="Confirmor" />
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>용량 불량 수량</label> <input type="number" class="form-control" name="CapacityDefect" />
+                <label>용량 불량 수량</label> <input type="number" class="form-control" name="CapacityDefect" />
+                <label>손실 불량 수량</label> <input type="number" class="form-control" name="LossDefect" />
+                <label>기포 불량 수량</label> <input type="number" class="form-control" name="BubbleDefect" />
+                <label>센터 불량 수량</label> <input type="number" class="form-control" name="CenterDefect" />
+                <label>내경 불량 수량</label> <input type="number" class="form-control" name="InnerDiameterDefect" />
+                <label>마크 불량 수량</label> <input type="number" class="form-control" name="MarkDefect" />
+                <label>케이스 불량 수량</label> <input type="number" class="form-control" name="CaseDefect" />
+                <label>에폭시 불량 수량</label> <input type="number" class="form-control" name="EpoxyDefect" />
+                <label>기타 불량 수량</label> <input type="number" class="form-control" name="EtcDefect" />
+                <label>기타 정보</label> <input type="text" class="form-control" name="EtcInfo" />
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <div class="text-center">
+        <button type="button" class="btn btn-primary" onclick="updateDB()">DB 수정</button>
+        <button type="button" class="btn btn-success" onclick="addDB()">DB 추가</button>
+    </div>
+</div>
+<script>
+    // 관리번호에 입력된 값 가져오기
+    var Controlnumber = document.getElementsByName("Controlnumber")[0].value;
+    var ProcessName = document.getElementsByName("ProcessName")[0].value;
+    var InspectionTime = document.getElementsByName("InspectionTime")[0].value;
+    var InspectionResult = document.getElementsByName("InspectionResult")[0].value;
+    var Inspector = document.getElementsByName("Inspector")[0].value;
+    var Confirmor = document.getElementsByName("Confirmor")[0].value;
+    var CapacityDefect = document.getElementsByName("CapacityDefect")[0].value;
+    var LossDefect = document.getElementsByName("LossDefect")[0].value;
+    var BubbleDefect = document.getElementsByName("BubbleDefect")[0].value;
+    var CenterDefect = document.getElementsByName("CenterDefect")[0].value;
+    var InnerDiameterDefect = document.getElementsByName("InnerDiameterDefect")[0].value;
+    var MarkDefect = document.getElementsByName("MarkDefect")[0].value;
+    var CaseDefect = document.getElementsByName("CaseDefect")[0].value;
+    var EpoxyDefect = document.getElementsByName("EpoxyDefect")[0].value;
+    var EtcDefect = document.getElementsByName("EtcDefect")[0].value;
+    var EtcInfo = document.getElementsByName("EtcInfo")[0].value;
+
+    function updateDB() {
+        $.ajax({
+            url: "/Oqc/UpdateDB",
+            type: "POST",
+            data: {
+                Controlnumber: Controlnumber,
+                ProcessName: ProcessName,
+                InspectionTime: InspectionTime,
+                InspectionResult: InspectionResult,
+                Inspector: Inspector,
+                Confirmor: Confirmor,
+                CapacityDefect: CapacityDefect,
+                LossDefect: LossDefect,
+                BubbleDefect: BubbleDefect,
+                CenterDefect: CenterDefect,
+                InnerDiameterDefect: InnerDiameterDefect,
+                MarkDefect: MarkDefect,
+                CaseDefect: CaseDefect,
+                EpoxyDefect: EpoxyDefect,
+                EtcDefect: EtcDefect,
+                EtcInfo: EtcInfo
+            },
+            success: function (data) {
+                alert("DB 수정 완료");
+            },
+            error: function (request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        }
+
+            function addDB() {
+                // DB 추가 코드
+                $.ajax({
+                    url: "/Oqc/AddDB",
+                    type: "POST",
+                    data: {
+                        Controlnumber: Controlnumber,
+                        ProcessName: ProcessName,
+                        InspectionTime: InspectionTime,
+                        InspectionResult: InspectionResult,
+                        Inspector: Inspector,
+                        Confirmor: Confirmor,
+                        CapacityDefect: CapacityDefect,
+                        LossDefect: LossDefect,
+                        BubbleDefect: BubbleDefect,
+                        CenterDefect: CenterDefect,
+                        InnerDiameterDefect: InnerDiameterDefect,
+                        MarkDefect: MarkDefect,
+                        CaseDefect: CaseDefect,
+                        EpoxyDefect: EpoxyDefect,
+                        EtcDefect: EtcDefect,
+                        EtcInfo: EtcInfo
+                    },
+                    success: function (data) {
+                        alert("DB 추가 완료");
+                    },
+                    error: function (request, status, error) {
+                        alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                });
+            }
+            function fetchData() {
+                $.ajax({
+                    url: '/fetchData', // 여기에 실제 URL을 입력해야 합니다.
+                    data: { 'controlNumber': controlNumber },
+                    type: 'POST',
+                    success: function (response) {
+                        populateData(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+            function populateData(data) {
+                $("#ProcessName").val(data.processName);
+                $("#InspectionTime").val(data.inspectionTime);
+                $("#InspectionResult").val(data.inspectionResult);
+                $("#Inspector").val(data.Inspector);
+                $("#Confirmor").val(data.Confirmor);
+                $("#LossDefect").val(data.LossDefect);
+                $("#BubbleDefect").val(data.BubbleDefect);
+                $("#CenterDefect").val(data.CenterDefect);
+                $("#InnerDiameterDefect").val(data.InnerDiameterDefect);
+                $("#MarkDefect").val(data.MarkDefect);
+                $("#CaseDefect").val(data.CaseDefect);
+                $("#EpoxyDefect").val(data.EpoxyDefect);
+                $("#EtcDefect").val(data.EtcDefect);
+                $("#EtcInfo").val(data.EtcInfo);
+            }
+                }
+</script>

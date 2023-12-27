@@ -11,5 +11,7 @@ namespace My_Smart_Factory.Data
         {
         }
         public DbSet<UserIdentity> UserIdentities { get; set; }
+
+        public DbSet<OqcModel> OqcModels { get; set; }
     }
 }
