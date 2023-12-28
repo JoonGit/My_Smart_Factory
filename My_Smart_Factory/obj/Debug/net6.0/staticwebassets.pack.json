@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\oqc.js",
+      "PackagePath": "staticwebassets\\js\\oqc.js"
+    },
+    {
       "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

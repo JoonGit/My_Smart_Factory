@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using My_Smart_Factory.Data;
+using My_Smart_Factory.Data.Service;
+using My_Smart_Factory.Data.Service.Interface;
 using My_Smart_Factory.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +34,9 @@ builder.Services.AddAuthentication(
         options.AccessDeniedPath = "/user/accessdenied";
         options.LoginPath = "/user/login";
     });
+
+builder.Services.AddScoped<IOqcService, OqcService>();
+
 
 //builder.Services.AddSession();
 

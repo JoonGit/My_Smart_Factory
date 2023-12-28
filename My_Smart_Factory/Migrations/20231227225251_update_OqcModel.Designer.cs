@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using My_Smart_Factory.Data;
 
@@ -10,9 +11,11 @@ using My_Smart_Factory.Data;
 namespace My_Smart_Factory.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231227225251_update_OqcModel")]
+    partial class update_OqcModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,6 +241,7 @@ namespace My_Smart_Factory.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ConfirmorId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Controlnumber")
@@ -251,6 +255,7 @@ namespace My_Smart_Factory.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EtcInfo")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("InnerDiameterDefect")
@@ -263,6 +268,7 @@ namespace My_Smart_Factory.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("InspectorId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("LossDefect")
@@ -272,6 +278,7 @@ namespace My_Smart_Factory.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProcessName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -345,11 +352,15 @@ namespace My_Smart_Factory.Migrations
                 {
                     b.HasOne("My_Smart_Factory.Models.UserIdentity", "Confirmor")
                         .WithMany()
-                        .HasForeignKey("ConfirmorId");
+                        .HasForeignKey("ConfirmorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("My_Smart_Factory.Models.UserIdentity", "Inspector")
                         .WithMany()
-                        .HasForeignKey("InspectorId");
+                        .HasForeignKey("InspectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Confirmor");
 
