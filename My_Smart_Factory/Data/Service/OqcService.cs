@@ -19,6 +19,7 @@ namespace My_Smart_Factory.Data.Service
             _userManager = userManager;
         }
 
+        #region Create
         private async Task<OqcModel?> Create(OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
         {
             try
@@ -32,9 +33,29 @@ namespace My_Smart_Factory.Data.Service
                 await Console.Out.WriteLineAsync(e.Message);
                 return null;
             }
-            
         }
 
+        private async Task<OqcModel?> CreateDefultModel(string controlnumber, UserIdentity inspector, UserIdentity confirmor)
+        {
+            try
+            {
+                // 신규데이터 입력
+                OqcModel model = new OqcModel();
+                model.Controlnumber = controlnumber;
+                model.Inspector = inspector;
+                model.Confirmor = confirmor;
+                model.InspectionTime = DateTime.Now;
+                return model;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
+        #region Update
         private async Task<OqcModel?> Update(OqcDto requestDto, OqcModel oqc, UserIdentity inspector, UserIdentity confirmor)
         {
             try
@@ -47,9 +68,8 @@ namespace My_Smart_Factory.Data.Service
                 await Console.Out.WriteLineAsync(e.Message);
                 return null;
             }
-            
-
         }
+        
         public OqcModel InputData(OqcModel model, OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
         {
             model.Inspector = inspector;
@@ -71,8 +91,10 @@ namespace My_Smart_Factory.Data.Service
             return model;
         }
 
+        #endregion
 
-        private async Task<List<OqcVo>?> Read(List<OqcModel> oqcList, UserIdentity inspector, UserIdentity confirmor)
+        #region Read
+        private async Task<List<OqcVo>?> Read(List<OqcModel> oqcList)
         {
             try
             {
@@ -88,28 +110,8 @@ namespace My_Smart_Factory.Data.Service
             {
                 Console.WriteLine(e.Message);
                 return null;
-            }                
-        }
-        
-        private async Task<OqcModel?> CreateDefultModel(string controlnumber, UserIdentity inspector, UserIdentity confirmor)
-        {
-            try
-            {
-                // 신규데이터 입력
-                OqcModel model = new OqcModel();
-                model.Controlnumber = controlnumber;
-                model.Inspector = inspector;
-                model.Confirmor = confirmor;
-                model.InspectionTime = DateTime.Now;
-                return model;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
             }
         }
-
 
         private OqcVo CreateOqcVo(OqcModel oqc)
         {
@@ -133,6 +135,8 @@ namespace My_Smart_Factory.Data.Service
             oqcVo.etcInfo = oqc.EtcInfo;
             return oqcVo;
         }
+        #endregion
+
         Task<OqcModel?> IOqcService.Create(OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
         {
             return Create(requestDto, inspector, confirmor);
@@ -148,9 +152,9 @@ namespace My_Smart_Factory.Data.Service
             return CreateDefultModel(controlnumber, inspector, confirmor);
         }
 
-        Task<List<OqcVo>?> IOqcService.Read(List<OqcModel> oqcList, UserIdentity inspector, UserIdentity confirmor)
+        Task<List<OqcVo>?> IOqcService.Read(List<OqcModel> oqcList)
         {
-            return Read(oqcList, inspector, confirmor);
+            return Read(oqcList);
         }
 
         OqcVo IOqcService.CreateOqcVo(OqcModel oqc)

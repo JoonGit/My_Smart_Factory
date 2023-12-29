@@ -22,6 +22,7 @@ function GetData() {
 
 var info = null;
 
+// oqc ajax POST 요청
 function Ajax(url) {
     var requestUrl = "/oqc/" + url;
     var requestData = GetData();
@@ -31,11 +32,11 @@ function Ajax(url) {
         type: "POST",
         data: requestData,
         success: function (response) {
-            var successMessage = "DB " + url + " 추가 완료";
-            var failureMessage = "DB " + url + " 추가 실패\n" + response;
+            var successMessage = "DB " + url + " success";
+            var failureMessage = "DB " + url + " fale\n" + response;
 
             if (response === "success") {
-                FetchData();
+                fetchData();
                 alert(successMessage);
             } else {
                 alert(failureMessage);
@@ -50,17 +51,19 @@ function Ajax(url) {
     });
 }
 
+// modal에 데이터 선택 버튼 생성
 function showModalWithData(response) {
     const modal = $('#DataChoiceModal');
     let choiceData = "";
-
     response.forEach((data, i) => {
-        choiceData += `<button type='button' class='btn btn-primary' onclick='populateData(info[${i}])'>${data.inspectionTime}</button><p>`;
+        var btnData = (i + 1) + " : " + data["inspectionTime"];
+        choiceData += `<button type='button' class='btn btn-primary' onclick='populateData(info[${i}])'>${btnData}</button><p>`;
     });
 
     modal.find('.modal-body').html(choiceData);
 }
 
+// 선택한 데이터 표시
 function populateData(data) {
     const fields = ['oqcId', 'processName', 'inspectionTime', 'inspectionResult',
         'inspector', 'confirmor', 'capacityDefect', 'lossDefect',
@@ -72,8 +75,7 @@ function populateData(data) {
     });
 }
 
-
-
+// controlnumber의 데이터 요청
 function fetchData() {
     const data = GetData();
 
@@ -94,6 +96,9 @@ function fetchData() {
     });
 }
 
+// modal열기
+// 일반적으로 사용하는 model.show를 하면 
+// showModalWithData 동작후 모달창이 닫혀지지 않는 현상 발생하기 때문에 버튼을 클릭하는 형식으로 변경
 function openModal() {
     $("#modalBtn").click();
 }
