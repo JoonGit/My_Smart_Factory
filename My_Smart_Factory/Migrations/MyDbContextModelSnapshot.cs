@@ -283,6 +283,54 @@ namespace My_Smart_Factory.Migrations
                     b.ToTable("OqcModels");
                 });
 
+            modelBuilder.Entity("My_Smart_Factory.Models.PiModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ControlNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LotNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Specification")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PiModels");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.PpsModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ControlNumberId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("DefectiveQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OperatorName")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ControlNumberId");
+
+                    b.ToTable("PpsModels");
+                });
+
             modelBuilder.Entity("My_Smart_Factory.Models.UserIdentity", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -354,6 +402,17 @@ namespace My_Smart_Factory.Migrations
                     b.Navigation("Confirmor");
 
                     b.Navigation("Inspector");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.PpsModel", b =>
+                {
+                    b.HasOne("My_Smart_Factory.Models.PiModel", "ControlNumber")
+                        .WithMany()
+                        .HasForeignKey("ControlNumberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ControlNumber");
                 });
 #pragma warning restore 612, 618
         }

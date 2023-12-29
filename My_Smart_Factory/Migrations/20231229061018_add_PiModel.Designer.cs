@@ -11,8 +11,8 @@ using My_Smart_Factory.Data;
 namespace My_Smart_Factory.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20231226114429_init5")]
-    partial class init5
+    [Migration("20231229061018_add_PiModel")]
+    partial class add_PiModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -222,6 +222,90 @@ namespace My_Smart_Factory.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("My_Smart_Factory.Models.OqcModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("BubbleDefect")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CapacityDefect")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CaseDefect")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CenterDefect")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConfirmorId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Controlnumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("EpoxyDefect")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EtcDefect")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EtcInfo")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("InnerDiameterDefect")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InspectionResult")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("InspectionTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("InspectorId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("LossDefect")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MarkDefect")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProcessName")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConfirmorId");
+
+                    b.HasIndex("InspectorId");
+
+                    b.ToTable("OqcModels");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.PiModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ControlNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LotNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Specification")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PiModels");
+                });
+
             modelBuilder.Entity("My_Smart_Factory.Models.UserIdentity", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -278,6 +362,21 @@ namespace My_Smart_Factory.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.OqcModel", b =>
+                {
+                    b.HasOne("My_Smart_Factory.Models.UserIdentity", "Confirmor")
+                        .WithMany()
+                        .HasForeignKey("ConfirmorId");
+
+                    b.HasOne("My_Smart_Factory.Models.UserIdentity", "Inspector")
+                        .WithMany()
+                        .HasForeignKey("InspectorId");
+
+                    b.Navigation("Confirmor");
+
+                    b.Navigation("Inspector");
                 });
 #pragma warning restore 612, 618
         }

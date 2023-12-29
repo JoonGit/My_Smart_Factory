@@ -5,7 +5,7 @@
 namespace My_Smart_Factory.Migrations
 {
     /// <inheritdoc />
-    public partial class init2 : Migration
+    public partial class add_PpsModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

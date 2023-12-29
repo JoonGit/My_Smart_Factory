@@ -40,6 +40,8 @@ namespace My_Smart_Factory.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Discriminator = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
@@ -196,6 +198,50 @@ namespace My_Smart_Factory.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "OqcModels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Controlnumber = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ProcessName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    InspectionTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    InspectionResult = table.Column<int>(type: "int", nullable: false),
+                    InspectorId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ConfirmorId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CapacityDefect = table.Column<int>(type: "int", nullable: false),
+                    LossDefect = table.Column<int>(type: "int", nullable: false),
+                    BubbleDefect = table.Column<int>(type: "int", nullable: false),
+                    CenterDefect = table.Column<int>(type: "int", nullable: false),
+                    InnerDiameterDefect = table.Column<int>(type: "int", nullable: false),
+                    MarkDefect = table.Column<int>(type: "int", nullable: false),
+                    CaseDefect = table.Column<int>(type: "int", nullable: false),
+                    EpoxyDefect = table.Column<int>(type: "int", nullable: false),
+                    EtcDefect = table.Column<int>(type: "int", nullable: false),
+                    EtcInfo = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OqcModels", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OqcModels_AspNetUsers_ConfirmorId",
+                        column: x => x.ConfirmorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_OqcModels_AspNetUsers_InspectorId",
+                        column: x => x.InspectorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -232,6 +278,16 @@ namespace My_Smart_Factory.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OqcModels_ConfirmorId",
+                table: "OqcModels",
+                column: "ConfirmorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OqcModels_InspectorId",
+                table: "OqcModels",
+                column: "InspectorId");
         }
 
         /// <inheritdoc />
@@ -251,6 +307,9 @@ namespace My_Smart_Factory.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "OqcModels");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

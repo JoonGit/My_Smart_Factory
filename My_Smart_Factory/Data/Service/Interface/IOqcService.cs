@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using My_Smart_Factory.Data.Base;
 using My_Smart_Factory.Data.Dto.Oqc;
-using My_Smart_Factory.Data.Vo;
+using My_Smart_Factory.Data.Vo.Oqc;
 using My_Smart_Factory.Models;
 
 namespace My_Smart_Factory.Data.Service.Interface

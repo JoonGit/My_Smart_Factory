@@ -5,13 +5,13 @@ using Microsoft.Extensions.ObjectPool;
 using My_Smart_Factory.Data;
 using My_Smart_Factory.Data.Dto.Oqc;
 using My_Smart_Factory.Data.Service.Interface;
-using My_Smart_Factory.Data.Vo;
-using My_Smart_Factory.Migrations;
+using My_Smart_Factory.Data.Vo.Oqc;
 using My_Smart_Factory.Models;
 using System.Text;
 
 namespace My_Smart_Factory.Controllers
 {
+    //출하, 출고검사(Outgoing Inspection) 
     [Route("oqc")]
     public class OqcController : Controller
     {

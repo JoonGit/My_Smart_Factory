@@ -1,4 +1,4 @@
-﻿namespace My_Smart_Factory.Data.Vo
+﻿namespace My_Smart_Factory.Data.Vo.Oqc
 {
     public class OqcVo
     {

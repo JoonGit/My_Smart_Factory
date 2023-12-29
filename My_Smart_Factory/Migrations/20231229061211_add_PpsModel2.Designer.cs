@@ -11,8 +11,8 @@ using My_Smart_Factory.Data;
 namespace My_Smart_Factory.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20231227225251_update_OqcModel")]
-    partial class update_OqcModel
+    [Migration("20231229061211_add_PpsModel2")]
+    partial class add_PpsModel2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -241,7 +241,6 @@ namespace My_Smart_Factory.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ConfirmorId")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Controlnumber")
@@ -255,7 +254,6 @@ namespace My_Smart_Factory.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EtcInfo")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("InnerDiameterDefect")
@@ -268,7 +266,6 @@ namespace My_Smart_Factory.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("InspectorId")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("LossDefect")
@@ -278,7 +275,6 @@ namespace My_Smart_Factory.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProcessName")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -288,6 +284,54 @@ namespace My_Smart_Factory.Migrations
                     b.HasIndex("InspectorId");
 
                     b.ToTable("OqcModels");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.PiModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ControlNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LotNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Specification")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PiModels");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.PpsModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ControlNumberId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("DefectiveQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OperatorName")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ControlNumberId");
+
+                    b.ToTable("PpsModels");
                 });
 
             modelBuilder.Entity("My_Smart_Factory.Models.UserIdentity", b =>
@@ -352,19 +396,26 @@ namespace My_Smart_Factory.Migrations
                 {
                     b.HasOne("My_Smart_Factory.Models.UserIdentity", "Confirmor")
                         .WithMany()
-                        .HasForeignKey("ConfirmorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ConfirmorId");
 
                     b.HasOne("My_Smart_Factory.Models.UserIdentity", "Inspector")
                         .WithMany()
-                        .HasForeignKey("InspectorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InspectorId");
 
                     b.Navigation("Confirmor");
 
                     b.Navigation("Inspector");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.PpsModel", b =>
+                {
+                    b.HasOne("My_Smart_Factory.Models.PiModel", "ControlNumber")
+                        .WithMany()
+                        .HasForeignKey("ControlNumberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ControlNumber");
                 });
 #pragma warning restore 612, 618
         }
