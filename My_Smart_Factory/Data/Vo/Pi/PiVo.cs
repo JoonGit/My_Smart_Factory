@@ -2,8 +2,9 @@
 {
     public class PiVo
     {
-        public string? ControlNumber { get; set; }       // 관리번호
-        public string? Specification { get; set; }      // 스펙
-        public string? LotNumber { get; set; }          // 로트번호
+        public int id { get; set; }
+        public string? controlNumber { get; set; }       // 관리번호
+        public string? specification { get; set; }      // 스펙
+        public string? lotNumber { get; set; }          // 로트번호
     }
 }

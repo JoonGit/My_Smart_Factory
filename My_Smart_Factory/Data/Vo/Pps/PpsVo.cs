@@ -2,10 +2,12 @@
 {
     public class PpsVo
     {
-        public string? Specification { get; set; }          // 스펙
-        public string? LotNumber { get; set; }              // 로트번호
-        public int Quantity { get; set; }                   // 수량
-        public int DefectiveQuantity { get; set; }          // 불량수량
-        public int DefectRate { get; set; }                 // 불량률
+
+        public int id { get; set; }
+        public string? specification { get; set; }          // 스펙
+        public string? lotNumber { get; set; }              // 로트번호
+        public int quantity { get; set; }                   // 수량
+        public int defectiveQuantity { get; set; }          // 불량수량
+        public double defectRate { get; set; }                 // 불량률
     }
 }

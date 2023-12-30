@@ -36,8 +36,8 @@ builder.Services.AddAuthentication(
     });
 
 builder.Services.AddScoped<IOqcService, OqcService>();
-builder.Services.AddScoped<IPpsInterface, PpsServicer>();
-builder.Services.AddScoped<IPiInterface, PiService>();
+builder.Services.AddScoped<IPpsService, PpsService>();
+builder.Services.AddScoped<IPiService, PiService>();
 
 
 //builder.Services.AddSession();

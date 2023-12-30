@@ -72,6 +72,25 @@ namespace My_Smart_Factory.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "PiModels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ControlNumber = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Specification = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LotNumber = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PiModels", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -242,6 +261,36 @@ namespace My_Smart_Factory.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "PpsModels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Date = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    OperatorId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DefectiveQuantity = table.Column<int>(type: "int", nullable: false),
+                    PiModelId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PpsModels", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PpsModels_AspNetUsers_OperatorId",
+                        column: x => x.OperatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PpsModels_PiModels_PiModelId",
+                        column: x => x.PiModelId,
+                        principalTable: "PiModels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -288,6 +337,16 @@ namespace My_Smart_Factory.Migrations
                 name: "IX_OqcModels_InspectorId",
                 table: "OqcModels",
                 column: "InspectorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PpsModels_OperatorId",
+                table: "PpsModels",
+                column: "OperatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PpsModels_PiModelId",
+                table: "PpsModels",
+                column: "PiModelId");
         }
 
         /// <inheritdoc />
@@ -312,10 +371,16 @@ namespace My_Smart_Factory.Migrations
                 name: "OqcModels");
 
             migrationBuilder.DropTable(
+                name: "PpsModels");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "PiModels");
         }
     }
 }

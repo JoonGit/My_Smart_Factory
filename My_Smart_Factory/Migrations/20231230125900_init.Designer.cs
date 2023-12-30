@@ -11,8 +11,8 @@ using My_Smart_Factory.Data;
 namespace My_Smart_Factory.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20231229061018_add_PiModel")]
-    partial class add_PiModel
+    [Migration("20231230125900_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -306,6 +306,36 @@ namespace My_Smart_Factory.Migrations
                     b.ToTable("PiModels");
                 });
 
+            modelBuilder.Entity("My_Smart_Factory.Models.PpsModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("DefectiveQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OperatorId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("PiModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperatorId");
+
+                    b.HasIndex("PiModelId");
+
+                    b.ToTable("PpsModels");
+                });
+
             modelBuilder.Entity("My_Smart_Factory.Models.UserIdentity", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -377,6 +407,23 @@ namespace My_Smart_Factory.Migrations
                     b.Navigation("Confirmor");
 
                     b.Navigation("Inspector");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.PpsModel", b =>
+                {
+                    b.HasOne("My_Smart_Factory.Models.UserIdentity", "Operator")
+                        .WithMany()
+                        .HasForeignKey("OperatorId");
+
+                    b.HasOne("My_Smart_Factory.Models.PiModel", "PiModel")
+                        .WithMany()
+                        .HasForeignKey("PiModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Operator");
+
+                    b.Navigation("PiModel");
                 });
 #pragma warning restore 612, 618
         }

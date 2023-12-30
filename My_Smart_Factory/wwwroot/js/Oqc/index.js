@@ -22,9 +22,11 @@ function GetData() {
 
 var info = null;
 
-// oqc ajax POST 요청
-
-
+// 저장 버튼 클릭 이벤트
+function saveData() {
+    const data = GetData();
+    AjaxPost("/oqc/create", data, "create");
+}
 // modal에 데이터 선택 버튼 생성
 function showModalWithData(response) {
     const modal = $('#DataChoiceModal');

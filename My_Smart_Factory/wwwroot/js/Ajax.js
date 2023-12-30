@@ -1,11 +1,11 @@
-function AjaxPost(url) {
+function AjaxPost(url, data, url) {
     var requestUrl = "/oqc/" + url;
     var requestData = GetData();
 
     $.ajax({
-        url: requestUrl,
+        url: url,
         type: "POST",
-        data: requestData,
+        data: data,
         success: function (response) {
             var successMessage = "DB " + url + " success";
             var failureMessage = "DB " + url + " fale\n" + response;

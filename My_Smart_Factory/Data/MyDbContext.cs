@@ -10,7 +10,7 @@ namespace My_Smart_Factory.Data
         public MyDbContext(DbContextOptions<MyDbContext> option) : base(option)
         {
         }
-        public DbSet<UserIdentity> UserIdentities { get; set; }
+        public DbSet<UserIdentity> UserIdentitys { get; set; }
         public DbSet<OqcModel> OqcModels { get; set; }
         public DbSet<PiModel> PiModels { get; set; }
         public DbSet<PpsModel> PpsModels { get; set; }

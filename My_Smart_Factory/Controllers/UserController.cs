@@ -135,7 +135,7 @@ namespace My_Smart_Factory.Controllers
             try
             {
                 // _dbContext에서 유저 정보들을 가져오고 List<UserVo>로 변환
-                var userList = await _dbContext.UserIdentities.ToListAsync();
+                var userList = await _dbContext.UserIdentitys.ToListAsync();
                 List<UserVo> userVo = new List<UserVo>();
                 //userList를 userVo로 변환
                 foreach (var user in userList)
@@ -147,7 +147,6 @@ namespace My_Smart_Factory.Controllers
                         Role = result[0]
                     });
                 }
-                ViewBag.userList = userVo;
                 return View(userList);
             }
             catch (Exception e)
