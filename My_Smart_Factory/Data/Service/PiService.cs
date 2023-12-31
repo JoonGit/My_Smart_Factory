@@ -9,7 +9,7 @@ using My_Smart_Factory.Models;
 
 namespace My_Smart_Factory.Data.Service
 {
-    public class PiService : EntityBaseRepository<PiModel>, IPiService
+    public class PiService : EntityBaseRepository<ProdInfoModel>, IPiService
     {
         public PiService(MyDbContext context) : base(context)
         {
@@ -18,11 +18,11 @@ namespace My_Smart_Factory.Data.Service
 
 
         #region Create
-        private async Task<PiModel> Create(PiDto requestDto)
+        private async Task<ProdInfoModel> Create(PiDto requestDto)
         {
             try
             {
-                PiModel piModel = new PiModel();
+                ProdInfoModel piModel = new ProdInfoModel();
                 piModel.ControlNumber = requestDto.controlNumber;
                 piModel.Specification = requestDto.specification;
                 piModel.LotNumber = requestDto.lotNumber;
@@ -36,7 +36,7 @@ namespace My_Smart_Factory.Data.Service
         }
         #endregion
         #region ReadAll
-        private async Task<List<PiVo>?> ReadAll(List<PiModel> piModels)
+        private async Task<List<PiVo>?> ReadAll(List<ProdInfoModel> piModels)
         {
             try
             {
@@ -60,9 +60,9 @@ namespace My_Smart_Factory.Data.Service
         }
         #endregion
         #region Update
-        private async Task<PiModel?> Update(PiModel oldModel, PiDto UpdateModel)
+        private async Task<ProdInfoModel?> Update(ProdInfoModel oldModel, PiDto UpdateModel)
         {
-            PiModel saveModel = oldModel;
+            ProdInfoModel saveModel = oldModel;
             try
             {
                 oldModel.ControlNumber = UpdateModel.controlNumber;
@@ -78,17 +78,17 @@ namespace My_Smart_Factory.Data.Service
         }
         #endregion
 
-        Task<List<PiVo>?> IPiService.ReadAll(List<PiModel> piModels)
+        Task<List<PiVo>?> IPiService.ReadAll(List<ProdInfoModel> piModels)
         {
             return ReadAll(piModels);
         }
 
-        Task<PiModel> IPiService.Create(PiDto requestDto)
+        Task<ProdInfoModel> IPiService.Create(PiDto requestDto)
         {
             return Create(requestDto);
         }
 
-        Task<PiModel?> IPiService.Update(PiModel oldModel, PiDto UpdateModel)
+        Task<ProdInfoModel?> IPiService.Update(ProdInfoModel oldModel, PiDto UpdateModel)
         {
             return Update(oldModel, UpdateModel);
         }

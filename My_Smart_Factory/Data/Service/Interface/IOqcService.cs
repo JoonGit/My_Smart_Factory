@@ -6,14 +6,14 @@ using My_Smart_Factory.Models;
 
 namespace My_Smart_Factory.Data.Service.Interface
 {
-    public interface IOqcService : IEntityBaseRepository<OqcModel>
+    public interface IOqcService : IEntityBaseRepository<OutgoingInspModel>
     {
 
-        Task<OqcModel?> Create(OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor);
-        Task<OqcModel?> CreateDefultModel(string controlnumber, UserIdentity inspector, UserIdentity confirmor);
-        Task<OqcModel?> Update(OqcDto requestDto, OqcModel oqc, UserIdentity inspector, UserIdentity confirmor);
-        OqcVo CreateOqcVo(OqcModel oqc);
-        Task<List<OqcVo>?> Read(List<OqcModel> oqcList);
+        Task<OutgoingInspModel?> Create(OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor);
+        Task<OutgoingInspModel?> CreateDefultModel(string controlnumber, UserIdentity inspector, UserIdentity confirmor);
+        Task<OutgoingInspModel?> Update(OqcDto requestDto, OutgoingInspModel oqc, UserIdentity inspector, UserIdentity confirmor);
+        OqcVo CreateOqcVo(OutgoingInspModel oqc);
+        Task<List<OqcVo>?> Read(List<OutgoingInspModel> oqcList);
 
     }
 }

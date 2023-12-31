@@ -5,10 +5,10 @@ using My_Smart_Factory.Models;
 
 namespace My_Smart_Factory.Data.Service.Interface
 {
-    public interface IPiService : IEntityBaseRepository<PiModel>
+    public interface IPiService : IEntityBaseRepository<ProdInfoModel>
     {
-        Task<List<PiVo>?> ReadAll(List<PiModel> piModels);
-        Task<PiModel> Create(PiDto requestDto);
-        Task<PiModel?> Update(PiModel oldModel, PiDto UpdateModel);
+        Task<List<PiVo>?> ReadAll(List<ProdInfoModel> piModels);
+        Task<ProdInfoModel> Create(PiDto requestDto);
+        Task<ProdInfoModel?> Update(ProdInfoModel oldModel, PiDto UpdateModel);
     }
 }

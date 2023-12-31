@@ -6,11 +6,11 @@ using My_Smart_Factory.Models;
 
 namespace My_Smart_Factory.Data.Service.Interface
 {
-    public interface IPpsService : IEntityBaseRepository<PpsModel>
+    public interface IPpsService : IEntityBaseRepository<ProcessStatusModel>
     {
-        Task<List<PpsVo>?> ReadAll(List<PpsModel> piModels);
-        Task<PpsModel> Create(PpsDto requestDto, PiModel piModel, UserIdentity Operator);
-        Task<PpsModel?> Update(PpsModel oldModel, PiModel piModel, UserIdentity Operator, PpsDto UpdateModel);
-        Task<List<PpsUpdateDateAllVo>?> UpdateDateAll(List<PpsModel> PpsModels);
+        Task<List<PpsVo>?> ReadAll(List<ProcessStatusModel> piModels);
+        Task<ProcessStatusModel> Create(PpsDto requestDto, ProdInfoModel piModel, UserIdentity Operator);
+        Task<ProcessStatusModel?> Update(ProcessStatusModel oldModel, ProdInfoModel piModel, UserIdentity Operator, PpsDto UpdateModel);
+        Task<List<PpsUpdateDateAllVo>?> UpdateDateAll(List<ProcessStatusModel> PpsModels);
     }
 }

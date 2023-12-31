@@ -10,7 +10,7 @@ using My_Smart_Factory.Models;
 
 namespace My_Smart_Factory.Data.Service
 {
-    public class OqcService : EntityBaseRepository<OqcModel>, IOqcService
+    public class OqcService : EntityBaseRepository<OutgoingInspModel>, IOqcService
     {
         private readonly UserManager<UserIdentity> _userManager;
         public OqcService(MyDbContext context,
@@ -20,11 +20,11 @@ namespace My_Smart_Factory.Data.Service
         }
 
         #region Create
-        private async Task<OqcModel?> Create(OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
+        private async Task<OutgoingInspModel?> Create(OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
         {
             try
             {
-                OqcModel model = new OqcModel();
+                OutgoingInspModel model = new OutgoingInspModel();
                 model = InputData(model, requestDto, inspector, confirmor);
                 return model;
             }
@@ -35,12 +35,12 @@ namespace My_Smart_Factory.Data.Service
             }
         }
 
-        private async Task<OqcModel?> CreateDefultModel(string controlnumber, UserIdentity inspector, UserIdentity confirmor)
+        private async Task<OutgoingInspModel?> CreateDefultModel(string controlnumber, UserIdentity inspector, UserIdentity confirmor)
         {
             try
             {
                 // 신규데이터 입력
-                OqcModel model = new OqcModel();
+                OutgoingInspModel model = new OutgoingInspModel();
                 model.Controlnumber = controlnumber;
                 model.Inspector = inspector;
                 model.Confirmor = confirmor;
@@ -56,7 +56,7 @@ namespace My_Smart_Factory.Data.Service
         #endregion
 
         #region Update
-        private async Task<OqcModel?> Update(OqcDto requestDto, OqcModel oqc, UserIdentity inspector, UserIdentity confirmor)
+        private async Task<OutgoingInspModel?> Update(OqcDto requestDto, OutgoingInspModel oqc, UserIdentity inspector, UserIdentity confirmor)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace My_Smart_Factory.Data.Service
             }
         }
         
-        public OqcModel InputData(OqcModel model, OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
+        public OutgoingInspModel InputData(OutgoingInspModel model, OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
         {
             model.Inspector = inspector;
             model.Confirmor = confirmor;
@@ -94,7 +94,7 @@ namespace My_Smart_Factory.Data.Service
         #endregion
 
         #region Read
-        private async Task<List<OqcVo>?> Read(List<OqcModel> oqcList)
+        private async Task<List<OqcVo>?> Read(List<OutgoingInspModel> oqcList)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace My_Smart_Factory.Data.Service
             }
         }
 
-        private OqcVo CreateOqcVo(OqcModel oqc)
+        private OqcVo CreateOqcVo(OutgoingInspModel oqc)
         {
             OqcVo oqcVo = new OqcVo();
             oqcVo.oqcId = oqc.Id;
@@ -137,27 +137,27 @@ namespace My_Smart_Factory.Data.Service
         }
         #endregion
 
-        Task<OqcModel?> IOqcService.Create(OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
+        Task<OutgoingInspModel?> IOqcService.Create(OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
         {
             return Create(requestDto, inspector, confirmor);
         }
 
-        Task<OqcModel?> IOqcService.Update(OqcDto requestDto, OqcModel oqc, UserIdentity inspector, UserIdentity confirmor)
+        Task<OutgoingInspModel?> IOqcService.Update(OqcDto requestDto, OutgoingInspModel oqc, UserIdentity inspector, UserIdentity confirmor)
         {
             return Update(requestDto, oqc, inspector, confirmor);
         }
 
-        Task<OqcModel?> IOqcService.CreateDefultModel(string controlnumber, UserIdentity inspector, UserIdentity confirmor)
+        Task<OutgoingInspModel?> IOqcService.CreateDefultModel(string controlnumber, UserIdentity inspector, UserIdentity confirmor)
         {
             return CreateDefultModel(controlnumber, inspector, confirmor);
         }
 
-        Task<List<OqcVo>?> IOqcService.Read(List<OqcModel> oqcList)
+        Task<List<OqcVo>?> IOqcService.Read(List<OutgoingInspModel> oqcList)
         {
             return Read(oqcList);
         }
 
-        OqcVo IOqcService.CreateOqcVo(OqcModel oqc)
+        OqcVo IOqcService.CreateOqcVo(OutgoingInspModel oqc)
         {
             return CreateOqcVo(oqc);
         }

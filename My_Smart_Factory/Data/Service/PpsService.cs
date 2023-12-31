@@ -8,7 +8,7 @@ using My_Smart_Factory.Models;
 
 namespace My_Smart_Factory.Data.Service
 {
-    public class PpsService : EntityBaseRepository<PpsModel>, IPpsService
+    public class PpsService : EntityBaseRepository<ProcessStatusModel>, IPpsService
     {
         public PpsService(MyDbContext context) : base(context)
         {
@@ -17,11 +17,11 @@ namespace My_Smart_Factory.Data.Service
 
 
         #region Create
-        private async Task<PpsModel> Create(PpsDto requestDto, PiModel piModel, UserIdentity Operator)
+        private async Task<ProcessStatusModel> Create(PpsDto requestDto, ProdInfoModel piModel, UserIdentity Operator)
         {
             try
             {
-                PpsModel ppsModel = new PpsModel();
+                ProcessStatusModel ppsModel = new ProcessStatusModel();
                 ppsModel.PiModel = piModel;
                 ppsModel.Date = requestDto.date;
                 ppsModel.Quantity = requestDto.quantity;
@@ -39,7 +39,7 @@ namespace My_Smart_Factory.Data.Service
 
         #endregion
         #region Read
-        private async Task<List<PpsVo>?> ReadAll(List<PpsModel> PpsModels)
+        private async Task<List<PpsVo>?> ReadAll(List<ProcessStatusModel> PpsModels)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace My_Smart_Factory.Data.Service
                 return null;
             }
         }
-        private async Task<List<PpsUpdateDateAllVo>?> UpdateDateAll(List<PpsModel> PpsModels)
+        private async Task<List<PpsUpdateDateAllVo>?> UpdateDateAll(List<ProcessStatusModel> PpsModels)
         {
             try
             {
@@ -105,9 +105,9 @@ namespace My_Smart_Factory.Data.Service
 
         #endregion
         #region Update
-        private async Task<PpsModel?> Update(PpsModel oldModel, PiModel piModel, UserIdentity Operator, PpsDto UpdateModel)
+        private async Task<ProcessStatusModel?> Update(ProcessStatusModel oldModel, ProdInfoModel piModel, UserIdentity Operator, PpsDto UpdateModel)
         {
-            PpsModel saveModel = oldModel;
+            ProcessStatusModel saveModel = oldModel;
             try
 
                 // 새로운 psModel을 생성한다
@@ -129,21 +129,21 @@ namespace My_Smart_Factory.Data.Service
         }
         #endregion
 
-        Task<PpsModel> IPpsService.Create(PpsDto requestDto, PiModel piModel, UserIdentity Operator)
+        Task<ProcessStatusModel> IPpsService.Create(PpsDto requestDto, ProdInfoModel piModel, UserIdentity Operator)
         {
             return Create(requestDto, piModel, Operator);
         }
-        Task<List<PpsVo>?> IPpsService.ReadAll(List<PpsModel> piModels)
+        Task<List<PpsVo>?> IPpsService.ReadAll(List<ProcessStatusModel> piModels)
         {
             return ReadAll(piModels);
         }
 
-        Task<PpsModel?> IPpsService.Update(PpsModel oldModel, PiModel piModel, UserIdentity Operator, PpsDto UpdateModel)
+        Task<ProcessStatusModel?> IPpsService.Update(ProcessStatusModel oldModel, ProdInfoModel piModel, UserIdentity Operator, PpsDto UpdateModel)
         {
             return Update(oldModel, piModel, Operator, UpdateModel);
         }
 
-        Task<List<PpsUpdateDateAllVo>?> IPpsService.UpdateDateAll(List<PpsModel> PpsModels)
+        Task<List<PpsUpdateDateAllVo>?> IPpsService.UpdateDateAll(List<ProcessStatusModel> PpsModels)
         {
             return UpdateDateAll(PpsModels);
         }

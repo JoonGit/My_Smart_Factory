@@ -11,9 +11,9 @@ namespace My_Smart_Factory.Data
         {
         }
         public DbSet<UserIdentity> UserIdentitys { get; set; }
-        public DbSet<OqcModel> OqcModels { get; set; }
-        public DbSet<PiModel> PiModels { get; set; }
-        public DbSet<PpsModel> PpsModels { get; set; }
+        public DbSet<OutgoingInspModel> OqcModels { get; set; }
+        public DbSet<ProdInfoModel> PiModels { get; set; }
+        public DbSet<ProcessStatusModel> PpsModels { get; set; }
 
     }
 }
