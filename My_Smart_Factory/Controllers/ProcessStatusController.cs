@@ -29,11 +29,11 @@ namespace My_Smart_Factory.Controllers
         public async Task<IActionResult> Index()
         {
             // PpsModel을 pi저정보와 함께 모두 불러온다
-            var PpsModels = await _context.PpsModels
-                .Include(PpsModel => PpsModel.PiModel)
+            var ProcessStatusModels = await _context.ProcessStatusModels
+                .Include(ProcessStatusModels => ProcessStatusModels.ProdInfoModel)
                 .ToListAsync();
-            List<PpsVo> voList = await _PpsInterface.ReadAll(PpsModels);
-            if (PpsModels.Count() == 0) { return View(); }
+            List<PpsVo> voList = await _PpsInterface.ReadAll(ProcessStatusModels);
+            if (ProcessStatusModels.Count() == 0) { return View(); }
 
             return View();
         }
@@ -51,15 +51,15 @@ namespace My_Smart_Factory.Controllers
             try
             {
                 // pi model을 requestDto.controlNumber로 찾는다
-                PiModel piModel = await _context.PiModels
+                ProdInfoModel piModel = await _context.ProdInfoModels
                     .FirstOrDefaultAsync(PiModel => PiModel.ControlNumber == requestDto.controlNumber);
                 if (piModel == null) { return BadRequest("Not Found Pi"); }
                 // Operator를 requestDto.operatorName으로 찾는다
                 UserIdentity Operator = await _context.UserIdentitys
                     .FirstOrDefaultAsync(UserIdentity => UserIdentity.UserName == requestDto.operatorName);
                 if (Operator == null) { return BadRequest("Not Found Operator"); }
-                PpsModel PpsModel = await _PpsInterface.Create(requestDto, piModel, Operator);
-                var result = await _context.PpsModels.AddAsync(PpsModel);
+                ProcessStatusModel ProcessStatusModel = await _PpsInterface.Create(requestDto, piModel, Operator);
+                var result = await _context.ProcessStatusModels.AddAsync(ProcessStatusModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -79,11 +79,11 @@ namespace My_Smart_Factory.Controllers
                 // string date를 DateTime으로 변환
 
                 DateTime dateTime = Convert.ToDateTime(date);
-                List<PpsModel> PpsModels = await _context.PpsModels
-                    .Where(PpsModel => PpsModel.Date == dateTime)
-                    .Include(PpsModel => PpsModel.PiModel)
+                List<ProcessStatusModel> ProcessStatusModels = await _context.ProcessStatusModels
+                    .Where(ProcessStatusModel => ProcessStatusModel.Date == dateTime)
+                    .Include(ProcessStatusModel => ProcessStatusModel.ProdInfoModel)
                     .ToListAsync();
-                List<PpsVo> voList = await _PpsInterface.ReadAll(PpsModels);
+                List<PpsVo> voList = await _PpsInterface.ReadAll(ProcessStatusModels);
                 if (voList == null) { return BadRequest("Not Found Pps"); }
                 return Json(voList);
             }
@@ -106,13 +106,13 @@ namespace My_Smart_Factory.Controllers
             {
                 DateTime dateTime = Convert.ToDateTime(date);
 
-                List<PpsModel> PpsModels = await _context.PpsModels
-                    .Where(PpsModel => PpsModel.Date == dateTime)
-                    .Include(PpsModel => PpsModel.PiModel)
-                    .Include(PpsModel => PpsModel.Operator)
+                List<ProcessStatusModel> ProcessStatusModels = await _context.ProcessStatusModels
+                    .Where(ProcessStatusModel => ProcessStatusModel.Date == dateTime)
+                    .Include(ProcessStatusModel => ProcessStatusModel.ProdInfoModel)
+                    .Include(ProcessStatusModel => ProcessStatusModel.Operator)
                     .ToListAsync();
-                if (PpsModels == null) { return BadRequest("Not Found Pps"); }
-                List<PpsUpdateDateAllVo> voList = await _PpsInterface.UpdateDateAll(PpsModels);
+                if (ProcessStatusModels == null) { return BadRequest("Not Found Pps"); }
+                List<PpsUpdateDateAllVo> voList = await _PpsInterface.UpdateDateAll(ProcessStatusModels);
                 return Json(voList);
             }
             catch (Exception e)
@@ -125,19 +125,19 @@ namespace My_Smart_Factory.Controllers
         {
             try
             {
-                PpsModel ppsModel = await _context.PpsModels.FindAsync(requestDto.id);
-                if (ppsModel == null) { return "Not Found Pps"; }
-                PiModel piModel = await _context.PiModels
+                ProcessStatusModel ProcessStatusModel = await _context.ProcessStatusModels.FindAsync(requestDto.id);
+                if (ProcessStatusModel == null) { return "Not Found Pps"; }
+                ProdInfoModel piModel = await _context.ProdInfoModels
                     .FirstOrDefaultAsync(PiModel => PiModel.ControlNumber == requestDto.controlNumber);
                 if (piModel == null) { return "Not Found Pi"; }
                 UserIdentity Operator = await _context.UserIdentitys
                     .FirstOrDefaultAsync(UserIdentity => UserIdentity.UserName == requestDto.operatorName);
                 if (Operator == null) { return "Not Found Operator"; }
-                PpsModel updateModel = await _PpsInterface.Update(ppsModel, piModel, Operator, requestDto);
+                ProcessStatusModel updateModel = await _PpsInterface.Update(ProcessStatusModel, piModel, Operator, requestDto);
                 if (updateModel == null) { return "Not Changed"; }
                 if (piModel == null) { return "Not Found Pi"; }
 
-                _context.PpsModels.Update(updateModel);
+                _context.ProcessStatusModels.Update(updateModel);
                 await _context.SaveChangesAsync();
                 return "success";
             }

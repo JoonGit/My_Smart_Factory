@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace My_Smart_Factory.Models
 {
-    public class OqcModel : IEntityBase
+    public class OutgoingInspModel : IEntityBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

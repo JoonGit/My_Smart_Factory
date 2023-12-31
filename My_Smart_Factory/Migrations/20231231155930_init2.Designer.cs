@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using My_Smart_Factory.Data;
 
@@ -10,9 +11,11 @@ using My_Smart_Factory.Data;
 namespace My_Smart_Factory.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231231155930_init2")]
+    partial class init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,7 +295,12 @@ namespace My_Smart_Factory.Migrations
                     b.Property<double?>("IES")
                         .HasColumnType("double");
 
+                    b.Property<int?>("SpecId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SpecId");
 
                     b.ToTable("InspEquipRecordModels");
                 });
@@ -446,6 +454,9 @@ namespace My_Smart_Factory.Migrations
                     b.Property<int?>("ProdCtrlNoId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SpecId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("WorkOrderId")
                         .HasColumnType("int");
 
@@ -454,6 +465,8 @@ namespace My_Smart_Factory.Migrations
                     b.HasIndex("FullInspectionModelId");
 
                     b.HasIndex("ProdCtrlNoId");
+
+                    b.HasIndex("SpecId");
 
                     b.HasIndex("WorkOrderId");
 
@@ -491,35 +504,7 @@ namespace My_Smart_Factory.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CurrentWorkQuantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("QRURL")
-                        .HasColumnType("longtext");
-
-                    b.Property<int?>("SpecId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserIdentityId")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<DateTime?>("WorkOrderDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("WorkOrderNumber")
-                        .HasColumnType("longtext");
-
-                    b.Property<int?>("WorkQuantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("WorkStatus")
-                        .HasColumnType("longtext");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SpecId");
-
-                    b.HasIndex("UserIdentityId");
 
                     b.ToTable("WorkOrderModels");
                 });
@@ -597,6 +582,15 @@ namespace My_Smart_Factory.Migrations
                     b.Navigation("WorkOrder");
                 });
 
+            modelBuilder.Entity("My_Smart_Factory.Models.InspEquipRecordModel", b =>
+                {
+                    b.HasOne("My_Smart_Factory.Models.SpecModel", "Spec")
+                        .WithMany()
+                        .HasForeignKey("SpecId");
+
+                    b.Navigation("Spec");
+                });
+
             modelBuilder.Entity("My_Smart_Factory.Models.OutgoingInspModel", b =>
                 {
                     b.HasOne("My_Smart_Factory.Models.UserIdentity", "Confirmor")
@@ -639,11 +633,17 @@ namespace My_Smart_Factory.Migrations
                         .WithMany()
                         .HasForeignKey("ProdCtrlNoId");
 
+                    b.HasOne("My_Smart_Factory.Models.SpecModel", "Spec")
+                        .WithMany()
+                        .HasForeignKey("SpecId");
+
                     b.HasOne("My_Smart_Factory.Models.WorkOrderModel", "WorkOrder")
                         .WithMany()
                         .HasForeignKey("WorkOrderId");
 
                     b.Navigation("ProdCtrlNo");
+
+                    b.Navigation("Spec");
 
                     b.Navigation("WorkOrder");
                 });
@@ -655,21 +655,6 @@ namespace My_Smart_Factory.Migrations
                         .HasForeignKey("InspEquipId");
 
                     b.Navigation("InspEquip");
-                });
-
-            modelBuilder.Entity("My_Smart_Factory.Models.WorkOrderModel", b =>
-                {
-                    b.HasOne("My_Smart_Factory.Models.SpecModel", "Spec")
-                        .WithMany()
-                        .HasForeignKey("SpecId");
-
-                    b.HasOne("My_Smart_Factory.Models.UserIdentity", "UserIdentity")
-                        .WithMany()
-                        .HasForeignKey("UserIdentityId");
-
-                    b.Navigation("Spec");
-
-                    b.Navigation("UserIdentity");
                 });
 
             modelBuilder.Entity("My_Smart_Factory.Models.FullInspectionModel", b =>

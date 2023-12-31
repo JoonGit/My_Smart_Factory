@@ -17,12 +17,12 @@ namespace My_Smart_Factory.Data.Service
 
 
         #region Create
-        private async Task<ProcessStatusModel> Create(PpsDto requestDto, ProdInfoModel piModel, UserIdentity Operator)
+        private async Task<ProcessStatusModel> Create(PpsDto requestDto, ProdInfoModel ProdInfoModel, UserIdentity Operator)
         {
             try
             {
                 ProcessStatusModel ppsModel = new ProcessStatusModel();
-                ppsModel.PiModel = piModel;
+                ppsModel.ProdInfoModel = ProdInfoModel;
                 ppsModel.Date = requestDto.date;
                 ppsModel.Quantity = requestDto.quantity;
                 ppsModel.Operator = Operator;
@@ -48,8 +48,8 @@ namespace My_Smart_Factory.Data.Service
                 {
                     PpsVo ppsVo = new PpsVo();
                     ppsVo.id = PpsModel.Id;
-                    ppsVo.specification = PpsModel.PiModel.Specification;
-                    ppsVo.lotNumber = PpsModel.PiModel.LotNumber;
+                    ppsVo.specification = PpsModel.ProdInfoModel.Specification;
+                    ppsVo.lotNumber = PpsModel.ProdInfoModel.LotNumber;
                     ppsVo.quantity = PpsModel.Quantity;
                     ppsVo.defectiveQuantity = PpsModel.DefectiveQuantity;
 
@@ -83,7 +83,7 @@ namespace My_Smart_Factory.Data.Service
                 {
                     PpsUpdateDateAllVo ppsVo = new PpsUpdateDateAllVo();
                     ppsVo.id = PpsModel.Id;
-                    ppsVo.controlNumber = PpsModel.PiModel.ControlNumber;
+                    ppsVo.controlNumber = PpsModel.ProdInfoModel.ControlNumber;
                     ppsVo.date = PpsModel.Date;
                     ppsVo.quantity = PpsModel.Quantity;
                     ppsVo.operatorName = PpsModel.Operator.UserName;
@@ -112,7 +112,7 @@ namespace My_Smart_Factory.Data.Service
 
                 // 새로운 psModel을 생성한다
                 {
-                    oldModel.PiModel = piModel;
+                    oldModel.ProdInfoModel = piModel;
                     oldModel.Date = UpdateModel.date;
                     oldModel.Quantity = UpdateModel.quantity;
                     oldModel.Operator = Operator;

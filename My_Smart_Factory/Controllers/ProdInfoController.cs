@@ -27,7 +27,7 @@ namespace My_Smart_Factory.Controllers
         public async Task<IActionResult> Index()
         {
             // piModel을 모두 불러온다
-            var piModels = await _context.PiModels.ToListAsync();
+            var piModels = await _context.ProdInfoModels.ToListAsync();
             List<PiVo> voList = await _piInterface.ReadAll(piModels);
             if (piModels.Count() == 0) { return View(); }
 
@@ -46,8 +46,8 @@ namespace My_Smart_Factory.Controllers
         {
             try
             {
-                PiModel piModel = await _piInterface.Create(requestDto);
-                var result = await _context.PiModels.AddAsync(piModel);
+                ProdInfoModel piModel = await _piInterface.Create(requestDto);
+                var result = await _context.ProdInfoModels.AddAsync(piModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -63,14 +63,14 @@ namespace My_Smart_Factory.Controllers
         {
             try
             {
-                PiModel piModel = await _context.PiModels.FindAsync(requestDto.id);
+                ProdInfoModel piModel = await _context.ProdInfoModels.FindAsync(requestDto.id);
                 if (piModel == null) { return "Not Found Pi";}
                 else
                 {
-                    PiModel updateModel = await _piInterface.Update(piModel, requestDto);
+                    ProdInfoModel updateModel = await _piInterface.Update(piModel, requestDto);
                     if (updateModel == null) { return "Not Changed"; }
 
-                    _context.PiModels.Update(piModel);
+                    _context.ProdInfoModels.Update(piModel);
                     await _context.SaveChangesAsync();
                     return "success";
                 }

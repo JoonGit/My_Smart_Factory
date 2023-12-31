@@ -4,7 +4,7 @@ namespace My_Smart_Factory.Models
 {
     //케이스 로트
     //Case Lot
-    public class ClModel
+    public class CaseLotModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

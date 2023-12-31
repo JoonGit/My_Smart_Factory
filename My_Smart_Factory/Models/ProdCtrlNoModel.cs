@@ -3,7 +3,7 @@
 namespace My_Smart_Factory.Models
 {
     //Product Control Number
-    public class PcnModel
+    public class ProdCtrlNoModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

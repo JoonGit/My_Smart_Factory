@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace My_Smart_Factory.Models
 {
-    public class PiModel : IEntityBase
+    public class ProdInfoModel : IEntityBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

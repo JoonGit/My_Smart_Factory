@@ -4,7 +4,7 @@ namespace My_Smart_Factory.Models
 {
     // InspectionEquipment
     // 검사장비
-    public class MeModel
+    public class InspEquipModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
