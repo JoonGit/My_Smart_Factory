@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DQ6GkdW9ww77rp/2SXBHZnmBtHYDwEuyrPtnif/EoQA=",
+  "Hash": "4TTPtLlbt05Pq8lXe3XJkkms20H5pTogMbk7cMv7AdY=",
   "Source": "My_Smart_Factory",
   "BasePath": "_content/My_Smart_Factory",
   "Mode": "Default",
@@ -102,12 +102,12 @@
       "OriginalItemSpec": "wwwroot\\js\\Ajax.js"
     },
     {
-      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\Oqc\\index.js",
+      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\OutgoingInsp\\index.js",
       "SourceId": "My_Smart_Factory",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\",
       "BasePath": "_content/My_Smart_Factory",
-      "RelativePath": "js/Oqc/index.js",
+      "RelativePath": "js/OutgoingInsp/index.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -116,15 +116,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\Oqc\\index.js"
+      "OriginalItemSpec": "wwwroot\\js\\OutgoingInsp\\index.js"
     },
     {
-      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\Pi\\Index.js",
+      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\ProcessStatus\\index.js",
       "SourceId": "My_Smart_Factory",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\",
       "BasePath": "_content/My_Smart_Factory",
-      "RelativePath": "js/Pi/Index.js",
+      "RelativePath": "js/ProcessStatus/index.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -133,15 +133,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\Pi\\Index.js"
+      "OriginalItemSpec": "wwwroot\\js\\ProcessStatus\\index.js"
     },
     {
-      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\Pps\\index.js",
+      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\ProcessStatus\\update.js",
       "SourceId": "My_Smart_Factory",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\",
       "BasePath": "_content/My_Smart_Factory",
-      "RelativePath": "js/Pps/index.js",
+      "RelativePath": "js/ProcessStatus/update.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -150,15 +150,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\Pps\\index.js"
+      "OriginalItemSpec": "wwwroot\\js\\ProcessStatus\\update.js"
     },
     {
-      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\Pps\\update.js",
+      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\ProdInfo\\Index.js",
       "SourceId": "My_Smart_Factory",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\",
       "BasePath": "_content/My_Smart_Factory",
-      "RelativePath": "js/Pps/update.js",
+      "RelativePath": "js/ProdInfo/Index.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -167,7 +167,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\Pps\\update.js"
+      "OriginalItemSpec": "wwwroot\\js\\ProdInfo\\Index.js"
     },
     {
       "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\site.js",

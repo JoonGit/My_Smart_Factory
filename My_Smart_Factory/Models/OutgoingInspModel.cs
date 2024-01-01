@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace My_Smart_Factory.Models
 {
+    // 출하 검사
     public class OutgoingInspModel : IEntityBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

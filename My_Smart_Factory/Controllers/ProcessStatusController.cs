@@ -1,24 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using My_Smart_Factory.Data.Service.Interface;
-using My_Smart_Factory.Data.Vo.Pps;
+using My_Smart_Factory.Data.Vo.ProcessStatus;
 using My_Smart_Factory.Data;
 using My_Smart_Factory.Models;
 using Microsoft.EntityFrameworkCore;
-using My_Smart_Factory.Data.Dto.Pps;
+using My_Smart_Factory.Data.Dto.ProcessStatus;
 using System;
+using My_Smart_Factory.Models.Prod;
 
 namespace My_Smart_Factory.Controllers
 {
-    [Route("pps")]
+    [Route("processStatus")]
     //공정 진행 상황(Process progress status)
-    public class PpsController : Controller
+    public class ProcessStatusController : Controller
     {
         // Pps 저장(Pps와함께), 수정,
         // 불러오기(Pps정보를 include 해서 ppsVo에 담아서 Json으로)
         private readonly MyDbContext _context;
-        private readonly IPpsService _PpsInterface;
-        public PpsController(MyDbContext context,
-            IPpsService PpsInterface)
+        private readonly IProcessStatusService _PpsInterface;
+        public ProcessStatusController(MyDbContext context,
+            IProcessStatusService PpsInterface)
         {
             _context = context;
             _PpsInterface = PpsInterface;
@@ -32,7 +33,7 @@ namespace My_Smart_Factory.Controllers
             var ProcessStatusModels = await _context.ProcessStatusModels
                 .Include(ProcessStatusModels => ProcessStatusModels.ProdInfoModel)
                 .ToListAsync();
-            List<PpsVo> voList = await _PpsInterface.ReadAll(ProcessStatusModels);
+            List<ProcessStatusVo> voList = await _PpsInterface.ReadAll(ProcessStatusModels);
             if (ProcessStatusModels.Count() == 0) { return View(); }
 
             return View();
@@ -46,19 +47,19 @@ namespace My_Smart_Factory.Controllers
             return View();
         }
         [HttpPost("create")]
-        public async Task<IActionResult> Create(PpsDto requestDto)
+        public async Task<IActionResult> Create(ProcessStatusDto requestDto)
         {
             try
             {
-                // pi model을 requestDto.controlNumber로 찾는다
-                ProdInfoModel piModel = await _context.ProdInfoModels
-                    .FirstOrDefaultAsync(PiModel => PiModel.ControlNumber == requestDto.controlNumber);
-                if (piModel == null) { return BadRequest("Not Found Pi"); }
+                // pi model을 requestDto.prodName 찾는다
+                ProdInfoModel ProdInfoModel = await _context.ProdInfoModels
+                    .FirstOrDefaultAsync(ProdInfoModel => ProdInfoModel.ProdName == requestDto.prodName);
+                if (ProdInfoModel == null) { return BadRequest("Not Found Pi"); }
                 // Operator를 requestDto.operatorName으로 찾는다
                 UserIdentity Operator = await _context.UserIdentitys
                     .FirstOrDefaultAsync(UserIdentity => UserIdentity.UserName == requestDto.operatorName);
                 if (Operator == null) { return BadRequest("Not Found Operator"); }
-                ProcessStatusModel ProcessStatusModel = await _PpsInterface.Create(requestDto, piModel, Operator);
+                ProcessStatusModel ProcessStatusModel = await _PpsInterface.Create(requestDto, ProdInfoModel, Operator);
                 var result = await _context.ProcessStatusModels.AddAsync(ProcessStatusModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -83,7 +84,7 @@ namespace My_Smart_Factory.Controllers
                     .Where(ProcessStatusModel => ProcessStatusModel.Date == dateTime)
                     .Include(ProcessStatusModel => ProcessStatusModel.ProdInfoModel)
                     .ToListAsync();
-                List<PpsVo> voList = await _PpsInterface.ReadAll(ProcessStatusModels);
+                List<ProcessStatusVo> voList = await _PpsInterface.ReadAll(ProcessStatusModels);
                 if (voList == null) { return BadRequest("Not Found Pps"); }
                 return Json(voList);
             }
@@ -112,7 +113,7 @@ namespace My_Smart_Factory.Controllers
                     .Include(ProcessStatusModel => ProcessStatusModel.Operator)
                     .ToListAsync();
                 if (ProcessStatusModels == null) { return BadRequest("Not Found Pps"); }
-                List<PpsUpdateDateAllVo> voList = await _PpsInterface.UpdateDateAll(ProcessStatusModels);
+                List<ProcessStatusUpdateDateAllVo> voList = await _PpsInterface.UpdateDateAll(ProcessStatusModels);
                 return Json(voList);
             }
             catch (Exception e)
@@ -121,21 +122,21 @@ namespace My_Smart_Factory.Controllers
             }
         }
         [HttpPost("update")]
-        public async Task<string> Update(PpsDto requestDto)
+        public async Task<string> Update(ProcessStatusDto requestDto)
         {
             try
             {
                 ProcessStatusModel ProcessStatusModel = await _context.ProcessStatusModels.FindAsync(requestDto.id);
                 if (ProcessStatusModel == null) { return "Not Found Pps"; }
-                ProdInfoModel piModel = await _context.ProdInfoModels
-                    .FirstOrDefaultAsync(PiModel => PiModel.ControlNumber == requestDto.controlNumber);
-                if (piModel == null) { return "Not Found Pi"; }
+                ProdInfoModel prodInfoModel = await _context.ProdInfoModels
+                    .FirstOrDefaultAsync(PiModel => PiModel.ProdName == requestDto.prodName);
+                if (prodInfoModel == null) { return "Not Found Pi"; }
                 UserIdentity Operator = await _context.UserIdentitys
                     .FirstOrDefaultAsync(UserIdentity => UserIdentity.UserName == requestDto.operatorName);
                 if (Operator == null) { return "Not Found Operator"; }
-                ProcessStatusModel updateModel = await _PpsInterface.Update(ProcessStatusModel, piModel, Operator, requestDto);
+                ProcessStatusModel updateModel = await _PpsInterface.Update(ProcessStatusModel, prodInfoModel, Operator, requestDto);
                 if (updateModel == null) { return "Not Changed"; }
-                if (piModel == null) { return "Not Found Pi"; }
+                if (prodInfoModel == null) { return "Not Found Pi"; }
 
                 _context.ProcessStatusModels.Update(updateModel);
                 await _context.SaveChangesAsync();

@@ -4,19 +4,19 @@ using My_Smart_Factory.Data;
 using My_Smart_Factory.Data.Dto.Pi;
 using My_Smart_Factory.Data.Service.Interface;
 using My_Smart_Factory.Data.Vo.Pi;
-using My_Smart_Factory.Models;
+using My_Smart_Factory.Models.Prod;
 using System.Threading.Tasks;
 
 namespace My_Smart_Factory.Controllers
 {
     // 제품정보(Product Informaction)
-    [Route("pi")]
-    public class PiController : Controller
+    [Route("prodInfo")]
+    public class ProdInfoController : Controller
     {
         private readonly MyDbContext _context;
-        private readonly IPiService _piInterface;
-        public PiController(MyDbContext context,
-            IPiService piInterface)
+        private readonly IProdInfoService _piInterface;
+        public ProdInfoController(MyDbContext context,
+            IProdInfoService piInterface)
         {
             _context = context;
             _piInterface = piInterface;
@@ -28,7 +28,7 @@ namespace My_Smart_Factory.Controllers
         {
             // piModel을 모두 불러온다
             var piModels = await _context.ProdInfoModels.ToListAsync();
-            List<PiVo> voList = await _piInterface.ReadAll(piModels);
+            List<ProdInfoVo> voList = await _piInterface.ReadAll(piModels);
             if (piModels.Count() == 0) { return View(); }
 
             return View(voList);
@@ -42,7 +42,7 @@ namespace My_Smart_Factory.Controllers
             return View();
         }
         [HttpPost("create")]
-        public async Task<IActionResult> Create(PiDto requestDto)
+        public async Task<IActionResult> Create(ProdInfoDto requestDto)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace My_Smart_Factory.Controllers
         #endregion
         #region update
         [HttpPost("update")]
-        public async Task<string> Update(PiDto requestDto)
+        public async Task<string> Update(ProdInfoDto requestDto)
         {
             try
             {

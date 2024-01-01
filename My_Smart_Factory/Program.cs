@@ -35,9 +35,9 @@ builder.Services.AddAuthentication(
         options.LoginPath = "/user/login";
     });
 
-builder.Services.AddScoped<IOqcService, OqcService>();
-builder.Services.AddScoped<IPpsService, PpsService>();
-builder.Services.AddScoped<IPiService, PiService>();
+builder.Services.AddScoped<IOutgoingInspService, OutgoingInspService>();
+builder.Services.AddScoped<IProcessStatusService, ProcessStatusService>();
+builder.Services.AddScoped<IProdInfoService, ProdInfoService>();
 
 
 //builder.Services.AddSession();

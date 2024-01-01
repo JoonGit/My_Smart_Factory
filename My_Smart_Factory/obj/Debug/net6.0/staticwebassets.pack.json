@@ -17,20 +17,20 @@
       "PackagePath": "staticwebassets\\js\\Ajax.js"
     },
     {
-      "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\Oqc\\index.js",
-      "PackagePath": "staticwebassets\\js\\Oqc\\index.js"
+      "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\OutgoingInsp\\index.js",
+      "PackagePath": "staticwebassets\\js\\OutgoingInsp\\index.js"
     },
     {
-      "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\Pi\\Index.js",
-      "PackagePath": "staticwebassets\\js\\Pi\\Index.js"
+      "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\ProcessStatus\\index.js",
+      "PackagePath": "staticwebassets\\js\\ProcessStatus\\index.js"
     },
     {
-      "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\Pps\\index.js",
-      "PackagePath": "staticwebassets\\js\\Pps\\index.js"
+      "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\ProcessStatus\\update.js",
+      "PackagePath": "staticwebassets\\js\\ProcessStatus\\update.js"
     },
     {
-      "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\Pps\\update.js",
-      "PackagePath": "staticwebassets\\js\\Pps\\update.js"
+      "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\ProdInfo\\Index.js",
+      "PackagePath": "staticwebassets\\js\\ProdInfo\\Index.js"
     },
     {
       "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\js\\site.js",

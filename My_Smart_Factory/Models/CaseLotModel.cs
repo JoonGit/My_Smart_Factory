@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using My_Smart_Factory.Data.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace My_Smart_Factory.Models
 {
-    //케이스 로트
+    //케이스 로트 : 한상자의 번호와 그 안에 들어있는 제품의 수량
     //Case Lot
-    public class CaseLotModel
+    public class CaseLotModel : IEntityBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

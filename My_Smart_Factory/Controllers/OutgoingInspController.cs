@@ -17,11 +17,11 @@ namespace My_Smart_Factory.Controllers
     {
         private readonly MyDbContext _dbContext;
         private readonly UserManager<UserIdentity> _userManager;
-        private readonly IOqcService _oqcService;
+        private readonly IOutgoingInspService _oqcService;
         public OutgoingInspController(
             MyDbContext dbContext
             , UserManager<UserIdentity> userManager
-            , IOqcService oqcService
+            , IOutgoingInspService oqcService
             )
         {
             _dbContext = dbContext;

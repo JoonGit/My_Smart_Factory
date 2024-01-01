@@ -1,9 +1,12 @@
 ﻿using My_Smart_Factory.Data.Base;
+using My_Smart_Factory.Models.Prod;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace My_Smart_Factory.Models
 {
+    // 관리번호로 제품의 정보를 알아낸 후
+    // 제품의 불량율을 계산하기 위한 클래스
     public class ProcessStatusModel : IEntityBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

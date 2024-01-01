@@ -1,0 +1,45 @@
+﻿@using My_Smart_Factory.Data.Vo.Pi;
+@model List<ProdInfoVo>
+
+
+
+@if (Model != null && Model.Count() != 0)
+{
+    <table class="table text-center">
+            <thead>
+                <tr>
+                    <th scope="col">관리번호</th>
+                    <th scope="col">스펙</th>
+                    <th scope="col">로트번호</th>
+                    <th scope="col">수정</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <input name="id" type="hidden" value="@item.id">
+
+                    <td>
+                        <input name="id" type="hidden" value="@item.id">
+                        <input name="prodName" type="text" class="form-control" value="@item.prodName">
+                    </td>
+                    <td>
+                        <input name="prodCode" type="text" class="form-control" value="@item.prodCode">
+                    </td>
+                    <td>
+                        <input name="prodWeight" type="text" class="form-control" value="@item.prodWeight">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" onClick="Update()">수정</button>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+}
+<a class="btn btn-primary" asp-controller="ProdInfo" asp-action="Create">Pi 생성</a>
+
+<script src="/js/Ajax.js"></script>
+<script src="/js/ProdInfo/Index.js"></script>
+

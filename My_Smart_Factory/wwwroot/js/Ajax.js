@@ -1,7 +1,4 @@
 function AjaxPost(url, data, url) {
-    var requestUrl = "/oqc/" + url;
-    var requestData = GetData();
-
     $.ajax({
         url: url,
         type: "POST",

@@ -68,78 +68,6 @@ namespace My_Smart_Factory.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
-
-                    b.UseTphMappingStrategy();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -165,10 +93,10 @@ namespace My_Smart_Factory.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
+                    b.Property<string>("ProviderKey")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("ProviderKey")
+                    b.Property<string>("LoginProvider")
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("ProviderDisplayName")
@@ -178,7 +106,7 @@ namespace My_Smart_Factory.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.HasKey("LoginProvider", "ProviderKey");
+                    b.HasKey("ProviderKey", "LoginProvider");
 
                     b.HasIndex("UserId");
 
@@ -245,31 +173,18 @@ namespace My_Smart_Factory.Migrations
                     b.Property<string>("FullInspectionNumber")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("InspEquipRecordId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("InspectionDateTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("WorkOrderId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("InspEquipRecordId");
-
-                    b.HasIndex("WorkOrderId");
 
                     b.ToTable("FullInspectionRecords");
                 });
 
-            modelBuilder.Entity("My_Smart_Factory.Models.InspEquipModel", b =>
+            modelBuilder.Entity("My_Smart_Factory.Models.Insp.InspEquipModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("InspEquipName")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Unit")
@@ -280,7 +195,7 @@ namespace My_Smart_Factory.Migrations
                     b.ToTable("InspEquipModels");
                 });
 
-            modelBuilder.Entity("My_Smart_Factory.Models.InspEquipRecordModel", b =>
+            modelBuilder.Entity("My_Smart_Factory.Models.Insp.InspEquipSettingRecordModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -289,12 +204,95 @@ namespace My_Smart_Factory.Migrations
                     b.Property<double?>("Accuracy")
                         .HasColumnType("double");
 
+                    b.Property<int?>("FullInspectionModelId")
+                        .HasColumnType("int");
+
                     b.Property<double?>("IES")
                         .HasColumnType("double");
 
+                    b.Property<int?>("InspEquipId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InspSpecId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("InspectionDateTime")
+                        .HasColumnType("datetime(6)");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("FullInspectionModelId");
+
+                    b.HasIndex("InspEquipId");
+
+                    b.HasIndex("InspSpecId");
+
                     b.ToTable("InspEquipRecordModels");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.Insp.InspProdRecordModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<double?>("Accuracy")
+                        .HasColumnType("double");
+
+                    b.Property<int?>("FullInspectionModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InspEquipId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("InspectionDateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool?>("IsPassed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<double?>("MeasuredValue")
+                        .HasColumnType("double");
+
+                    b.Property<int?>("ProdCtrlNoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FullInspectionModelId");
+
+                    b.HasIndex("InspEquipId");
+
+                    b.HasIndex("ProdCtrlNoId");
+
+                    b.ToTable("ProdInspectionRecords");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.Insp.InspSpecModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ETR")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("IES")
+                        .HasColumnType("double");
+
+                    b.Property<int?>("InspEquipId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdInfoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InspEquipId");
+
+                    b.HasIndex("ProdInfoId");
+
+                    b.ToTable("SpecModels");
                 });
 
             modelBuilder.Entity("My_Smart_Factory.Models.OutgoingInspModel", b =>
@@ -391,36 +389,38 @@ namespace My_Smart_Factory.Migrations
                     b.ToTable("ProcessStatusModels");
                 });
 
-            modelBuilder.Entity("My_Smart_Factory.Models.ProdCtrlNoModel", b =>
+            modelBuilder.Entity("My_Smart_Factory.Models.Prod.ProdCtrlNoModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ControlNumber")
+                    b.Property<string>("Number")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("OriginOfProduction")
-                        .HasColumnType("longtext");
+                    b.Property<int?>("ProdInfoId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProdInfoId");
 
                     b.ToTable("ProdCtrlNoModels");
                 });
 
-            modelBuilder.Entity("My_Smart_Factory.Models.ProdInfoModel", b =>
+            modelBuilder.Entity("My_Smart_Factory.Models.Prod.ProdInfoModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ControlNumber")
+                    b.Property<string>("ProdCode")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("LotNumber")
+                    b.Property<string>("ProdName")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Specification")
+                    b.Property<string>("ProdWeight")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -428,61 +428,68 @@ namespace My_Smart_Factory.Migrations
                     b.ToTable("ProdInfoModels");
                 });
 
-            modelBuilder.Entity("My_Smart_Factory.Models.ProdInspectionRecordModel", b =>
+            modelBuilder.Entity("My_Smart_Factory.Models.UserIdentity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<double?>("Accuracy")
-                        .HasColumnType("double");
-
-                    b.Property<int?>("FullInspectionModelId")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("IsPassed")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<int?>("ProdCtrlNoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WorkOrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FullInspectionModelId");
-
-                    b.HasIndex("ProdCtrlNoId");
-
-                    b.HasIndex("WorkOrderId");
-
-                    b.ToTable("ProdInspectionRecords");
-                });
-
-            modelBuilder.Entity("My_Smart_Factory.Models.SpecModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ETR")
-                        .HasColumnType("int");
-
-                    b.Property<double?>("IES")
-                        .HasColumnType("double");
-
-                    b.Property<int?>("InspEquipId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("InspEquipId");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
 
-                    b.ToTable("SpecModels");
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("My_Smart_Factory.Models.WorkOrderModel", b =>
@@ -494,11 +501,11 @@ namespace My_Smart_Factory.Migrations
                     b.Property<int?>("CurrentWorkQuantity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProdInfoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("QRURL")
                         .HasColumnType("longtext");
-
-                    b.Property<int?>("SpecId")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserIdentityId")
                         .HasColumnType("varchar(255)");
@@ -517,18 +524,11 @@ namespace My_Smart_Factory.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SpecId");
+                    b.HasIndex("ProdInfoId");
 
                     b.HasIndex("UserIdentityId");
 
                     b.ToTable("WorkOrderModels");
-                });
-
-            modelBuilder.Entity("My_Smart_Factory.Models.UserIdentity", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.HasDiscriminator().HasValue("UserIdentity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -542,7 +542,7 @@ namespace My_Smart_Factory.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("My_Smart_Factory.Models.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -551,7 +551,7 @@ namespace My_Smart_Factory.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("My_Smart_Factory.Models.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -566,7 +566,7 @@ namespace My_Smart_Factory.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("My_Smart_Factory.Models.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -575,7 +575,7 @@ namespace My_Smart_Factory.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("My_Smart_Factory.Models.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -584,17 +584,68 @@ namespace My_Smart_Factory.Migrations
 
             modelBuilder.Entity("My_Smart_Factory.Models.FullInspectionModel", b =>
                 {
-                    b.HasOne("My_Smart_Factory.Models.InspEquipRecordModel", "InspEquipRecord")
-                        .WithMany()
-                        .HasForeignKey("InspEquipRecordId");
-
                     b.HasOne("My_Smart_Factory.Models.WorkOrderModel", "WorkOrder")
-                        .WithMany()
-                        .HasForeignKey("WorkOrderId");
-
-                    b.Navigation("InspEquipRecord");
+                        .WithOne("FullInspection")
+                        .HasForeignKey("My_Smart_Factory.Models.FullInspectionModel", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("WorkOrder");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.Insp.InspEquipSettingRecordModel", b =>
+                {
+                    b.HasOne("My_Smart_Factory.Models.FullInspectionModel", null)
+                        .WithMany("InspEquipRecord")
+                        .HasForeignKey("FullInspectionModelId");
+
+                    b.HasOne("My_Smart_Factory.Models.Insp.InspEquipModel", "InspEquip")
+                        .WithMany()
+                        .HasForeignKey("InspEquipId");
+
+                    b.HasOne("My_Smart_Factory.Models.Insp.InspSpecModel", "InspSpec")
+                        .WithMany()
+                        .HasForeignKey("InspSpecId");
+
+                    b.Navigation("InspEquip");
+
+                    b.Navigation("InspSpec");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.Insp.InspProdRecordModel", b =>
+                {
+                    b.HasOne("My_Smart_Factory.Models.FullInspectionModel", null)
+                        .WithMany("ProdInspectionRecords")
+                        .HasForeignKey("FullInspectionModelId");
+
+                    b.HasOne("My_Smart_Factory.Models.Insp.InspEquipModel", "InspEquip")
+                        .WithMany()
+                        .HasForeignKey("InspEquipId");
+
+                    b.HasOne("My_Smart_Factory.Models.Prod.ProdCtrlNoModel", "ProdCtrlNo")
+                        .WithMany()
+                        .HasForeignKey("ProdCtrlNoId");
+
+                    b.Navigation("InspEquip");
+
+                    b.Navigation("ProdCtrlNo");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.Insp.InspSpecModel", b =>
+                {
+                    b.HasOne("My_Smart_Factory.Models.Insp.InspEquipModel", "InspEquip")
+                        .WithMany()
+                        .HasForeignKey("InspEquipId");
+
+                    b.HasOne("My_Smart_Factory.Models.Prod.ProdInfoModel", "ProdInfo")
+                        .WithMany()
+                        .HasForeignKey("ProdInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("InspEquip");
+
+                    b.Navigation("ProdInfo");
                 });
 
             modelBuilder.Entity("My_Smart_Factory.Models.OutgoingInspModel", b =>
@@ -618,7 +669,7 @@ namespace My_Smart_Factory.Migrations
                         .WithMany()
                         .HasForeignKey("OperatorId");
 
-                    b.HasOne("My_Smart_Factory.Models.ProdInfoModel", "ProdInfoModel")
+                    b.HasOne("My_Smart_Factory.Models.Prod.ProdInfoModel", "ProdInfoModel")
                         .WithMany()
                         .HasForeignKey("ProdInfoModelId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -629,52 +680,40 @@ namespace My_Smart_Factory.Migrations
                     b.Navigation("ProdInfoModel");
                 });
 
-            modelBuilder.Entity("My_Smart_Factory.Models.ProdInspectionRecordModel", b =>
+            modelBuilder.Entity("My_Smart_Factory.Models.Prod.ProdCtrlNoModel", b =>
                 {
-                    b.HasOne("My_Smart_Factory.Models.FullInspectionModel", null)
-                        .WithMany("ProdInspectionRecords")
-                        .HasForeignKey("FullInspectionModelId");
-
-                    b.HasOne("My_Smart_Factory.Models.ProdCtrlNoModel", "ProdCtrlNo")
+                    b.HasOne("My_Smart_Factory.Models.Prod.ProdInfoModel", "ProdInfo")
                         .WithMany()
-                        .HasForeignKey("ProdCtrlNoId");
+                        .HasForeignKey("ProdInfoId");
 
-                    b.HasOne("My_Smart_Factory.Models.WorkOrderModel", "WorkOrder")
-                        .WithMany()
-                        .HasForeignKey("WorkOrderId");
-
-                    b.Navigation("ProdCtrlNo");
-
-                    b.Navigation("WorkOrder");
-                });
-
-            modelBuilder.Entity("My_Smart_Factory.Models.SpecModel", b =>
-                {
-                    b.HasOne("My_Smart_Factory.Models.InspEquipModel", "InspEquip")
-                        .WithMany()
-                        .HasForeignKey("InspEquipId");
-
-                    b.Navigation("InspEquip");
+                    b.Navigation("ProdInfo");
                 });
 
             modelBuilder.Entity("My_Smart_Factory.Models.WorkOrderModel", b =>
                 {
-                    b.HasOne("My_Smart_Factory.Models.SpecModel", "Spec")
+                    b.HasOne("My_Smart_Factory.Models.Prod.ProdInfoModel", "ProdInfo")
                         .WithMany()
-                        .HasForeignKey("SpecId");
+                        .HasForeignKey("ProdInfoId");
 
                     b.HasOne("My_Smart_Factory.Models.UserIdentity", "UserIdentity")
                         .WithMany()
                         .HasForeignKey("UserIdentityId");
 
-                    b.Navigation("Spec");
+                    b.Navigation("ProdInfo");
 
                     b.Navigation("UserIdentity");
                 });
 
             modelBuilder.Entity("My_Smart_Factory.Models.FullInspectionModel", b =>
                 {
+                    b.Navigation("InspEquipRecord");
+
                     b.Navigation("ProdInspectionRecords");
+                });
+
+            modelBuilder.Entity("My_Smart_Factory.Models.WorkOrderModel", b =>
+                {
+                    b.Navigation("FullInspection");
                 });
 #pragma warning restore 612, 618
         }
