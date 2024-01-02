@@ -38,6 +38,10 @@ builder.Services.AddAuthentication(
 builder.Services.AddScoped<IOutgoingInspService, OutgoingInspService>();
 builder.Services.AddScoped<IProcessStatusService, ProcessStatusService>();
 builder.Services.AddScoped<IProdInfoService, ProdInfoService>();
+builder.Services.AddScoped<IInspEquipService, InspEquipService>();
+builder.Services.AddScoped<IInspEquipSettingRecordService, InspEquipSettingRecordService>();
+builder.Services.AddScoped<IInspProdRecordService, InspProdRecordService>();
+builder.Services.AddScoped<IInspSpecService, InspSpecService>();
 
 
 //builder.Services.AddSession();

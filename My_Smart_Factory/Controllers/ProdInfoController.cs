@@ -14,28 +14,25 @@ namespace My_Smart_Factory.Controllers
     public class ProdInfoController : Controller
     {
         private readonly MyDbContext _context;
-        private readonly IProdInfoService _piInterface;
+        private readonly IProdInfoService _piService;
         public ProdInfoController(MyDbContext context,
-            IProdInfoService piInterface)
+            IProdInfoService piService)
         {
             _context = context;
-            _piInterface = piInterface;
+            _piService = piService;
         }
 
-        // PI 저장, 수정, 불러오기
         [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
-            // piModel을 모두 불러온다
-            var piModels = await _context.ProdInfoModels.ToListAsync();
-            List<ProdInfoVo> voList = await _piInterface.ReadAll(piModels);
+            var piModels = await _piService.GetAllAsync();
             if (piModels.Count() == 0) { return View(); }
+            IEnumerable<ProdInfoVo>? voList = await _piService.ToVo(piModels);
 
             return View(voList);
         }
 
         #region Create
-        // PI 생성
         [HttpGet("create")]
         public async Task<IActionResult> Create()
         {
@@ -46,9 +43,7 @@ namespace My_Smart_Factory.Controllers
         {
             try
             {
-                ProdInfoModel piModel = await _piInterface.Create(requestDto);
-                var result = await _context.ProdInfoModels.AddAsync(piModel);
-                await _context.SaveChangesAsync();
+                await _piService.AddAsync(requestDto.ToModel());
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -63,15 +58,11 @@ namespace My_Smart_Factory.Controllers
         {
             try
             {
-                ProdInfoModel piModel = await _context.ProdInfoModels.FindAsync(requestDto.id);
-                if (piModel == null) { return "Not Found Pi";}
+                ProdInfoModel? piModel = await _piService.GetByIdAsync(requestDto.id);
+                if (piModel == null) { return "Not Found ProdInfo";}
                 else
                 {
-                    ProdInfoModel updateModel = await _piInterface.Update(piModel, requestDto);
-                    if (updateModel == null) { return "Not Changed"; }
-
-                    _context.ProdInfoModels.Update(piModel);
-                    await _context.SaveChangesAsync();
+                    await _piService.UpdateAsync(requestDto.id, await _piService.Update(piModel, requestDto));
                     return "success";
                 }
             }

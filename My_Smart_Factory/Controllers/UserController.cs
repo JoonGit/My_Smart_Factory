@@ -85,7 +85,7 @@ namespace My_Smart_Factory.Controllers
 
         // 로그인 동작
         [HttpPost("login")]
-        public async Task<IActionResult> Login(PiDto model, string? ReturnUrl)
+        public async Task<IActionResult> Login(LoginDto model, string? ReturnUrl)
         {
             try
             {

@@ -12,15 +12,12 @@ namespace My_Smart_Factory.Data.Service
 {
     public class OutgoingInspService : EntityBaseRepository<OutgoingInspModel>, IOutgoingInspService
     {
-        private readonly UserManager<UserIdentity> _userManager;
-        public OutgoingInspService(MyDbContext context,
-            UserManager<UserIdentity> userManager) : base(context)
+        public OutgoingInspService(MyDbContext context) : base(context)
         {
-            _userManager = userManager;
         }
 
         #region Create
-        private async Task<OutgoingInspModel?> Create(OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
+        private async Task<OutgoingInspModel?> Create(OutgoingInspDto requestDto, UserIdentity inspector, UserIdentity confirmor)
         {
             try
             {
@@ -56,7 +53,7 @@ namespace My_Smart_Factory.Data.Service
         #endregion
 
         #region Update
-        private async Task<OutgoingInspModel?> Update(OqcDto requestDto, OutgoingInspModel oqc, UserIdentity inspector, UserIdentity confirmor)
+        private async Task<OutgoingInspModel?> Update(OutgoingInspDto requestDto, OutgoingInspModel oqc, UserIdentity inspector, UserIdentity confirmor)
         {
             try
             {
@@ -70,7 +67,7 @@ namespace My_Smart_Factory.Data.Service
             }
         }
         
-        public OutgoingInspModel InputData(OutgoingInspModel model, OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
+        public OutgoingInspModel InputData(OutgoingInspModel model, OutgoingInspDto requestDto, UserIdentity inspector, UserIdentity confirmor)
         {
             model.Inspector = inspector;
             model.Confirmor = confirmor;
@@ -94,12 +91,11 @@ namespace My_Smart_Factory.Data.Service
         #endregion
 
         #region Read
-        private async Task<List<OqcVo>?> Read(List<OutgoingInspModel> oqcList)
+        private async Task<List<OutgoingInspVo>?> Read(List<OutgoingInspModel> oqcList)
         {
             try
             {
-                // dbcontext에서 해당 관리번호의 데이터와 Inspector, Confirmor 가져오는데 InspectionTime기준으로 내림차순정렬해서 모두 가져온다
-                List<OqcVo> oqcVos = new List<OqcVo>();
+                List<OutgoingInspVo> oqcVos = new List<OutgoingInspVo>();
                 foreach (var oqc in oqcList)
                 {
                     oqcVos.Add(CreateOqcVo(oqc));
@@ -113,9 +109,9 @@ namespace My_Smart_Factory.Data.Service
             }
         }
 
-        private OqcVo CreateOqcVo(OutgoingInspModel oqc)
+        private OutgoingInspVo CreateOqcVo(OutgoingInspModel oqc)
         {
-            OqcVo oqcVo = new OqcVo();
+            OutgoingInspVo oqcVo = new OutgoingInspVo();
             oqcVo.oqcId = oqc.Id;
             oqcVo.inspector = oqc.Inspector.UserName;
             oqcVo.confirmor = oqc.Confirmor.UserName;
@@ -137,12 +133,13 @@ namespace My_Smart_Factory.Data.Service
         }
         #endregion
 
-        Task<OutgoingInspModel?> IOutgoingInspService.Create(OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor)
+        #region interface
+        Task<OutgoingInspModel?> IOutgoingInspService.Create(OutgoingInspDto requestDto, UserIdentity inspector, UserIdentity confirmor)
         {
             return Create(requestDto, inspector, confirmor);
         }
 
-        Task<OutgoingInspModel?> IOutgoingInspService.Update(OqcDto requestDto, OutgoingInspModel oqc, UserIdentity inspector, UserIdentity confirmor)
+        Task<OutgoingInspModel?> IOutgoingInspService.Update(OutgoingInspDto requestDto, OutgoingInspModel oqc, UserIdentity inspector, UserIdentity confirmor)
         {
             return Update(requestDto, oqc, inspector, confirmor);
         }
@@ -152,14 +149,15 @@ namespace My_Smart_Factory.Data.Service
             return CreateDefultModel(controlnumber, inspector, confirmor);
         }
 
-        Task<List<OqcVo>?> IOutgoingInspService.Read(List<OutgoingInspModel> oqcList)
+        Task<List<OutgoingInspVo>?> IOutgoingInspService.Read(List<OutgoingInspModel> oqcList)
         {
             return Read(oqcList);
         }
 
-        OqcVo IOutgoingInspService.CreateOqcVo(OutgoingInspModel oqc)
+        OutgoingInspVo IOutgoingInspService.CreateOqcVo(OutgoingInspModel oqc)
         {
             return CreateOqcVo(oqc);
         }
+        #endregion
     }
 }

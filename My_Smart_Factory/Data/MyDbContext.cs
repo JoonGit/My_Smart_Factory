@@ -20,10 +20,10 @@ namespace My_Smart_Factory.Data
         public DbSet<InspEquipModel> InspEquipModels { get; set; }      // 검사장비
         public DbSet<ProdCtrlNoModel> ProdCtrlNoModels { get; set;}     // 관리번호
         public DbSet<CaseLotModel> CaseLotModels { get; set;}           // 케이스 로트
-        public DbSet<InspSpecModel> SpecModels { get; set;}         // 스펙
-        public DbSet<InspEquipSettingRecordModel> InspEquipRecordModels { get; set; }           // 검사장비 기록
-        public DbSet<InspProdRecordModel> ProdInspectionRecords { get; set;}           // 상품장비 기록
-        public DbSet<FullInspectionModel> FullInspectionRecords { get; set; }           // 전수검사
+        public DbSet<InspSpecModel> InspSpecModels { get; set;}         // 스펙
+        public DbSet<InspEquipSettingRecordModel> InspEquipSettingRecordModels { get; set; }           // 검사장비 기록
+        public DbSet<InspProdRecordModel> InspProdRecordModels { get; set;}           // 상품장비 기록
+        public DbSet<FullInspRecordModel> FullInspRecordModels { get; set; }           // 전수검사
         public DbSet<WorkOrderModel> WorkOrderModels { get; set; }           // 작업지시
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,7 +32,7 @@ namespace My_Smart_Factory.Data
             builder.Entity<WorkOrderModel>()
                 .HasOne(w => w.FullInspection)
                 .WithOne(f => f.WorkOrder)
-                .HasForeignKey<FullInspectionModel>(f => f.Id);
+                .HasForeignKey<FullInspRecordModel>(f => f.Id);
 
             builder.Entity<IdentityUserLogin<string>>().HasKey(x => new { x.ProviderKey, x.LoginProvider });
         }

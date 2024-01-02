@@ -7,7 +7,7 @@ namespace My_Smart_Factory.Data.Service.Interface
 {
     public interface IProdInfoService : IEntityBaseRepository<ProdInfoModel>
     {
-        Task<List<ProdInfoVo>?> ReadAll(List<ProdInfoModel> piModels);
+        Task<IEnumerable<ProdInfoVo>?> ToVo(IEnumerable<ProdInfoModel> piModels);
         Task<ProdInfoModel> Create(ProdInfoDto requestDto);
         Task<ProdInfoModel?> Update(ProdInfoModel oldModel, ProdInfoDto UpdateModel);
     }

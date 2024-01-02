@@ -1,11 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+<h1>ProdInfo 생성 페이지</h1>
 <form asp-controller="ProdInfo" asp-action="create" method="post">
-    <input type="text" name="prodName" placeholder="prodName" value="" />
-    <input type="text" name="prodCode" placeholder="prodCode" value="" />
-    <input type="text" name="prodWeight" placeholder="prodWeight" value="" />
-    <button>생성</button>
+    <div class="container">
+        <div class="center">
+            <div class="form-group">
+                <label>상품명</label><input class="form-control" type="text" name="prodName" placeholder="prodName" value="" />
+                <label>상품코드</label><input class="form-control" type="text" name="prodCode" placeholder="prodCode" value="" />
+                <label>상품무게</label><input class="form-control" type="text" name="prodWeight" placeholder="prodWeight" value="" />
+                <button>생성</button>
+            </div>
+        </div>
+    </div>
 </form>

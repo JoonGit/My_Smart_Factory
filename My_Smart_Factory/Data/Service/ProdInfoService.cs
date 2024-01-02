@@ -22,11 +22,11 @@ namespace My_Smart_Factory.Data.Service
         {
             try
             {
-                ProdInfoModel ProdInfoModel = new ProdInfoModel();
-                ProdInfoModel.ProdName = requestDto.prodName;
-                ProdInfoModel.ProdCode = requestDto.prodCode;
-                ProdInfoModel.ProdWeight = requestDto.prodWeight;
-                return ProdInfoModel;
+                ProdInfoModel piModel = new ProdInfoModel();
+                piModel.ProdName = requestDto.prodName;
+                piModel.ProdCode = requestDto.prodCode;
+                piModel.ProdWeight = requestDto.prodWeight;
+                return piModel;
             }
             catch (Exception e)
             {
@@ -35,12 +35,12 @@ namespace My_Smart_Factory.Data.Service
             }
         }
         #endregion
-        #region ReadAll
-        private async Task<List<ProdInfoVo>?> ReadAll(List<ProdInfoModel> ProdInfoModels)
+        #region ToVo
+        private async Task<IEnumerable<ProdInfoVo>?> ToVo(IEnumerable<ProdInfoModel> ProdInfoModels)
         {
             try
             {
-                List<ProdInfoVo> voList = new List<ProdInfoVo>();
+                List<ProdInfoVo> piVos = new List<ProdInfoVo>();
                 foreach (var ProdInfoModel in ProdInfoModels)
                 {
                     ProdInfoVo piVo = new ProdInfoVo();
@@ -48,9 +48,9 @@ namespace My_Smart_Factory.Data.Service
                     piVo.prodName = ProdInfoModel.ProdName;
                     piVo.prodCode = ProdInfoModel.ProdCode;
                     piVo.prodWeight = ProdInfoModel.ProdWeight;
-                    voList.Add(piVo);
+                    piVos.Add(piVo);
                 }
-                return voList;
+                return piVos;
             }
             catch (Exception e)
             {
@@ -76,11 +76,7 @@ namespace My_Smart_Factory.Data.Service
             }
         }
         #endregion
-
-        Task<List<ProdInfoVo>?> IProdInfoService.ReadAll(List<ProdInfoModel> piModels)
-        {
-            return ReadAll(piModels);
-        }
+        #region interface
 
         Task<ProdInfoModel> IProdInfoService.Create(ProdInfoDto requestDto)
         {
@@ -91,5 +87,11 @@ namespace My_Smart_Factory.Data.Service
         {
             return Update(oldModel, UpdateModel);
         }
+
+        Task<IEnumerable<ProdInfoVo>?> IProdInfoService.ToVo(IEnumerable<ProdInfoModel> piModels)
+        {
+            return ToVo(piModels);
+        }
+        #endregion
     }
 }

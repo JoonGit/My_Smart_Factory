@@ -10,7 +10,7 @@ namespace My_Smart_Factory.Models.Prod
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string? Number { get; set; }                         // 관리번호
+        public string? ProdCtrlNo { get; set; }                         // 관리번호
         public virtual ProdInfoModel? ProdInfo { get; set; }        // 제품정보
     }
 }

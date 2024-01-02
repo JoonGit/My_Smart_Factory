@@ -8,7 +8,6 @@ function AjaxPost(url, data, url) {
             var failureMessage = "DB " + url + " fale\n" + response;
 
             if (response === "success") {
-                fetchData();
                 alert(successMessage);
             } else {
                 alert(failureMessage);

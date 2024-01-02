@@ -14,6 +14,6 @@ function Update() {
             prodCode: prodCode,
             prodWeight: prodWeight
         };
-        AjaxPost("/ProdInfo/create", data, "create");
+        AjaxPost("/ProdInfo/update", data, "update");
     });
 }

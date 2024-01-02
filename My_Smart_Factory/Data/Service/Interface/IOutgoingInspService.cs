@@ -9,11 +9,11 @@ namespace My_Smart_Factory.Data.Service.Interface
     public interface IOutgoingInspService : IEntityBaseRepository<OutgoingInspModel>
     {
 
-        Task<OutgoingInspModel?> Create(OqcDto requestDto, UserIdentity inspector, UserIdentity confirmor);
+        Task<OutgoingInspModel?> Create(OutgoingInspDto requestDto, UserIdentity inspector, UserIdentity confirmor);
         Task<OutgoingInspModel?> CreateDefultModel(string controlnumber, UserIdentity inspector, UserIdentity confirmor);
-        Task<OutgoingInspModel?> Update(OqcDto requestDto, OutgoingInspModel oqc, UserIdentity inspector, UserIdentity confirmor);
-        OqcVo CreateOqcVo(OutgoingInspModel oqc);
-        Task<List<OqcVo>?> Read(List<OutgoingInspModel> oqcList);
+        Task<OutgoingInspModel?> Update(OutgoingInspDto requestDto, OutgoingInspModel oqc, UserIdentity inspector, UserIdentity confirmor);
+        OutgoingInspVo CreateOqcVo(OutgoingInspModel oqc);
+        Task<List<OutgoingInspVo>?> Read(List<OutgoingInspModel> oqcList);
 
     }
 }

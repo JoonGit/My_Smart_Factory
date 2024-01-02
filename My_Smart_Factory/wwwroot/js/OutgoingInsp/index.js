@@ -23,9 +23,15 @@ function GetData() {
 var info = null;
 
 // 저장 버튼 클릭 이벤트
-function saveData() {
+function create() {
     const data = GetData();
     AjaxPost("/outgoingInsp/create", data, "create");
+}
+
+function update() {
+    const data = GetData();
+    AjaxPost("/outgoingInsp/update", data, "update");
+
 }
 // modal에 데이터 선택 버튼 생성
 function showModalWithData(response) {

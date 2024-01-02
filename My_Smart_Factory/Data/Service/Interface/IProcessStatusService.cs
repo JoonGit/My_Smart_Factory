@@ -12,6 +12,6 @@ namespace My_Smart_Factory.Data.Service.Interface
         Task<List<ProcessStatusVo>?> ReadAll(List<ProcessStatusModel> piModels);
         Task<ProcessStatusModel> Create(ProcessStatusDto requestDto, ProdInfoModel piModel, UserIdentity Operator);
         Task<ProcessStatusModel?> Update(ProcessStatusModel oldModel, ProdInfoModel piModel, UserIdentity Operator, ProcessStatusDto UpdateModel);
-        Task<List<ProcessStatusUpdateDateAllVo>?> UpdateDateAll(List<ProcessStatusModel> PpsModels);
+        Task<List<ProcessStatusUpdateDateAllVo>?> UpdateDateAll(List<ProcessStatusModel> psModels);
     }
 }

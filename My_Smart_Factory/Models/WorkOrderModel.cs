@@ -17,6 +17,6 @@ namespace My_Smart_Factory.Models
         public string? WorkStatus { get; set; }                 // 작업 상태
         public int? CurrentWorkQuantity { get; set; }           // 현재 작업 수량
         public string? QRURL { get; set; }                      // qr 코드 url
-        public virtual FullInspectionModel? FullInspection { get; set; }  // 전수검사
+        public virtual FullInspRecordModel? FullInspection { get; set; }  // 전수검사
     }
 }

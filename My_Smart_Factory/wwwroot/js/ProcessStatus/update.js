@@ -13,12 +13,8 @@ function loadTableData() {
                 var row = $('<tr>');
                 var date = new Date(item.date);
                 date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-
-                console.log(item);
                 row.append($('<input>').attr({ type: 'hidden', name: 'id', value: item.id }));
-                row.append($('<td>').append($('<input>').attr({ type: 'text', name: 'prodName', value: item.controlNumber, class: 'form-control' })));
-                row.append($('<td>').append($('<input>').attr({ type: 'text', name: 'prodCode', value: item.controlNumber, class: 'form-control' })));
-                row.append($('<td>').append($('<input>').attr({ type: 'text', name: 'prodWeight', value: item.controlNumber, class: 'form-control' })));
+                row.append($('<td>').append($('<input>').attr({ type: 'text', name: 'prodName', value: item.prodName, class: 'form-control' })));
                 row.append($('<td>').append($('<input>').attr({ type: 'date', name: 'date', value: date.toISOString().split('T')[0], class: 'form-control' })));
                 row.append($('<td>').append($('<input>').attr({ type: 'text', name: 'quantity', value: item.quantity, class: 'form-control' })));
                 row.append($('<td>').append($('<input>').attr({ type: 'text', name: 'operatorName', value: item.operatorName, class: 'form-control' })));
@@ -41,8 +37,6 @@ function Update() {
         var row = $(this).closest('tr');
         var id = row.find('input[name="id"]').val();
         var prodName = row.find('input[name="prodName"]').val();
-        var prodCode = row.find('input[name="prodCode"]').val();
-        var prodWeight = row.find('input[name="prodWeight"]').val();
         var date = row.find('input[name="date"]').val();
         var quantity = row.find('input[name="quantity"]').val();
         var operatorName = row.find('input[name="operatorName"]').val();
@@ -50,13 +44,11 @@ function Update() {
         var data = {
             id: id,
             prodName: prodName,
-            prodCode: prodCode,
-            prodWeight: prodWeight,
             date: date,
             quantity: quantity,
             operatorName: operatorName,
             defectiveQuantity: defectiveQuantity
         };
+        AjaxPost("/processStatus/update", data, "update");
     });
-    AjaxPost("/processStatus/update", data, "update");
 }

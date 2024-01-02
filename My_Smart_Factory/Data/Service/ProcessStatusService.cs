@@ -15,20 +15,18 @@ namespace My_Smart_Factory.Data.Service
         {
         }
 
-
-
         #region Create
         private async Task<ProcessStatusModel> Create(ProcessStatusDto requestDto, ProdInfoModel ProdInfoModel, UserIdentity Operator)
         {
             try
             {
-                ProcessStatusModel ppsModel = new ProcessStatusModel();
-                ppsModel.ProdInfoModel = ProdInfoModel;
-                ppsModel.Date = requestDto.date;
-                ppsModel.Quantity = requestDto.quantity;
-                ppsModel.Operator = Operator;
-                ppsModel.DefectiveQuantity = requestDto.defectiveQuantity;
-                return ppsModel;
+                ProcessStatusModel psModel = new ProcessStatusModel();
+                psModel.ProdInfoModel = ProdInfoModel;
+                psModel.Date = requestDto.date;
+                psModel.Quantity = requestDto.quantity;
+                psModel.Operator = Operator;
+                psModel.DefectiveQuantity = requestDto.defectiveQuantity;
+                return psModel;
             }
             catch (Exception e)
             {
@@ -40,32 +38,32 @@ namespace My_Smart_Factory.Data.Service
 
         #endregion
         #region Read
-        private async Task<List<ProcessStatusVo>?> ReadAll(List<ProcessStatusModel> processStatusModels)
+        private async Task<List<ProcessStatusVo>?> ReadAll(List<ProcessStatusModel> psModels)
         {
             try
             {
                 List<ProcessStatusVo> voList = new List<ProcessStatusVo>();
-                foreach (var processStatusModel in processStatusModels)
+                foreach (var psModel in psModels)
                 {
-                    ProcessStatusVo processStatusVo = new ProcessStatusVo();
-                    processStatusVo.id = processStatusModel.Id;
-                    processStatusVo.prodName = processStatusModel.ProdInfoModel.ProdName;
-                    processStatusVo.prodCode = processStatusModel.ProdInfoModel.ProdCode;
-                    processStatusVo.prodWeight = processStatusModel.ProdInfoModel.ProdWeight;
-                    processStatusVo.quantity = processStatusModel.Quantity;
-                    processStatusVo.defectiveQuantity = processStatusModel.DefectiveQuantity;
+                    ProcessStatusVo psVo = new ProcessStatusVo();
+                    psVo.id = psModel.Id;
+                    psVo.prodName = psModel.ProdInfoModel.ProdName;
+                    psVo.prodCode = psModel.ProdInfoModel.ProdCode;
+                    psVo.prodWeight = psModel.ProdInfoModel.ProdWeight;
+                    psVo.quantity = psModel.Quantity;
+                    psVo.defectiveQuantity = psModel.DefectiveQuantity;
 
-                    if (processStatusModel.Quantity != 0)
+                    if (psModel.Quantity != 0)
                     {
-                        double defectRate = (processStatusModel.DefectiveQuantity / (double)processStatusModel.Quantity) * 100;
-                        processStatusVo.defectRate = Math.Round(defectRate, 5);
+                        double defectRate = (psModel.DefectiveQuantity / (double)psModel.Quantity) * 100;
+                        psVo.defectRate = Math.Round(defectRate, 5);
                     }
                     else
                     {
-                        processStatusVo.defectRate = 0;
+                        psVo.defectRate = 0;
                     }
 
-                    voList.Add(processStatusVo);
+                    voList.Add(psVo);
                 }
                 return voList;
             }
@@ -76,23 +74,22 @@ namespace My_Smart_Factory.Data.Service
                 return null;
             }
         }
-        private async Task<List<ProcessStatusUpdateDateAllVo>?> UpdateDateAll(List<ProcessStatusModel> processStatusModels)
+        private async Task<List<ProcessStatusUpdateDateAllVo>?> UpdateDateAll(List<ProcessStatusModel> psModels)
         {
             try
             {
                 List<ProcessStatusUpdateDateAllVo> voList = new List<ProcessStatusUpdateDateAllVo>();
-                foreach (var ppsModel in processStatusModels)
+                foreach (var psModel in psModels)
                 {
-                    ProcessStatusUpdateDateAllVo ppsVo = new ProcessStatusUpdateDateAllVo();
-                    ppsVo.id = ppsModel.Id;
-                    ppsVo.ProdName = ppsModel.ProdInfoModel.ProdName;
-                    ppsVo.date = ppsModel.Date;
-                    ppsVo.quantity = ppsModel.Quantity;
-                    ppsVo.operatorName = ppsModel.Operator.UserName;
-                    ppsVo.defectiveQuantity = ppsModel.DefectiveQuantity;
+                    ProcessStatusUpdateDateAllVo psVo = new ProcessStatusUpdateDateAllVo();
+                    psVo.id = psModel.Id;
+                    psVo.ProdName = psModel.ProdInfoModel.ProdName;
+                    psVo.date = psModel.Date;
+                    psVo.quantity = psModel.Quantity;
+                    psVo.operatorName = psModel.Operator.UserName;
+                    psVo.defectiveQuantity = psModel.DefectiveQuantity;
 
-
-                    voList.Add(ppsVo);
+                    voList.Add(psVo);
                 }
                 return voList;
             }
@@ -103,8 +100,6 @@ namespace My_Smart_Factory.Data.Service
                 return null;
             }
         }
-
-
         #endregion
         #region Update
         private async Task<ProcessStatusModel?> Update(ProcessStatusModel oldModel, ProdInfoModel piModel, UserIdentity Operator, ProcessStatusDto UpdateModel)
@@ -112,14 +107,12 @@ namespace My_Smart_Factory.Data.Service
             ProcessStatusModel saveModel = oldModel;
             try
 
-                // 새로운 psModel을 생성한다
                 {
                     oldModel.ProdInfoModel = piModel;
                     oldModel.Date = UpdateModel.date;
                     oldModel.Quantity = UpdateModel.quantity;
                     oldModel.Operator = Operator;
                     oldModel.DefectiveQuantity = UpdateModel.defectiveQuantity;
-
 
                     return oldModel;
             }
@@ -130,7 +123,7 @@ namespace My_Smart_Factory.Data.Service
             }
         }
         #endregion
-
+        #region interface
         Task<ProcessStatusModel> IProcessStatusService.Create(ProcessStatusDto requestDto, ProdInfoModel piModel, UserIdentity Operator)
         {
             return Create(requestDto, piModel, Operator);
@@ -145,9 +138,10 @@ namespace My_Smart_Factory.Data.Service
             return Update(oldModel, piModel, Operator, UpdateModel);
         }
 
-        Task<List<ProcessStatusUpdateDateAllVo>?> IProcessStatusService.UpdateDateAll(List<ProcessStatusModel> PpsModels)
+        Task<List<ProcessStatusUpdateDateAllVo>?> IProcessStatusService.UpdateDateAll(List<ProcessStatusModel> psModels)
         {
-            return UpdateDateAll(PpsModels);
+            return UpdateDateAll(psModels);
         }
+#endregion
     }
 }
