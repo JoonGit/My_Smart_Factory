@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using My_Smart_Factory.Data;
 using My_Smart_Factory.Data.Dto.Insp;
 using My_Smart_Factory.Data.Service;
-using My_Smart_Factory.Data.Service.Interface;
+using My_Smart_Factory.Data.Service.Interface.Insp;
 
 namespace My_Smart_Factory.Controllers
 {
-    [Route("inspEquip")]
+    [Route("inspequip")]
     public class InspEquipController : Controller
     {
         private readonly IInspEquipService _inspEquipService;
@@ -16,11 +16,13 @@ namespace My_Smart_Factory.Controllers
         {
             _inspEquipService = inspEquipService;
         }
-        public IActionResult Index()
+        [HttpGet("index")]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var ieList = await _inspEquipService.GetAllAsync();
+            return View(ieList);
         }
-
+        #region create
         [HttpGet("create")]
         public IActionResult Create()
         {
@@ -39,12 +41,16 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
+        #endregion
+        #region Read
         [HttpGet("read")]
         public async Task<IActionResult> Read()
         {
             var ieList = await _inspEquipService.GetAllAsync();
             return View(ieList);
         }
+        #endregion
+        #region Edit
         [HttpGet("edit")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -65,7 +71,9 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpPost("delete")]
+        #endregion
+        #region Delete
+        [HttpGet("delete")]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -78,5 +86,6 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
+        #endregion
     }
 }

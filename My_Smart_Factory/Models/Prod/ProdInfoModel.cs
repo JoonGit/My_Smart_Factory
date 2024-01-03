@@ -12,7 +12,6 @@ namespace My_Smart_Factory.Models.Prod
         public int Id { get; set; }
         public string? ProdName { get; set; }                       // 상품이름
         public string? ProdCode { get; set; }                       // 상품코드
-        public string? ProdWeight { get; set; }                     // 상품무게
-
+        public decimal? ProdWeight { get; set; }                     // 상품무게
     }
 }

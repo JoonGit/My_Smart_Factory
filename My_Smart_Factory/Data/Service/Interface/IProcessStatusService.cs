@@ -1,6 +1,5 @@
 ﻿using My_Smart_Factory.Data.Base;
 using My_Smart_Factory.Data.Dto.ProcessStatus;
-using My_Smart_Factory.Data.Vo.Pi;
 using My_Smart_Factory.Data.Vo.ProcessStatus;
 using My_Smart_Factory.Models;
 using My_Smart_Factory.Models.Prod;

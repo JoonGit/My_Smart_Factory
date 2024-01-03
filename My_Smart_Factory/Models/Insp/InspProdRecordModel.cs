@@ -9,11 +9,11 @@ namespace My_Smart_Factory.Models.Insp
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public virtual InspEquipModel? InspEquip { get; set; }      // 검사 장비
+        public virtual InspSpecModel? InspSpecModel { get; set; }       // 검사 스펙
         public virtual ProdCtrlNoModel? ProdCtrlNo { get; set; }    // 관리번호
         public DateTime? InspectionDateTime { get; set; }           // 검사 일시
-        public double? MeasuredValue { get; set; }                   // 측정값
-        public double? Accuracy { get; set; }                       // 일치율
+        public decimal? MeasuredValue { get; set; }                   // 측정값
+        public decimal? Accuracy { get; set; }                       // 일치율
         public bool? IsPassed { get; set; }                         // 합격여부
     }
 }

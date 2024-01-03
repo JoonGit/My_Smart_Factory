@@ -11,8 +11,8 @@ namespace My_Smart_Factory.Models
         public int Id { get; set; }
         public string? FullInspectionNumber { get; set; }                                   // 전수검사번호
         public virtual WorkOrderModel? WorkOrder { get; set; }                              // 작업지시
-        public virtual List<InspEquipSettingRecordModel>? InspEquipRecord { get; set; }     // 검사장비 세팅 기록
-        public virtual List<InspProdRecordModel> ProdInspectionRecords { get; set; }        // 제품 검사 기록   
+        public virtual List<InspEquipSettingRecordModel>? InspEquipSettingRecords { get; set; }     // 검사장비 세팅 기록
+        public virtual List<InspProdRecordModel>? InspProdRecords { get; set; }        // 제품 검사 기록   
     
     }
 }

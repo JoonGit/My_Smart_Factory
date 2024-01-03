@@ -3,9 +3,9 @@ using My_Smart_Factory.Data.Dto;
 using My_Smart_Factory.Data;
 using My_Smart_Factory.Data.Dto.Insp;
 using Microsoft.EntityFrameworkCore;
-using My_Smart_Factory.Data.Service.Interface;
 using My_Smart_Factory.Models.Insp;
 using My_Smart_Factory.Models.Prod;
+using My_Smart_Factory.Data.Service.Interface.Insp;
 
 namespace My_Smart_Factory.Controllers
 {

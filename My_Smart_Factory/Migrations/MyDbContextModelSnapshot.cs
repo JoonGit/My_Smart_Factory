@@ -510,11 +510,11 @@ namespace My_Smart_Factory.Migrations
                     b.Property<string>("QRURL")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UserIdentityId")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<DateTime?>("WorkOrderDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("WorkOrderIssuerId")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("WorkOrderNumber")
                         .HasColumnType("longtext");
@@ -529,7 +529,7 @@ namespace My_Smart_Factory.Migrations
 
                     b.HasIndex("ProdInfoId");
 
-                    b.HasIndex("UserIdentityId");
+                    b.HasIndex("WorkOrderIssuerId");
 
                     b.ToTable("WorkOrderModels");
                 });
@@ -599,7 +599,7 @@ namespace My_Smart_Factory.Migrations
             modelBuilder.Entity("My_Smart_Factory.Models.Insp.InspEquipSettingRecordModel", b =>
                 {
                     b.HasOne("My_Smart_Factory.Models.FullInspRecordModel", null)
-                        .WithMany("InspEquipRecord")
+                        .WithMany("InspEquipSettingRecords")
                         .HasForeignKey("FullInspRecordModelId");
 
                     b.HasOne("My_Smart_Factory.Models.Insp.InspEquipModel", "InspEquip")
@@ -618,7 +618,7 @@ namespace My_Smart_Factory.Migrations
             modelBuilder.Entity("My_Smart_Factory.Models.Insp.InspProdRecordModel", b =>
                 {
                     b.HasOne("My_Smart_Factory.Models.FullInspRecordModel", null)
-                        .WithMany("ProdInspectionRecords")
+                        .WithMany("InspProdRecords")
                         .HasForeignKey("FullInspRecordModelId");
 
                     b.HasOne("My_Smart_Factory.Models.Insp.InspEquipModel", "InspEquip")
@@ -696,20 +696,20 @@ namespace My_Smart_Factory.Migrations
                         .WithMany()
                         .HasForeignKey("ProdInfoId");
 
-                    b.HasOne("My_Smart_Factory.Models.UserIdentity", "UserIdentity")
+                    b.HasOne("My_Smart_Factory.Models.UserIdentity", "WorkOrderIssuer")
                         .WithMany()
-                        .HasForeignKey("UserIdentityId");
+                        .HasForeignKey("WorkOrderIssuerId");
 
                     b.Navigation("ProdInfo");
 
-                    b.Navigation("UserIdentity");
+                    b.Navigation("WorkOrderIssuer");
                 });
 
             modelBuilder.Entity("My_Smart_Factory.Models.FullInspRecordModel", b =>
                 {
-                    b.Navigation("InspEquipRecord");
+                    b.Navigation("InspEquipSettingRecords");
 
-                    b.Navigation("ProdInspectionRecords");
+                    b.Navigation("InspProdRecords");
                 });
 
             modelBuilder.Entity("My_Smart_Factory.Models.WorkOrderModel", b =>

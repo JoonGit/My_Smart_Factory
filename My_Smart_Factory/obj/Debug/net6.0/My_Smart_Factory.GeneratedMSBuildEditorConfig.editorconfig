@@ -16,6 +16,46 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\WorkSpece\My_Smart_Factory\My_Smart_Factory
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/CaseLot/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzZUxvdFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/CaseLot/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzZUxvdFxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/CaseLot/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzZUxvdFxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/CaseLot/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzZUxvdFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/CaseLot/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzZUxvdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/FullInspRecord/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVsbEluc3BSZWNvcmRcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/FullInspRecord/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVsbEluc3BSZWNvcmRcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/FullInspRecord/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVsbEluc3BSZWNvcmRcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/FullInspRecord/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVsbEluc3BSZWNvcmRcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/FullInspRecord/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVsbEluc3BSZWNvcmRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -24,24 +64,84 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipModels/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwTW9kZWxzXENyZWF0ZS5jc2h0bWw=
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipSettingRecord/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwU2V0dGluZ1JlY29yZFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipModels/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwTW9kZWxzXERlbGV0ZS5jc2h0bWw=
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipSettingRecord/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwU2V0dGluZ1JlY29yZFxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipModels/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwTW9kZWxzXERldGFpbHMuY3NodG1s
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipSettingRecord/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwU2V0dGluZ1JlY29yZFxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipModels/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwTW9kZWxzXEVkaXQuY3NodG1s
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipSettingRecord/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwU2V0dGluZ1JlY29yZFxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipModels/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwTW9kZWxzXEluZGV4LmNzaHRtbA==
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipSettingRecord/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwU2V0dGluZ1JlY29yZFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquip/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquip/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquip/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquip/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquip/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspProdRecord/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcFByb2RSZWNvcmRcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspProdRecord/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcFByb2RSZWNvcmRcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspProdRecord/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcFByb2RSZWNvcmRcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspProdRecord/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcFByb2RSZWNvcmRcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspProdRecord/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcFByb2RSZWNvcmRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspSpec/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcFNwZWNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspSpec/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcFNwZWNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspSpec/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcFNwZWNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspSpec/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcFNwZWNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspSpec/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcFNwZWNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/OutgoingInsp/Index.cshtml]
@@ -58,6 +158,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/ProcessStatus/update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2Vzc1N0YXR1c1x1cGRhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/ProdCtrlNo/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZEN0cmxOb1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/ProdCtrlNo/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZEN0cmxOb1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/ProdCtrlNo/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZEN0cmxOb1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/ProdCtrlNo/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZEN0cmxOb1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/ProdCtrlNo/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZEN0cmxOb1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/ProdInfo/create.cshtml]
@@ -98,6 +218,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/User/UserList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/WorkOrder/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV29ya09yZGVyXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/WorkOrder/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV29ya09yZGVyXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/WorkOrder/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV29ya09yZGVyXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/WorkOrder/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV29ya09yZGVyXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/WorkOrder/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV29ya09yZGVyXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/_ViewImports.cshtml]

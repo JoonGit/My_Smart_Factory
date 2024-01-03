@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using My_Smart_Factory.Data;
-using My_Smart_Factory.Data.Dto.Pi;
-using My_Smart_Factory.Data.Service.Interface;
-using My_Smart_Factory.Data.Vo.Pi;
+using My_Smart_Factory.Data.Dto.Prod;
+using My_Smart_Factory.Data.Service.Interface.Prod;
+using My_Smart_Factory.Data.Vo.Prod;
 using My_Smart_Factory.Models.Prod;
 using System.Threading.Tasks;
 

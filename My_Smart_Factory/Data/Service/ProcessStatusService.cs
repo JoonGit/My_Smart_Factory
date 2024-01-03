@@ -55,7 +55,7 @@ namespace My_Smart_Factory.Data.Service
 
                     if (psModel.Quantity != 0)
                     {
-                        double defectRate = (psModel.DefectiveQuantity / (double)psModel.Quantity) * 100;
+                        decimal defectRate = (psModel.DefectiveQuantity / (decimal)psModel.Quantity) * 100;
                         psVo.defectRate = Math.Round(defectRate, 5);
                     }
                     else

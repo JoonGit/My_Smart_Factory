@@ -3,9 +3,11 @@ using My_Smart_Factory.Data.Dto;
 using My_Smart_Factory.Data;
 using My_Smart_Factory.Data.Dto.Insp;
 using Microsoft.EntityFrameworkCore;
-using My_Smart_Factory.Data.Service.Interface;
 using My_Smart_Factory.Models.Insp;
 using My_Smart_Factory.Models.Prod;
+using My_Smart_Factory.Data.Service.Interface.Insp;
+using My_Smart_Factory.Data.Vo.Insp;
+using NuGet.Packaging.Signing;
 
 namespace My_Smart_Factory.Controllers
 {
@@ -36,11 +38,14 @@ namespace My_Smart_Factory.Controllers
             try
             {
                 //InspEquipModel InspEquip, InspSpecModel InspSpec
-                InspEquipModel? InspEquip = await _context.InspEquipModels.FirstOrDefaultAsync(x => x.InspEquipName == requestDto.InspEquipName);
-                if (InspEquip == null) { BadRequest("No InspEquip"); }
+                InspSpecModel? InspSpec = await _context.InspSpecModels.FirstOrDefaultAsync(x => x.InspSpecName == requestDto.InspSpecName);
+                if (InspSpec == null) { BadRequest("No InspEquip"); }
                 ProdCtrlNoModel? ProdCtrlNo = await _context.ProdCtrlNoModels.FirstOrDefaultAsync(x => x.ProdCtrlNo == requestDto.ProdCtrlNo);
                 if (ProdCtrlNo == null) { BadRequest("No ProdCtrlNo"); }
-                await _inspProdRecordService.AddAsync(requestDto.ToModel(InspEquip, ProdCtrlNo));
+                decimal Accuracy = ((decimal)requestDto.MeasuredValue / (decimal)ProdCtrlNo.ProdInfo.ProdWeight) * 100;
+                bool IsPassed = true;
+                if (Math.Abs(Accuracy)  > InspSpec.ETR) { IsPassed = false; }
+                await _inspProdRecordService.AddAsync(requestDto.ToModel(InspSpec, ProdCtrlNo, Accuracy, IsPassed));
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -66,11 +71,14 @@ namespace My_Smart_Factory.Controllers
             try
             {
                 var model = await _inspProdRecordService.GetByIdAsync(requestDto.Id);
-                InspEquipModel? InspEquip = await _context.InspEquipModels.FirstOrDefaultAsync(x => x.InspEquipName == requestDto.InspEquipName);
-                if (InspEquip == null) { BadRequest("No InspEquip"); }
+                InspSpecModel? InspSpec = await _context.InspSpecModels.FirstOrDefaultAsync(x => x.InspSpecName == requestDto.InspSpecName);
+                if (InspSpec == null) { BadRequest("No InspSpec"); }
                 ProdCtrlNoModel? ProdCtrlNo = await _context.ProdCtrlNoModels.FirstOrDefaultAsync(x => x.ProdCtrlNo == requestDto.ProdCtrlNo);
                 if (ProdCtrlNo == null) { BadRequest("No ProdCtrlNo"); }
-                await _inspProdRecordService.UpdateAsync(requestDto.Id, _inspProdRecordService.UpdateModel(model, requestDto, InspEquip, ProdCtrlNo));
+                decimal Accuracy = ((decimal)requestDto.MeasuredValue / (decimal)ProdCtrlNo.ProdInfo.ProdWeight) * 100;
+                bool IsPassed = true;
+                if (Math.Abs(Accuracy) > InspSpec.ETR) { IsPassed = false; }
+                await _inspProdRecordService.UpdateAsync(requestDto.Id, _inspProdRecordService.UpdateModel(model, requestDto, InspSpec, ProdCtrlNo, Accuracy, IsPassed));
                 return RedirectToAction("Index");
             }
             catch (Exception e)

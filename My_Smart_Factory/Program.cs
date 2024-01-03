@@ -5,7 +5,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using My_Smart_Factory.Data;
 using My_Smart_Factory.Data.Service;
+using My_Smart_Factory.Data.Service.Insp;
 using My_Smart_Factory.Data.Service.Interface;
+using My_Smart_Factory.Data.Service.Interface.Insp;
+using My_Smart_Factory.Data.Service.Interface.Prod;
+using My_Smart_Factory.Data.Service.Prod;
 using My_Smart_Factory.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +46,10 @@ builder.Services.AddScoped<IInspEquipService, InspEquipService>();
 builder.Services.AddScoped<IInspEquipSettingRecordService, InspEquipSettingRecordService>();
 builder.Services.AddScoped<IInspProdRecordService, InspProdRecordService>();
 builder.Services.AddScoped<IInspSpecService, InspSpecService>();
+builder.Services.AddScoped<ICaseLotService, CaseLotService>();
+builder.Services.AddScoped<IFullInspRecordService, FullInspRecordService>();
+builder.Services.AddScoped<IProdCtrlNoService, ProdCtrlNoService>();
+builder.Services.AddScoped<IWorkOrderService, WorkOrderService>();
 
 
 //builder.Services.AddSession();

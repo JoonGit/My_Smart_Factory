@@ -1,4 +1,5 @@
-﻿using My_Smart_Factory.Models.Prod;
+﻿using My_Smart_Factory.Data.Vo.Prod;
+using My_Smart_Factory.Models.Prod;
 
 namespace My_Smart_Factory.Data.Dto.Prod
 {
@@ -9,5 +10,25 @@ namespace My_Smart_Factory.Data.Dto.Prod
         public string? ProdName { get; set; }                       // 상품이름
 
         //public virtual ProdInfoModel? ProdInfo { get; set; }
+
+        public ProdCtrlNoModel ToModel(ProdInfoModel ProdInfo)
+        {
+            return new ProdCtrlNoModel
+            {
+                Id = Id,
+                ProdCtrlNo = ProdCtrlNo,
+                ProdInfo = ProdInfo
+            };
+        }
+
+        public ProdCtrlNoVo ToVo(ProdCtrlNoModel ProdCtrlNo)
+        {
+            return new ProdCtrlNoVo
+            {
+                Id = Id,
+                ProdCtrlNo = ProdCtrlNo.ProdCtrlNo,
+                ProdName = ProdCtrlNo.ProdInfo.ProdName
+            };
+        }
     }
 }

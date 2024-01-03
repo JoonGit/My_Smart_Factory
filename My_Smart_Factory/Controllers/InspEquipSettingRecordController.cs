@@ -3,8 +3,8 @@ using My_Smart_Factory.Data.Dto;
 using My_Smart_Factory.Data;
 using Microsoft.EntityFrameworkCore;
 using My_Smart_Factory.Data.Dto.Insp;
-using My_Smart_Factory.Data.Service.Interface;
 using My_Smart_Factory.Models.Insp;
+using My_Smart_Factory.Data.Service.Interface.Insp;
 
 namespace My_Smart_Factory.Controllers
 {
@@ -40,7 +40,8 @@ namespace My_Smart_Factory.Controllers
                 if (InspEquip == null) { BadRequest("No InspEquip"); }
                 InspSpecModel? InspSpec = await _context.InspSpecModels.FirstOrDefaultAsync(x => x.InspSpecName == requestDto.InspSpecName);
                 if (InspSpec == null) { BadRequest("No InspSpec"); }
-                await _inspEquipSettingRecordService.AddAsync(requestDto.ToModel(InspEquip, InspSpec));
+                decimal Accuracy = ((decimal)requestDto.IES / (decimal)InspSpec.ProdInfo.ProdWeight) * 100;
+                await _inspEquipSettingRecordService.AddAsync(requestDto.ToModel(InspEquip, InspSpec, Accuracy));
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -70,7 +71,8 @@ namespace My_Smart_Factory.Controllers
                 if (InspEquip == null) { BadRequest("No InspEquip"); }
                 InspSpecModel? InspSpec = await _context.InspSpecModels.FirstOrDefaultAsync(x => x.InspSpecName == requestDto.InspSpecName);
                 if (InspSpec == null) { BadRequest("No InspSpec"); }
-                await _inspEquipSettingRecordService.UpdateAsync(requestDto.Id, _inspEquipSettingRecordService.UpdateModel(model, requestDto, InspEquip, InspSpec));
+                decimal Accuracy = ((decimal)requestDto.IES / (decimal)InspSpec.ProdInfo.ProdWeight) * 100;
+                await _inspEquipSettingRecordService.UpdateAsync(requestDto.Id, _inspEquipSettingRecordService.UpdateModel(model, requestDto, InspEquip, InspSpec, Accuracy));
                 return RedirectToAction("Index");
             }
             catch (Exception e)

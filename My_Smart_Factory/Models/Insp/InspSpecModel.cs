@@ -12,7 +12,6 @@ namespace My_Smart_Factory.Models.Insp
         public string? InspSpecName { get; set; }                        // 검사기준명
         public virtual ProdInfoModel? ProdInfo { get; set; }             // 관리번호
         public virtual InspEquipModel? InspEquip { get; set; }          // 검사장비
-        public double? IES { get; set; }                                // Inspection Equipment Settings (검사장비설정)
         public int? ETR { get; set; }                                   // 오류 허용범위 (Error Tolerance Range)
     }
 }

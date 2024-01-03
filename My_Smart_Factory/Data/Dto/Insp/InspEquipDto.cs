@@ -1,4 +1,5 @@
-﻿using My_Smart_Factory.Models.Insp;
+﻿using My_Smart_Factory.Data.Vo.Insp;
+using My_Smart_Factory.Models.Insp;
 
 namespace My_Smart_Factory.Data.Dto.Insp
 {
@@ -15,6 +16,16 @@ namespace My_Smart_Factory.Data.Dto.Insp
             model.Unit = Unit;
 
             return model;
+        }
+
+        public InspEquipVo ToVo(InspEquipModel inspEquip)
+        {
+            return new InspEquipVo
+            {
+                Id = inspEquip.Id,
+                InspEquipName = inspEquip.InspEquipName,
+                Unit = inspEquip.Unit
+            };
         }
     }
 }
