@@ -20,7 +20,7 @@ namespace My_Smart_Factory.Data.Service
         {
             model.WorkOrder = WorkOrder;
             model.InspEquipSettingRecords = InspEquipSettingRecords;
-            model.FullInspectionNumber = requestDto.FullInspectionNumber;
+            model.FullInspNo = requestDto.FullInspeNo;
             model.InspProdRecords = InspProdRecords;
             return model;
         }

@@ -36,7 +36,7 @@ namespace My_Smart_Factory.Controllers
         {
             try
             {
-                WorkOrderModel? WorkOrder = await _context.WorkOrderModels.FirstOrDefaultAsync(x => x.WorkOrderNumber == requestDto.WorkOrderNumber);
+                WorkOrderModel? WorkOrder = await _context.WorkOrderModels.FirstOrDefaultAsync(x => x.WorkOrderNo == requestDto.WorkOrderNo);
                 if (WorkOrder == null) { BadRequest("No WorkOrder"); }
                 List<InspEquipSettingRecordModel>? InspEquipSettingRecordModels = await CreateListInspEquipSettingRecordModel(requestDto);
                 if (InspEquipSettingRecordModels.Count == 0) { BadRequest("No InspEquipSettingRecord"); }
@@ -73,7 +73,7 @@ namespace My_Smart_Factory.Controllers
             try
             {
                 var model = await _fullInspRecordService.GetByIdAsync(requestDto.Id);
-                WorkOrderModel? WorkOrder = await _context.WorkOrderModels.FirstOrDefaultAsync(x => x.WorkOrderNumber == requestDto.WorkOrderNumber);
+                WorkOrderModel? WorkOrder = await _context.WorkOrderModels.FirstOrDefaultAsync(x => x.WorkOrderNo == requestDto.WorkOrderNo);
                 if (WorkOrder == null) { BadRequest("No WorkOrder"); }
                 List<InspEquipSettingRecordModel>? InspEquipSettingRecordModels = await CreateListInspEquipSettingRecordModel(requestDto);
                 if (InspEquipSettingRecordModels.Count == 0) { BadRequest("No InspEquipSettingRecord"); }
@@ -120,9 +120,11 @@ namespace My_Smart_Factory.Controllers
                 {
                     BadRequest("No InspSpec " + item.InspSpecName.ToString());
                 }
+                FullInspRecordModel? FullInspRecord = await _context.FullInspRecordModels.FirstOrDefaultAsync(x => x.FullInspNo == item.FullInspNo);
+                if (FullInspRecord == null) { BadRequest("No FullInspRecord"); }
                 decimal Accuracy = ((decimal)item.IES / (decimal)InspSpec.ProdInfo.ProdWeight) * 100;
 
-                InspEquipSettingRecordModels.Add(item.ToModel(InspEquip, InspSpec, Accuracy));
+                InspEquipSettingRecordModels.Add(item.ToModel(InspEquip, InspSpec, FullInspRecord, Accuracy));
             }
             return InspEquipSettingRecordModels;
         }
@@ -136,10 +138,12 @@ namespace My_Smart_Factory.Controllers
                 if (InspSpec == null) { BadRequest("No InspEquip " + item.InspSpecName); }
                 ProdCtrlNoModel? ProdCtrlNo = await _context.ProdCtrlNoModels.FirstOrDefaultAsync(x => x.ProdCtrlNo == item.ProdCtrlNo);
                 if (ProdCtrlNo == null) { BadRequest("No ProdCtrlNo " + item.ProdCtrlNo); }
+                FullInspRecordModel? FullInspRecord = await _context.FullInspRecordModels.FirstOrDefaultAsync(x => x.FullInspNo == item.FullInspNo);
+                if (FullInspRecord == null) { BadRequest("No FullInspRecord"); }
                 decimal Accuracy = ((decimal)item.MeasuredValue / (decimal)ProdCtrlNo.ProdInfo.ProdWeight) * 100;
                 bool IsPassed = true;
                 if (Math.Abs(Accuracy) > InspSpec.ETR) { IsPassed = false; }
-                InspProdRecordModels.Add(item.ToModel(InspSpec, ProdCtrlNo, Accuracy, IsPassed));
+                InspProdRecordModels.Add(item.ToModel(InspSpec, ProdCtrlNo, FullInspRecord, Accuracy, IsPassed));
             }
             return InspProdRecordModels;
         }

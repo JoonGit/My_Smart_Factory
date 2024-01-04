@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using My_Smart_Factory.Data.Dto;
 using My_Smart_Factory.Data;
 using Microsoft.EntityFrameworkCore;
-using My_Smart_Factory.Data.Dto.Prod;
-using My_Smart_Factory.Data.Service.Interface.Prod;
 using My_Smart_Factory.Models.Prod;
 using My_Smart_Factory.Data.Service.Interface;
 using My_Smart_Factory.Models;
+using My_Smart_Factory.Data.Vo;
 
 namespace My_Smart_Factory.Controllers
 {
@@ -34,7 +32,7 @@ namespace My_Smart_Factory.Controllers
             return View();
         }
         [HttpPost("create")]
-        public async Task<IActionResult> Create(WorkOrderVo requestDto)
+        public async Task<IActionResult> Create(WorkOrderDto requestDto)
         {
             try
             {
@@ -43,7 +41,7 @@ namespace My_Smart_Factory.Controllers
                 if (ProdInfo == null) { BadRequest("No ProdInfo"); }
                 UserIdentity WorkOrderIssuer = await _context.UserIdentitys.FirstOrDefaultAsync(x => x.UserName == requestDto.WorkOrderIssuer);
                 if (WorkOrderIssuer == null) { BadRequest("No WorkOrderIssuer"); }
-                FullInspRecordModel FullInspection = await _context.FullInspRecordModels.FirstOrDefaultAsync(x => x.FullInspectionNumber == requestDto.FullInspectionNumber);
+                FullInspRecordModel FullInspection = await _context.FullInspRecordModels.FirstOrDefaultAsync(x => x.FullInspNo == requestDto.FullInspNo);
                 if (FullInspection == null) { BadRequest("No FullInspection"); }
                 await _workOrderService.AddAsync(requestDto.ToModel(ProdInfo, WorkOrderIssuer, FullInspection));
                 return RedirectToAction("Index");
@@ -66,7 +64,7 @@ namespace My_Smart_Factory.Controllers
             return View(model);
         }
         [HttpPost("edit")]
-        public async Task<IActionResult> Edit(WorkOrderVo requestDto)
+        public async Task<IActionResult> Edit(WorkOrderDto requestDto)
         {
             try
             {
@@ -75,7 +73,7 @@ namespace My_Smart_Factory.Controllers
                 if (ProdInfo == null) { BadRequest("No ProdInfo"); }
                 UserIdentity WorkOrderIssuer = await _context.UserIdentitys.FirstOrDefaultAsync(x => x.UserName == requestDto.WorkOrderIssuer);
                 if (WorkOrderIssuer == null) { BadRequest("No WorkOrderIssuer"); }
-                FullInspRecordModel FullInspection = await _context.FullInspRecordModels.FirstOrDefaultAsync(x => x.FullInspectionNumber == requestDto.FullInspectionNumber);
+                FullInspRecordModel FullInspection = await _context.FullInspRecordModels.FirstOrDefaultAsync(x => x.FullInspNo == requestDto.FullInspNo);
                 if (FullInspection == null) { BadRequest("No FullInspection"); }
                 await _workOrderService.UpdateAsync(requestDto.Id, _workOrderService.UpdateModel(model, requestDto, ProdInfo, WorkOrderIssuer, FullInspection));
                 return RedirectToAction("Index");

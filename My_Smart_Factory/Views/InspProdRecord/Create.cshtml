@@ -1,4 +1,4 @@
-﻿@model My_Smart_Factory.Models.Insp.InspEquipModel
+﻿@model My_Smart_Factory.Data.Dto.Insp.InspProdRecordDto
 
 @{
     ViewData["Title"] = "Create";
@@ -6,21 +6,36 @@
 
 <h1>Create</h1>
 
-<h4>InspEquipModel</h4>
+<h4>InspProdRecordDto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="InspEquipName" class="control-label"></label>
-                <input asp-for="InspEquipName" class="form-control" />
-                <span asp-validation-for="InspEquipName" class="text-danger"></span>
+                <label asp-for="FullInspNo" class="control-label"></label>
+                <input asp-for="FullInspNo" class="form-control" />
+                <span asp-validation-for="FullInspNo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Unit" class="control-label"></label>
-                <input asp-for="Unit" class="form-control" />
-                <span asp-validation-for="Unit" class="text-danger"></span>
+                <label asp-for="InspSpecName" class="control-label"></label>
+                <input asp-for="InspSpecName" class="form-control" />
+                <span asp-validation-for="InspSpecName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProdCtrlNo" class="control-label"></label>
+                <input asp-for="ProdCtrlNo" class="form-control" />
+                <span asp-validation-for="ProdCtrlNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InspectionDateTime" class="control-label"></label>
+                <input asp-for="InspectionDateTime" class="form-control" />
+                <span asp-validation-for="InspectionDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MeasuredValue" class="control-label"></label>
+                <input asp-for="MeasuredValue" class="form-control" />
+                <span asp-validation-for="MeasuredValue" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

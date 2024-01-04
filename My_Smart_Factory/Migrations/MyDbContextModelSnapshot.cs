@@ -170,7 +170,7 @@ namespace My_Smart_Factory.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("FullInspectionNumber")
+                    b.Property<string>("FullInspNo")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -201,14 +201,14 @@ namespace My_Smart_Factory.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<double?>("Accuracy")
-                        .HasColumnType("double");
+                    b.Property<decimal?>("Accuracy")
+                        .HasColumnType("decimal(65,30)");
 
-                    b.Property<int?>("FullInspRecordModelId")
+                    b.Property<int>("FullInspRecordId")
                         .HasColumnType("int");
 
-                    b.Property<double?>("IES")
-                        .HasColumnType("double");
+                    b.Property<decimal?>("IES")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<int?>("InspEquipId")
                         .HasColumnType("int");
@@ -221,7 +221,7 @@ namespace My_Smart_Factory.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FullInspRecordModelId");
+                    b.HasIndex("FullInspRecordId");
 
                     b.HasIndex("InspEquipId");
 
@@ -236,13 +236,13 @@ namespace My_Smart_Factory.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<double?>("Accuracy")
-                        .HasColumnType("double");
+                    b.Property<decimal?>("Accuracy")
+                        .HasColumnType("decimal(65,30)");
 
-                    b.Property<int?>("FullInspRecordModelId")
+                    b.Property<int?>("FullInspRecordId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InspEquipId")
+                    b.Property<int?>("InspSpecId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("InspectionDateTime")
@@ -251,17 +251,17 @@ namespace My_Smart_Factory.Migrations
                     b.Property<bool?>("IsPassed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<double?>("MeasuredValue")
-                        .HasColumnType("double");
+                    b.Property<decimal?>("MeasuredValue")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<int?>("ProdCtrlNoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FullInspRecordModelId");
+                    b.HasIndex("FullInspRecordId");
 
-                    b.HasIndex("InspEquipId");
+                    b.HasIndex("InspSpecId");
 
                     b.HasIndex("ProdCtrlNoId");
 
@@ -276,9 +276,6 @@ namespace My_Smart_Factory.Migrations
 
                     b.Property<int?>("ETR")
                         .HasColumnType("int");
-
-                    b.Property<double?>("IES")
-                        .HasColumnType("double");
 
                     b.Property<int?>("InspEquipId")
                         .HasColumnType("int");
@@ -423,8 +420,8 @@ namespace My_Smart_Factory.Migrations
                     b.Property<string>("ProdName")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("ProdWeight")
-                        .HasColumnType("longtext");
+                    b.Property<decimal?>("ProdWeight")
+                        .HasColumnType("decimal(65,30)");
 
                     b.HasKey("Id");
 
@@ -516,14 +513,14 @@ namespace My_Smart_Factory.Migrations
                     b.Property<string>("WorkOrderIssuerId")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("WorkOrderNumber")
+                    b.Property<string>("WorkOrderNo")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("WorkOrderStatus")
                         .HasColumnType("longtext");
 
                     b.Property<int?>("WorkQuantity")
                         .HasColumnType("int");
-
-                    b.Property<string>("WorkStatus")
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -598,9 +595,11 @@ namespace My_Smart_Factory.Migrations
 
             modelBuilder.Entity("My_Smart_Factory.Models.Insp.InspEquipSettingRecordModel", b =>
                 {
-                    b.HasOne("My_Smart_Factory.Models.FullInspRecordModel", null)
+                    b.HasOne("My_Smart_Factory.Models.FullInspRecordModel", "FullInspRecord")
                         .WithMany("InspEquipSettingRecords")
-                        .HasForeignKey("FullInspRecordModelId");
+                        .HasForeignKey("FullInspRecordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("My_Smart_Factory.Models.Insp.InspEquipModel", "InspEquip")
                         .WithMany()
@@ -610,6 +609,8 @@ namespace My_Smart_Factory.Migrations
                         .WithMany()
                         .HasForeignKey("InspSpecId");
 
+                    b.Navigation("FullInspRecord");
+
                     b.Navigation("InspEquip");
 
                     b.Navigation("InspSpec");
@@ -617,19 +618,21 @@ namespace My_Smart_Factory.Migrations
 
             modelBuilder.Entity("My_Smart_Factory.Models.Insp.InspProdRecordModel", b =>
                 {
-                    b.HasOne("My_Smart_Factory.Models.FullInspRecordModel", null)
+                    b.HasOne("My_Smart_Factory.Models.FullInspRecordModel", "FullInspRecord")
                         .WithMany("InspProdRecords")
-                        .HasForeignKey("FullInspRecordModelId");
+                        .HasForeignKey("FullInspRecordId");
 
-                    b.HasOne("My_Smart_Factory.Models.Insp.InspEquipModel", "InspEquip")
+                    b.HasOne("My_Smart_Factory.Models.Insp.InspSpecModel", "InspSpec")
                         .WithMany()
-                        .HasForeignKey("InspEquipId");
+                        .HasForeignKey("InspSpecId");
 
                     b.HasOne("My_Smart_Factory.Models.Prod.ProdCtrlNoModel", "ProdCtrlNo")
                         .WithMany()
                         .HasForeignKey("ProdCtrlNoId");
 
-                    b.Navigation("InspEquip");
+                    b.Navigation("FullInspRecord");
+
+                    b.Navigation("InspSpec");
 
                     b.Navigation("ProdCtrlNo");
                 });

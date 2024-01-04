@@ -7,12 +7,15 @@ namespace My_Smart_Factory.Data.Vo.Insp
     public class InspProdRecordVo
     {
         public int? Id { get; set; }
+        public string? FullInspNo { get; set; }                         // 검사 관리 번호
         public string? InspEquipName { get; set; }                      // 장비명
         public string? ProdCtrlNo { get; set; }                         // 관리번호
         public string? ProdName { get; set; }                           // 제품 이름
         public DateTime? InspectionDateTime { get; set; }               // 검사 일시
-        public decimal? MeasuredValue { get; set; }                      // 측정값
-        public decimal? Accuracy { get; set; }                           // 일치율
+        public decimal? MeasuredValue { get; set; }                     // 측정값
+        public decimal? SpecIES { get; set; }                           // 기준값
+        public decimal? Accuracy { get; set; }                          // 일치율
+        public decimal? ETR { get; set; }                               // 에러 범위
         public string Unit { get; set; }                                // 단위
         public bool? IsPassed { get; set; }
 

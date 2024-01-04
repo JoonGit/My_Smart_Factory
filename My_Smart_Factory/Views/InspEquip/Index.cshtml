@@ -1,4 +1,4 @@
-﻿@model IEnumerable<My_Smart_Factory.Models.Insp.InspEquipModel>
+﻿@model IEnumerable<My_Smart_Factory.Data.Vo.Insp.InspEquipVo>
 
 @{
     ViewData["Title"] = "Index";
@@ -32,7 +32,7 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

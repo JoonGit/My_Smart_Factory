@@ -7,7 +7,7 @@ namespace My_Smart_Factory.Data.Service.Interface
 {
     public interface IWorkOrderService : IEntityBaseRepository<WorkOrderModel>
     {
-        WorkOrderModel UpdateModel(WorkOrderModel model, WorkOrderVo requestDto, ProdInfoModel ProdInfo, UserIdentity WorkOrderIssuer, FullInspRecordModel? FullInspection);
+        WorkOrderModel UpdateModel(WorkOrderModel model, WorkOrderDto requestDto, ProdInfoModel ProdInfo, UserIdentity WorkOrderIssuer, FullInspRecordModel? FullInspection);
         
     }
 }

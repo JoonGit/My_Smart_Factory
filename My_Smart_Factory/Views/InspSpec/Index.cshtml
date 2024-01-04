@@ -1,4 +1,4 @@
-﻿@model IEnumerable<My_Smart_Factory.Models.Insp.InspEquipModel>
+﻿@model IEnumerable<My_Smart_Factory.Data.Vo.Insp.InspSpecVo>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,10 +13,19 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.InspSpecName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProdName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.InspEquipName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Unit)
+                @Html.DisplayNameFor(model => model.IES)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ETR)
             </th>
             <th></th>
         </tr>
@@ -25,10 +34,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.InspSpecName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProdName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.InspEquipName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Unit)
+                @Html.DisplayFor(modelItem => item.IES)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ETR)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using My_Smart_Factory.Data.Dto.Insp;
 using My_Smart_Factory.Models.Insp;
 using My_Smart_Factory.Data.Service.Interface.Insp;
+using My_Smart_Factory.Data.Vo.Insp;
+using My_Smart_Factory.Models;
 
 namespace My_Smart_Factory.Controllers
 {
@@ -20,9 +22,22 @@ namespace My_Smart_Factory.Controllers
             _inspEquipSettingRecordService = inspEquipSettingRecordService;
             _context = context;
         }
-        public IActionResult Index()
+        [HttpGet("index")]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            // inclue 해서 모두 가져오기
+            var iesrList = await _context.InspEquipSettingRecordModels
+                .Include(x => x.InspEquip)
+                .Include(x => x.InspSpec).Include(x => x.InspSpec.ProdInfo)
+                .Include(x => x.FullInspRecord)
+                .ToListAsync();
+            var voList = new List<InspEquipSettingRecordVo>();
+
+            foreach (var item in iesrList)
+            {
+                voList.Add(_inspEquipSettingRecordService.ModelToVo(item));
+            }
+            return View(voList);
         }
 
         [HttpGet("create")]
@@ -38,10 +53,15 @@ namespace My_Smart_Factory.Controllers
                 //InspEquipModel InspEquip, InspSpecModel InspSpec
                 InspEquipModel? InspEquip = await _context.InspEquipModels.FirstOrDefaultAsync(x => x.InspEquipName == requestDto.InspEquipName);
                 if (InspEquip == null) { BadRequest("No InspEquip"); }
-                InspSpecModel? InspSpec = await _context.InspSpecModels.FirstOrDefaultAsync(x => x.InspSpecName == requestDto.InspSpecName);
+                // InspSpec에 ProdInfo를 포함 시킨다
+                InspSpecModel? InspSpec = await _context.InspSpecModels
+                    .Include(x => x.ProdInfo)
+                    .FirstOrDefaultAsync(x => x.InspSpecName == requestDto.InspSpecName);
                 if (InspSpec == null) { BadRequest("No InspSpec"); }
+                FullInspRecordModel? FullInspRecord = await _context.FullInspRecordModels.FirstOrDefaultAsync(x => x.FullInspNo == requestDto.FullInspNo);
+                if (FullInspRecord == null) { BadRequest("No FullInspRecord"); }
                 decimal Accuracy = ((decimal)requestDto.IES / (decimal)InspSpec.ProdInfo.ProdWeight) * 100;
-                await _inspEquipSettingRecordService.AddAsync(requestDto.ToModel(InspEquip, InspSpec, Accuracy));
+                await _inspEquipSettingRecordService.AddAsync(requestDto.ToModel(InspEquip, InspSpec, FullInspRecord, Accuracy));
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -49,12 +69,7 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpGet("read")]
-        public async Task<IActionResult> Read()
-        {
-            var ieList = await _inspEquipSettingRecordService.GetAllAsync();
-            return View(ieList);
-        }
+
         [HttpGet("edit")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -71,8 +86,10 @@ namespace My_Smart_Factory.Controllers
                 if (InspEquip == null) { BadRequest("No InspEquip"); }
                 InspSpecModel? InspSpec = await _context.InspSpecModels.FirstOrDefaultAsync(x => x.InspSpecName == requestDto.InspSpecName);
                 if (InspSpec == null) { BadRequest("No InspSpec"); }
+                FullInspRecordModel? FullInspRecord = await _context.FullInspRecordModels.FirstOrDefaultAsync(x => x.FullInspNo == requestDto.FullInspNo);
+                if (FullInspRecord == null) { BadRequest("No FullInspRecord"); }
                 decimal Accuracy = ((decimal)requestDto.IES / (decimal)InspSpec.ProdInfo.ProdWeight) * 100;
-                await _inspEquipSettingRecordService.UpdateAsync(requestDto.Id, _inspEquipSettingRecordService.UpdateModel(model, requestDto, InspEquip, InspSpec, Accuracy));
+                await _inspEquipSettingRecordService.UpdateAsync(requestDto.Id, _inspEquipSettingRecordService.UpdateModel(model, requestDto, InspEquip, InspSpec, FullInspRecord, Accuracy));
                 return RedirectToAction("Index");
             }
             catch (Exception e)

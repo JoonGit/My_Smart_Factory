@@ -113,8 +113,7 @@ namespace My_Smart_Factory.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProdCode = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProdWeight = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    ProdWeight = table.Column<decimal>(type: "decimal(65,30)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -294,6 +293,34 @@ namespace My_Smart_Factory.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "InspSpecModels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    InspSpecName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ProdInfoId = table.Column<int>(type: "int", nullable: true),
+                    InspEquipId = table.Column<int>(type: "int", nullable: true),
+                    ETR = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InspSpecModels", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InspSpecModels_InspEquipModels_InspEquipId",
+                        column: x => x.InspEquipId,
+                        principalTable: "InspEquipModels",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_InspSpecModels_ProdInfoModels_ProdInfoId",
+                        column: x => x.ProdInfoId,
+                        principalTable: "ProdInfoModels",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "ProcessStatusModels",
                 columns: table => new
                 {
@@ -329,7 +356,7 @@ namespace My_Smart_Factory.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Number = table.Column<string>(type: "longtext", nullable: true)
+                    ProdCtrlNo = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProdInfoId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -345,34 +372,6 @@ namespace My_Smart_Factory.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "SpecModels",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ProdInfoId = table.Column<int>(type: "int", nullable: false),
-                    InspEquipId = table.Column<int>(type: "int", nullable: true),
-                    IES = table.Column<double>(type: "double", nullable: true),
-                    ETR = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SpecModels", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SpecModels_InspEquipModels_InspEquipId",
-                        column: x => x.InspEquipId,
-                        principalTable: "InspEquipModels",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_SpecModels_ProdInfoModels_ProdInfoId",
-                        column: x => x.ProdInfoId,
-                        principalTable: "ProdInfoModels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "WorkOrderModels",
                 columns: table => new
                 {
@@ -382,7 +381,7 @@ namespace My_Smart_Factory.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     WorkOrderDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     ProdInfoId = table.Column<int>(type: "int", nullable: true),
-                    UserIdentityId = table.Column<string>(type: "varchar(255)", nullable: true)
+                    WorkOrderIssuerId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     WorkQuantity = table.Column<int>(type: "int", nullable: true),
                     WorkStatus = table.Column<string>(type: "longtext", nullable: true)
@@ -395,8 +394,8 @@ namespace My_Smart_Factory.Migrations
                 {
                     table.PrimaryKey("PK_WorkOrderModels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WorkOrderModels_AspNetUsers_UserIdentityId",
-                        column: x => x.UserIdentityId,
+                        name: "FK_WorkOrderModels_AspNetUsers_WorkOrderIssuerId",
+                        column: x => x.WorkOrderIssuerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -408,7 +407,7 @@ namespace My_Smart_Factory.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "FullInspectionRecords",
+                name: "FullInspRecordModels",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
@@ -417,9 +416,9 @@ namespace My_Smart_Factory.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FullInspectionRecords", x => x.Id);
+                    table.PrimaryKey("PK_FullInspRecordModels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FullInspectionRecords_WorkOrderModels_Id",
+                        name: "FK_FullInspRecordModels_WorkOrderModels_Id",
                         column: x => x.Id,
                         principalTable: "WorkOrderModels",
                         principalColumn: "Id",
@@ -428,7 +427,7 @@ namespace My_Smart_Factory.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "InspEquipRecordModels",
+                name: "InspEquipSettingRecordModels",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -436,60 +435,60 @@ namespace My_Smart_Factory.Migrations
                     InspEquipId = table.Column<int>(type: "int", nullable: true),
                     InspSpecId = table.Column<int>(type: "int", nullable: true),
                     InspectionDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IES = table.Column<double>(type: "double", nullable: true),
-                    Accuracy = table.Column<double>(type: "double", nullable: true),
-                    FullInspectionModelId = table.Column<int>(type: "int", nullable: true)
+                    IES = table.Column<decimal>(type: "decimal(65,30)", nullable: true),
+                    Accuracy = table.Column<decimal>(type: "decimal(65,30)", nullable: true),
+                    FullInspRecordModelId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InspEquipRecordModels", x => x.Id);
+                    table.PrimaryKey("PK_InspEquipSettingRecordModels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_InspEquipRecordModels_FullInspectionRecords_FullInspectionMo~",
-                        column: x => x.FullInspectionModelId,
-                        principalTable: "FullInspectionRecords",
+                        name: "FK_InspEquipSettingRecordModels_FullInspRecordModels_FullInspRe~",
+                        column: x => x.FullInspRecordModelId,
+                        principalTable: "FullInspRecordModels",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_InspEquipRecordModels_InspEquipModels_InspEquipId",
+                        name: "FK_InspEquipSettingRecordModels_InspEquipModels_InspEquipId",
                         column: x => x.InspEquipId,
                         principalTable: "InspEquipModels",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_InspEquipRecordModels_SpecModels_InspSpecId",
+                        name: "FK_InspEquipSettingRecordModels_InspSpecModels_InspSpecId",
                         column: x => x.InspSpecId,
-                        principalTable: "SpecModels",
+                        principalTable: "InspSpecModels",
                         principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ProdInspectionRecords",
+                name: "InspProdRecordModels",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    InspEquipId = table.Column<int>(type: "int", nullable: true),
+                    InspSpecId = table.Column<int>(type: "int", nullable: true),
                     ProdCtrlNoId = table.Column<int>(type: "int", nullable: true),
                     InspectionDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    MeasuredValue = table.Column<double>(type: "double", nullable: true),
-                    Accuracy = table.Column<double>(type: "double", nullable: true),
+                    MeasuredValue = table.Column<decimal>(type: "decimal(65,30)", nullable: true),
+                    Accuracy = table.Column<decimal>(type: "decimal(65,30)", nullable: true),
                     IsPassed = table.Column<bool>(type: "tinyint(1)", nullable: true),
-                    FullInspectionModelId = table.Column<int>(type: "int", nullable: true)
+                    FullInspRecordModelId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProdInspectionRecords", x => x.Id);
+                    table.PrimaryKey("PK_InspProdRecordModels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProdInspectionRecords_FullInspectionRecords_FullInspectionMo~",
-                        column: x => x.FullInspectionModelId,
-                        principalTable: "FullInspectionRecords",
+                        name: "FK_InspProdRecordModels_FullInspRecordModels_FullInspRecordMode~",
+                        column: x => x.FullInspRecordModelId,
+                        principalTable: "FullInspRecordModels",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ProdInspectionRecords_InspEquipModels_InspEquipId",
-                        column: x => x.InspEquipId,
-                        principalTable: "InspEquipModels",
+                        name: "FK_InspProdRecordModels_InspSpecModels_InspSpecId",
+                        column: x => x.InspSpecId,
+                        principalTable: "InspSpecModels",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ProdInspectionRecords_ProdCtrlNoModels_ProdCtrlNoId",
+                        name: "FK_InspProdRecordModels_ProdCtrlNoModels_ProdCtrlNoId",
                         column: x => x.ProdCtrlNoId,
                         principalTable: "ProdCtrlNoModels",
                         principalColumn: "Id");
@@ -534,19 +533,44 @@ namespace My_Smart_Factory.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_InspEquipRecordModels_FullInspectionModelId",
-                table: "InspEquipRecordModels",
-                column: "FullInspectionModelId");
+                name: "IX_InspEquipSettingRecordModels_FullInspRecordModelId",
+                table: "InspEquipSettingRecordModels",
+                column: "FullInspRecordModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InspEquipRecordModels_InspEquipId",
-                table: "InspEquipRecordModels",
+                name: "IX_InspEquipSettingRecordModels_InspEquipId",
+                table: "InspEquipSettingRecordModels",
                 column: "InspEquipId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InspEquipRecordModels_InspSpecId",
-                table: "InspEquipRecordModels",
+                name: "IX_InspEquipSettingRecordModels_InspSpecId",
+                table: "InspEquipSettingRecordModels",
                 column: "InspSpecId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InspProdRecordModels_FullInspRecordModelId",
+                table: "InspProdRecordModels",
+                column: "FullInspRecordModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InspProdRecordModels_InspSpecId",
+                table: "InspProdRecordModels",
+                column: "InspSpecId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InspProdRecordModels_ProdCtrlNoId",
+                table: "InspProdRecordModels",
+                column: "ProdCtrlNoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InspSpecModels_InspEquipId",
+                table: "InspSpecModels",
+                column: "InspEquipId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InspSpecModels_ProdInfoId",
+                table: "InspSpecModels",
+                column: "ProdInfoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OutgoingInspModels_ConfirmorId",
@@ -574,39 +598,14 @@ namespace My_Smart_Factory.Migrations
                 column: "ProdInfoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProdInspectionRecords_FullInspectionModelId",
-                table: "ProdInspectionRecords",
-                column: "FullInspectionModelId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProdInspectionRecords_InspEquipId",
-                table: "ProdInspectionRecords",
-                column: "InspEquipId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProdInspectionRecords_ProdCtrlNoId",
-                table: "ProdInspectionRecords",
-                column: "ProdCtrlNoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SpecModels_InspEquipId",
-                table: "SpecModels",
-                column: "InspEquipId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SpecModels_ProdInfoId",
-                table: "SpecModels",
-                column: "ProdInfoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_WorkOrderModels_ProdInfoId",
                 table: "WorkOrderModels",
                 column: "ProdInfoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkOrderModels_UserIdentityId",
+                name: "IX_WorkOrderModels_WorkOrderIssuerId",
                 table: "WorkOrderModels",
-                column: "UserIdentityId");
+                column: "WorkOrderIssuerId");
         }
 
         /// <inheritdoc />
@@ -631,7 +630,10 @@ namespace My_Smart_Factory.Migrations
                 name: "CaseLotModels");
 
             migrationBuilder.DropTable(
-                name: "InspEquipRecordModels");
+                name: "InspEquipSettingRecordModels");
+
+            migrationBuilder.DropTable(
+                name: "InspProdRecordModels");
 
             migrationBuilder.DropTable(
                 name: "OutgoingInspModels");
@@ -640,25 +642,22 @@ namespace My_Smart_Factory.Migrations
                 name: "ProcessStatusModels");
 
             migrationBuilder.DropTable(
-                name: "ProdInspectionRecords");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "SpecModels");
+                name: "FullInspRecordModels");
 
             migrationBuilder.DropTable(
-                name: "FullInspectionRecords");
+                name: "InspSpecModels");
 
             migrationBuilder.DropTable(
                 name: "ProdCtrlNoModels");
 
             migrationBuilder.DropTable(
-                name: "InspEquipModels");
+                name: "WorkOrderModels");
 
             migrationBuilder.DropTable(
-                name: "WorkOrderModels");
+                name: "InspEquipModels");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

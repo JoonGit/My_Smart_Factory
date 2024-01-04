@@ -2,6 +2,15 @@
 using System;
 using My_Smart_Factory.Data.Enums;
 using My_Smart_Factory.Models;
+using My_Smart_Factory.Data.Service.Insp;
+using Microsoft.AspNetCore.Authentication;
+using My_Smart_Factory.Data;
+using My_Smart_Factory.Models.Insp;
+using My_Smart_Factory.Data.Vo.Insp;
+using My_Smart_Factory.Migrations;
+using Microsoft.EntityFrameworkCore;
+using My_Smart_Factory.Models.Prod;
+using My_Smart_Factory.Data.Vo;
 
 namespace BaseProject.Data
 {
@@ -11,7 +20,7 @@ namespace BaseProject.Data
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
-                
+
             }
 
         }
@@ -34,40 +43,193 @@ namespace BaseProject.Data
                     }
                 }
 
-            
-            //Users
-            var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<UserIdentity>>();
-            string adminId = "admin";
 
-            var adminUser = await userManager.FindByIdAsync(adminId);
-            if (adminUser == null)
-            {
-                var newAdminUser = new UserIdentity()
+                //Users
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<UserIdentity>>();
+                string adminId = "admin";
+
+                var adminUser = await userManager.FindByIdAsync(adminId);
+                if (adminUser == null)
                 {
-                    UserName = "admin-user",
-                    Id = adminId,
-                    EmailConfirmed = true
-                };
-                await userManager.CreateAsync(newAdminUser, "Dkagh1234!?");
-                await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin.ToString());
-            }
+                    var newAdminUser = new UserIdentity()
+                    {
+                        UserName = "admin-user",
+                        Id = adminId,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(newAdminUser, "Dkagh1234!?");
+                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin.ToString());
+                }
 
 
-            string memberId = "user";
+                string memberId = "user";
 
-            var appUser = await userManager.FindByIdAsync(memberId);
-            if (appUser == null)
-            {
-                var newMemberUser = new UserIdentity()
+                var appUser = await userManager.FindByIdAsync(memberId);
+                if (appUser == null)
                 {
-                    UserName = "member",
-                    Id = memberId,
-                    EmailConfirmed = true
-                };
-                await userManager.CreateAsync(newMemberUser, "Dkagh1234!");
-                await userManager.AddToRoleAsync(newMemberUser, UserRoles.Member.ToString());
+                    var newMemberUser = new UserIdentity()
+                    {
+                        UserName = "member",
+                        Id = memberId,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(newMemberUser, "Dkagh1234!");
+                    await userManager.AddToRoleAsync(newMemberUser, UserRoles.Member.ToString());
+                }
             }
         }
-    }
+
+        public static async Task SeedDataAsync(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<MyDbContext>();
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<UserIdentity>>();
+
+                if (!context.InspEquipModels.Any())
+                {
+                    await context.InspEquipModels.AddRangeAsync(new List<InspEquipModel>()
+                    {
+                        new InspEquipModel
+                        {
+                            InspEquipName = "InspEquip",
+                            Unit = "Unit"
+                        }
+                    });
+                    await context.SaveChangesAsync();
+                }
+                if (!context.ProdInfoModels.Any())
+                {
+                    await context.ProdInfoModels.AddRangeAsync(new List<ProdInfoModel>()
+                    {
+                        new ProdInfoModel
+                        {
+                            ProdName = "ProdName",
+                            ProdWeight = 10
+                        }
+                    });
+                    await context.SaveChangesAsync();
+                }
+                if (!context.InspSpecModels.Any())
+                {
+                    await context.InspSpecModels.AddRangeAsync(new List<InspSpecModel>()
+                    {
+                        new InspSpecModel
+                        {
+                            InspSpecName = "InspSpec",
+                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "ProdName").FirstOrDefaultAsync(),
+                            InspEquip = await context.InspEquipModels.Where(x => x.InspEquipName == "InspEquip").FirstOrDefaultAsync(),
+                            ETR = 5
+                        }
+                    });
+                    await context.SaveChangesAsync();
+                }
+                if (!context.ProdInfoModels.Any())
+                {
+                    await context.ProdCtrlNoModels.AddRangeAsync(new List<ProdCtrlNoModel>()
+                    {
+                        new ProdCtrlNoModel
+                        {
+                            ProdCtrlNo = "ProdCtrlNo",
+                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "ProdName").FirstOrDefaultAsync()
+                        }
+                    });
+                    await context.SaveChangesAsync();
+                }
+                if (!context.ProdCtrlNoModels.Any())
+                {
+                    await context.ProdCtrlNoModels.AddRangeAsync(new List<ProdCtrlNoModel>()
+                    {
+                        new ProdCtrlNoModel
+                        {
+                            ProdCtrlNo = "ProdCtrlNo",
+                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "ProdName").FirstOrDefaultAsync()
+                        }
+                    });
+                    await context.SaveChangesAsync();
+                }
+                if (!context.WorkOrderModels.Any())
+                {
+                    await context.WorkOrderModels.AddRangeAsync(new List<WorkOrderModel>()
+                    {
+                        new WorkOrderModel
+                        {
+                            WorkOrderNo = "WorkOrderNo",
+                            WorkOrderDate = DateTime.Now,
+                            WorkQuantity = 100,
+                            WorkOrderStatus = "생산대기",
+                            CurrentWorkQuantity = 0,
+                            FullInspection = null,
+                            WorkOrderIssuer = await userManager.FindByNameAsync("member"),
+                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "ProdName").FirstOrDefaultAsync(),
+                        }
+                    });
+                    await context.SaveChangesAsync();
+                }
+                if (!context.FullInspRecordModels.Any())
+                {
+                    await context.FullInspRecordModels.AddRangeAsync(new List<FullInspRecordModel>()
+                    {
+
+                        new FullInspRecordModel
+                        {
+                            FullInspNo = "FullInspNo",
+                            WorkOrder = await context.WorkOrderModels.Where(w => w.WorkOrderNo == "WorkOrderNo").FirstOrDefaultAsync(),
+                            InspEquipSettingRecords = await context.InspEquipSettingRecordModels.Where(x => x.FullInspRecord.FullInspNo == "FullInspNo").ToListAsync(),
+                            InspProdRecords = await context.InspProdRecordModels.Where(x => x.FullInspRecord.FullInspNo == "FullInspNo").ToListAsync()
+                        }
+                    });
+                    await context.SaveChangesAsync();
+                }
+                var workOrder = context.WorkOrderModels.Where(w => w.WorkOrderNo == "WorkOrderNo").FirstOrDefault();
+                if (workOrder.FullInspection == null)
+                {
+                    var fullInspRecord = context.FullInspRecordModels.Where(f => f.FullInspNo == "FullInspNo").FirstOrDefault();
+                    workOrder.FullInspection = fullInspRecord;
+
+                }
+                if (!context.InspEquipSettingRecordModels.Any())
+                {
+                    await context.InspEquipSettingRecordModels.AddRangeAsync(new List<InspEquipSettingRecordModel>()
+                    {
+                        new InspEquipSettingRecordModel
+                        {
+                            InspectionDateTime = DateTime.Now,
+                            IES = 5,
+                            Accuracy = ((decimal)5 / (decimal)10) * 100,
+                            InspEquip = await context.InspEquipModels.Where(x => x.InspEquipName == "InspEquip").FirstOrDefaultAsync(),
+                            InspSpec = await context.InspSpecModels.Where(x => x.InspSpecName == "InspSpec").FirstOrDefaultAsync(),
+                            FullInspRecord = await context.FullInspRecordModels.Where(x => x.FullInspNo == "FullInspNo").FirstOrDefaultAsync()
+                        }
+                    });
+                    context.SaveChanges();
+                }
+                if (!context.InspProdRecordModels.Any())
+                {
+                    await context.InspProdRecordModels.AddRangeAsync(new List<InspProdRecordModel>()
+                    {
+                        new InspProdRecordModel
+                        {
+                            InspectionDateTime = DateTime.Now,
+                            MeasuredValue = 5,
+                            Accuracy = 50,
+                            IsPassed = false,
+                            InspSpec = await context.InspSpecModels.Where(x => x.InspSpecName == "InspSpec").FirstOrDefaultAsync(),
+                            ProdCtrlNo = await context.ProdCtrlNoModels.Where(x => x.ProdCtrlNo == "ProdCtrlNo").FirstOrDefaultAsync(),
+                            FullInspRecord = await context.FullInspRecordModels.Where(x => x.FullInspNo == "FullInspNo").FirstOrDefaultAsync()
+                        }
+                    });
+                    context.SaveChanges();
+                }
+                
+
+                
+
+
+
+
+
+            }
+        }
     }
 }

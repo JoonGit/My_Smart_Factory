@@ -4,6 +4,7 @@ using My_Smart_Factory.Data;
 using My_Smart_Factory.Data.Dto.Insp;
 using My_Smart_Factory.Data.Service;
 using My_Smart_Factory.Data.Service.Interface.Insp;
+using My_Smart_Factory.Data.Vo.Insp;
 
 namespace My_Smart_Factory.Controllers
 {
@@ -20,7 +21,12 @@ namespace My_Smart_Factory.Controllers
         public async Task<IActionResult> Index()
         {
             var ieList = await _inspEquipService.GetAllAsync();
-            return View(ieList);
+            var voList = new List<InspEquipVo>();
+            foreach (var item in ieList)
+            {
+                voList.Add(_inspEquipService.ModelToVo(item));
+            }
+            return View(voList);
         }
         #region create
         [HttpGet("create")]
@@ -42,20 +48,13 @@ namespace My_Smart_Factory.Controllers
             }
         }
         #endregion
-        #region Read
-        [HttpGet("read")]
-        public async Task<IActionResult> Read()
-        {
-            var ieList = await _inspEquipService.GetAllAsync();
-            return View(ieList);
-        }
-        #endregion
         #region Edit
         [HttpGet("edit")]
         public async Task<IActionResult> Edit(int id)
         {
             var model = await _inspEquipService.GetByIdAsync(id);
-            return View(model);
+            var dto = _inspEquipService.ModelToDto(model);
+            return View(dto);
         }
         [HttpPost("edit")]
         public async Task<IActionResult> Edit(InspEquipDto requestDto)

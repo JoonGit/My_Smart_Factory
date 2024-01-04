@@ -8,9 +8,11 @@ using My_Smart_Factory.Models.Prod;
 using My_Smart_Factory.Data.Service.Interface.Insp;
 using My_Smart_Factory.Data.Vo.Insp;
 using NuGet.Packaging.Signing;
+using My_Smart_Factory.Models;
 
 namespace My_Smart_Factory.Controllers
 {
+    [Route("InspProdRecord")]
     public class InspProdRecordController : Controller
     {
         private readonly IInspProdRecordService _inspProdRecordService;
@@ -22,11 +24,23 @@ namespace My_Smart_Factory.Controllers
             _inspProdRecordService = inspProdRecordService;
             _context = context;
         }
-        public IActionResult Index()
+        [HttpGet("index")]
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            var isList = await _context.InspProdRecordModels
+                .Include(x => x.InspSpec)
+                .Include(x => x.ProdCtrlNo).Include(x => x.ProdCtrlNo.ProdInfo)
+                .Include(x => x.FullInspRecord)
+                .ToListAsync();
+            var voList = new List<InspProdRecordVo>();
+            foreach (var item in isList)
+            {
+                voList.Add(_inspProdRecordService.ModelToVo(item));
+            }
 
+            return View(voList);
+        }
+        #region create
         [HttpGet("create")]
         public IActionResult Create()
         {
@@ -37,15 +51,16 @@ namespace My_Smart_Factory.Controllers
         {
             try
             {
-                //InspEquipModel InspEquip, InspSpecModel InspSpec
                 InspSpecModel? InspSpec = await _context.InspSpecModels.FirstOrDefaultAsync(x => x.InspSpecName == requestDto.InspSpecName);
                 if (InspSpec == null) { BadRequest("No InspEquip"); }
                 ProdCtrlNoModel? ProdCtrlNo = await _context.ProdCtrlNoModels.FirstOrDefaultAsync(x => x.ProdCtrlNo == requestDto.ProdCtrlNo);
                 if (ProdCtrlNo == null) { BadRequest("No ProdCtrlNo"); }
+                FullInspRecordModel? FullInspRecord = await _context.FullInspRecordModels.FirstOrDefaultAsync(x => x.FullInspNo == requestDto.FullInspNo);
+                if (FullInspRecord == null) { BadRequest("No FullInspRecord"); }
                 decimal Accuracy = ((decimal)requestDto.MeasuredValue / (decimal)ProdCtrlNo.ProdInfo.ProdWeight) * 100;
                 bool IsPassed = true;
-                if (Math.Abs(Accuracy)  > InspSpec.ETR) { IsPassed = false; }
-                await _inspProdRecordService.AddAsync(requestDto.ToModel(InspSpec, ProdCtrlNo, Accuracy, IsPassed));
+                if (Math.Abs(Accuracy) > InspSpec.ETR) { IsPassed = false; }
+                await _inspProdRecordService.AddAsync(requestDto.ToModel(InspSpec, ProdCtrlNo, FullInspRecord, Accuracy, IsPassed));
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -53,12 +68,8 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpGet("read")]
-        public async Task<IActionResult> Read()
-        {
-            var ieList = await _inspProdRecordService.GetAllAsync();
-            return View(ieList);
-        }
+        #endregion
+        #region edit
         [HttpGet("edit")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -75,10 +86,12 @@ namespace My_Smart_Factory.Controllers
                 if (InspSpec == null) { BadRequest("No InspSpec"); }
                 ProdCtrlNoModel? ProdCtrlNo = await _context.ProdCtrlNoModels.FirstOrDefaultAsync(x => x.ProdCtrlNo == requestDto.ProdCtrlNo);
                 if (ProdCtrlNo == null) { BadRequest("No ProdCtrlNo"); }
+                FullInspRecordModel? FullInspRecord = await _context.FullInspRecordModels.FirstOrDefaultAsync(x => x.FullInspNo == requestDto.FullInspNo);
+                if (FullInspRecord == null) { BadRequest("No FullInspRecord"); }
                 decimal Accuracy = ((decimal)requestDto.MeasuredValue / (decimal)ProdCtrlNo.ProdInfo.ProdWeight) * 100;
                 bool IsPassed = true;
                 if (Math.Abs(Accuracy) > InspSpec.ETR) { IsPassed = false; }
-                await _inspProdRecordService.UpdateAsync(requestDto.Id, _inspProdRecordService.UpdateModel(model, requestDto, InspSpec, ProdCtrlNo, Accuracy, IsPassed));
+                await _inspProdRecordService.UpdateAsync(requestDto.Id, _inspProdRecordService.UpdateModel(model, requestDto, InspSpec, ProdCtrlNo, FullInspRecord, Accuracy, IsPassed));
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -86,6 +99,8 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
+        #endregion
+        #region Delete
         [HttpPost("delete")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -99,5 +114,6 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
+        #endregion
     }
 }

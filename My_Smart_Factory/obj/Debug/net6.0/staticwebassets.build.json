@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4TTPtLlbt05Pq8lXe3XJkkms20H5pTogMbk7cMv7AdY=",
+  "Hash": "3JvzrkV+MHtJ2B4lKWqg7CSOMa8vEtggcrqPM/uL6P0=",
   "Source": "My_Smart_Factory",
   "BasePath": "_content/My_Smart_Factory",
   "Mode": "Default",
@@ -1154,6 +1154,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\qrImg\\test.png",
+      "SourceId": "My_Smart_Factory",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\",
+      "BasePath": "_content/My_Smart_Factory",
+      "RelativePath": "qrImg/test.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\qrImg\\test.png"
     }
   ]
 }

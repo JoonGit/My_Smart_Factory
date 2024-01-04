@@ -10,8 +10,8 @@ namespace My_Smart_Factory.Models.Insp
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string? InspSpecName { get; set; }                        // 검사기준명
-        public virtual ProdInfoModel? ProdInfo { get; set; }             // 관리번호
-        public virtual InspEquipModel? InspEquip { get; set; }          // 검사장비
-        public int? ETR { get; set; }                                   // 오류 허용범위 (Error Tolerance Range)
+        public virtual ProdInfoModel? ProdInfo { get; set; }             // 검사 품목
+        public virtual InspEquipModel? InspEquip { get; set; }           // 검사장비
+        public int? ETR { get; set; }                                    // 오류 허용범위 (Error Tolerance Range)
     }
 }

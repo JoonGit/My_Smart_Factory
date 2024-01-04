@@ -1,4 +1,4 @@
-﻿@model IEnumerable<My_Smart_Factory.Models.Insp.InspEquipModel>
+﻿@model IEnumerable<My_Smart_Factory.Data.Vo.Insp.InspProdRecordVo>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,10 +13,37 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.FullInspNo)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.InspEquipName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ProdCtrlNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProdName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InspectionDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeasuredValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpecIES)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accuracy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ETR)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Unit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPassed)
             </th>
             <th></th>
         </tr>
@@ -28,7 +55,31 @@
                 @Html.DisplayFor(modelItem => item.InspEquipName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.ProdCtrlNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProdName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InspectionDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MeasuredValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecIES)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Accuracy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ETR)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Unit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPassed)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

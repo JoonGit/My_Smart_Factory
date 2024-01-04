@@ -6,9 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using My_Smart_Factory.Models.Insp;
 using My_Smart_Factory.Models.Prod;
 using My_Smart_Factory.Data.Service.Interface.Insp;
+using My_Smart_Factory.Data.Vo.Insp;
 
 namespace My_Smart_Factory.Controllers
 {
+    [Route("inspspec")]
     public class InspSpecController : Controller
     {
         private readonly IInspSpecService _inspSpecService;
@@ -20,11 +22,22 @@ namespace My_Smart_Factory.Controllers
             _inspSpecService = inspSpecService;
             _context = context;
         }
-        public IActionResult Index()
+        [HttpGet("index")]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            // inclue 해서 모두 가져오기
+            var isList = await _context.InspSpecModels
+                .Include(x => x.ProdInfo)
+                .Include(x => x.InspEquip)
+                .ToListAsync();
+            var voList = new List<InspSpecVo>();
+            foreach (var item in isList)
+            {
+                voList.Add(_inspSpecService.ModelToVo(item));
+            }
+            return View(voList);
         }
-
+        #region create
         [HttpGet("create")]
         public IActionResult Create()
         {
@@ -48,12 +61,8 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpGet("read")]
-        public async Task<IActionResult> Read()
-        {
-            var ieList = await _inspSpecService.GetAllAsync();
-            return View(ieList);
-        }
+        #endregion
+        #region edit
         [HttpGet("edit")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -78,6 +87,8 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
+        #endregion
+        #region delete
         [HttpPost("delete")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -91,5 +102,6 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
+        #endregion
     }
 }

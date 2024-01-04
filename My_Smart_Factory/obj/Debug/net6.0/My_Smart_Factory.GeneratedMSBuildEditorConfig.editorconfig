@@ -56,6 +56,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVsbEluc3BSZWNvcmRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/Home/CreateQRCode.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDcmVhdGVRUkNvZGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -68,32 +72,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwU2V0dGluZ1JlY29yZFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipSettingRecord/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwU2V0dGluZ1JlY29yZFxEZWxldGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipSettingRecord/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwU2V0dGluZ1JlY29yZFxEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipSettingRecord/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwU2V0dGluZ1JlY29yZFxFZGl0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipSettingRecord/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwU2V0dGluZ1JlY29yZFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquip/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwXENyZWF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquip/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwXERlbGV0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquip/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquip/Edit.cshtml]

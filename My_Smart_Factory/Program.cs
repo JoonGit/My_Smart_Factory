@@ -50,6 +50,8 @@ builder.Services.AddScoped<ICaseLotService, CaseLotService>();
 builder.Services.AddScoped<IFullInspRecordService, FullInspRecordService>();
 builder.Services.AddScoped<IProdCtrlNoService, ProdCtrlNoService>();
 builder.Services.AddScoped<IWorkOrderService, WorkOrderService>();
+builder.Services.AddScoped<QrCodeService>();
+
 
 
 //builder.Services.AddSession();
@@ -76,6 +78,7 @@ app.UseAuthentication(); // User, ClaimsPrincipal 생성을 위해 활성화
 app.UseAuthorization();
 
 AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
+AppDbInitializer.SeedDataAsync(app).Wait();
 
 app.MapControllerRoute(
     name: "default",

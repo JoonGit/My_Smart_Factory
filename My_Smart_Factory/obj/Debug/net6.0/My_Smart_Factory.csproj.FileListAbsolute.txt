@@ -957,3 +957,4 @@ C:\WorkSpece\My_Smart_Factory\My_Smart_Factory\bin\Debug\net6.0\runtimes\unix\li
 C:\WorkSpece\My_Smart_Factory\My_Smart_Factory\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\WorkSpece\My_Smart_Factory\My_Smart_Factory\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\WorkSpece\My_Smart_Factory\My_Smart_Factory\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\WorkSpece\My_Smart_Factory\My_Smart_Factory\bin\Debug\net6.0\QRCoder.dll

@@ -11,21 +11,21 @@ namespace My_Smart_Factory.Data.Service
         public WorkOrderService(MyDbContext context) : base(context)
         {
         }
-        private WorkOrderModel UpdateModel(WorkOrderModel model, WorkOrderVo requestDto, ProdInfoModel ProdInfo, UserIdentity WorkOrderIssuer, FullInspRecordModel? FullInspection)
+        private WorkOrderModel UpdateModel(WorkOrderModel model, WorkOrderDto requestDto, ProdInfoModel ProdInfo, UserIdentity WorkOrderIssuer, FullInspRecordModel? FullInspection)
         {
-            model.WorkOrderNumber = requestDto.WorkOrderNumber;
+            model.WorkOrderNo = requestDto.WorkOrderNo;
             model.WorkOrderDate = requestDto.WorkOrderDate;
             model.ProdInfo = ProdInfo;
             model.WorkOrderIssuer = WorkOrderIssuer;
             model.WorkQuantity = requestDto.WorkQuantity;
-            model.WorkStatus = requestDto.WorkStatus;
+            model.WorkOrderStatus = requestDto.WorkOrderStatus;
             model.CurrentWorkQuantity = requestDto.CurrentWorkQuantity;
             model.QRURL = requestDto.QRURL;
             model.FullInspection = FullInspection;
             return model;
         }
 
-        WorkOrderModel IWorkOrderService.UpdateModel(WorkOrderModel model, WorkOrderVo requestDto, ProdInfoModel ProdInfo, UserIdentity WorkOrderIssuer, FullInspRecordModel? FullInspection)
+        WorkOrderModel IWorkOrderService.UpdateModel(WorkOrderModel model, WorkOrderDto requestDto, ProdInfoModel ProdInfo, UserIdentity WorkOrderIssuer, FullInspRecordModel? FullInspection)
         {
             return UpdateModel(model, requestDto, ProdInfo, WorkOrderIssuer, FullInspection);
         }
