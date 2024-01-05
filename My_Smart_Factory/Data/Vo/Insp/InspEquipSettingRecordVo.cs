@@ -15,7 +15,5 @@ namespace My_Smart_Factory.Data.Vo.Insp
         public decimal? ETR { get; set; }                            // 에러 허용 값
         public string? Unit { get; set; }                            // 단위
         public decimal? Accuracy { get; set; }                       // 일치율
-
-
     }
 }

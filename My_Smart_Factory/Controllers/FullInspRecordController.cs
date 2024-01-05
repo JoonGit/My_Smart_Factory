@@ -7,9 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using My_Smart_Factory.Data.Service.Interface;
 using My_Smart_Factory.Models.Insp;
 using My_Smart_Factory.Models.Prod;
+using My_Smart_Factory.Data.Vo.FullInsp;
 
 namespace My_Smart_Factory.Controllers
 {
+    [Route("fullInsprecord")]
     public class FullInspRecordController : Controller
     {
         private readonly IFullInspRecordService _fullInspRecordService;
@@ -21,9 +23,18 @@ namespace My_Smart_Factory.Controllers
             _fullInspRecordService = fullInspRecordService;
             this._context = _context;
         }
-        public IActionResult Index()
+        [HttpGet("index")]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = await _context.FullInspRecordModels
+                .Include(x => x.WorkOrder)
+                .ToListAsync();
+            List<FullInspRecordVo> voList = new List<FullInspRecordVo>();
+            foreach (var item in model)
+            {
+                voList.Add(_fullInspRecordService.ModelToVo(item));
+            }
+            return View(voList);
         }
         #region create
         [HttpGet("create")]
@@ -36,14 +47,11 @@ namespace My_Smart_Factory.Controllers
         {
             try
             {
-                WorkOrderModel? WorkOrder = await _context.WorkOrderModels.FirstOrDefaultAsync(x => x.WorkOrderNo == requestDto.WorkOrderNo);
-                if (WorkOrder == null) { BadRequest("No WorkOrder"); }
-                List<InspEquipSettingRecordModel>? InspEquipSettingRecordModels = await CreateListInspEquipSettingRecordModel(requestDto);
-                if (InspEquipSettingRecordModels.Count == 0) { BadRequest("No InspEquipSettingRecord"); }
-                List<InspProdRecordModel>? InspProdRecordModels = await CreateListInspProdRecordModel(requestDto);
-                if (InspProdRecordModels.Count == 0) { BadRequest("No InspProdRecord"); }
-
-                await _fullInspRecordService.AddAsync(requestDto.ToModel(WorkOrder, InspEquipSettingRecordModels, InspProdRecordModels));
+                WorkOrderModel? WorkOrder = await _context.WorkOrderModels
+                    .Include(x => x.ProdInfo)
+                    .Include(x => x.WorkOrderIssuer)
+                    .FirstOrDefaultAsync(x => x.WorkOrderNo == requestDto.WorkOrderNo);
+                await _fullInspRecordService.AddAsync(requestDto.ToModel(WorkOrder));
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -51,6 +59,44 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
+        #endregion
+        #region Detail
+        [HttpGet("detail")]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var model = await _context.FullInspRecordModels
+                .Include(x => x.WorkOrder)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+            FullInspRecordVo vo = _fullInspRecordService.ModelToVo(model);
+
+            return View(vo);
+        }
+        [HttpGet("proddetail")]
+        public async Task<IActionResult> ProdDetail(int id)
+        {
+            var model = await _context.FullInspRecordModels
+                            .Include(x => x.WorkOrder)
+                            .Include(x => x.InspProdRecords).ThenInclude(x => x.InspSpec).ThenInclude(x => x.InspEquip)
+                            .Include(x => x.InspProdRecords).ThenInclude(x => x.ProdCtrlNo).ThenInclude(x => x.ProdInfo)
+                            .Where(x => x.Id == id)
+                            .FirstOrDefaultAsync();
+            var dto = _fullInspRecordService.ModelToProdVo(model);
+            return View(dto);
+        }
+        [HttpGet("equipdetail")]
+        public async Task<IActionResult> EquipDetail(int id)
+        {
+            var model = await _context.FullInspRecordModels
+                            .Include(x => x.WorkOrder)
+                            .Include(x => x.InspEquipSettingRecords).ThenInclude(x => x.InspEquip)
+                            .Include(x => x.InspEquipSettingRecords).ThenInclude(x => x.InspSpec).ThenInclude(x => x.ProdInfo)
+                            .Where(x => x.Id == id)
+                            .FirstOrDefaultAsync();
+            var dto = _fullInspRecordService.ModelToEquipVo(model);
+            return View(dto);
+        }
+
         #endregion
         #region Read
         [HttpGet("read")]
@@ -64,8 +110,12 @@ namespace My_Smart_Factory.Controllers
         [HttpGet("edit")]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await _fullInspRecordService.GetByIdAsync(id);
-            return View(model);
+            var model = await _context.FullInspRecordModels
+                .Include(x => x.WorkOrder)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+            var dto = _fullInspRecordService.ModelToDto(model);
+            return View(dto);
         }
         [HttpPost("edit")]
         public async Task<IActionResult> Edit(FullInspRecordDto requestDto)
@@ -89,12 +139,17 @@ namespace My_Smart_Factory.Controllers
         }
         #endregion
         #region Delete
-        [HttpPost("delete")]
+        [HttpGet("delete")]
         public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                await _fullInspRecordService.DeleteAsync(id);
+                var fullInspRecord = await _context.FullInspRecordModels
+                    .Include(x => x.WorkOrder)
+                    .Where(x => x.Id == id)
+                    .FirstOrDefaultAsync();
+                _context.FullInspRecordModels.Remove(fullInspRecord);
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             catch (Exception e)

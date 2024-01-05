@@ -6,6 +6,12 @@ using My_Smart_Factory.Models.Insp;
 using My_Smart_Factory.Models.Prod;
 using My_Smart_Factory.Data.Vo.Insp;
 using My_Smart_Factory.Data.Dto.Insp;
+using My_Smart_Factory.Data.Dto.Prod;
+using My_Smart_Factory.Data.Vo.ProcessStatus;
+using My_Smart_Factory.Data.Vo.Prod;
+using My_Smart_Factory.Data.Dto;
+using My_Smart_Factory.Data.Vo.FullInsp;
+using My_Smart_Factory.Data.Vo;
 
 namespace My_Smart_Factory.Data
 {
@@ -38,14 +44,12 @@ namespace My_Smart_Factory.Data
 
             builder.Entity<IdentityUserLogin<string>>().HasKey(x => new { x.ProviderKey, x.LoginProvider });
         }
-        //public DbSet<My_Smart_Factory.Data.Vo.Insp.InspProdRecordVo>? InspProdRecordVo { get; set; }
-        //public DbSet<My_Smart_Factory.Data.Dto.Insp.InspProdRecordDto>? InspProdRecordDto { get; set; }
-        //public DbSet<My_Smart_Factory.Models.QRCodeModel>? QRCodeModel { get; set; }
-        //public DbSet<My_Smart_Factory.Data.Vo.Insp.InspEquipVo>? InspEquipVo { get; set; }
-        //public DbSet<My_Smart_Factory.Data.Dto.Insp.InspEquipDto>? InspEquipDto { get; set; }
-        //public DbSet<My_Smart_Factory.Data.Vo.Insp.InspEquipSettingRecordVo>? InspEquipSettingRecordVo { get; set; }
-        //public DbSet<My_Smart_Factory.Data.Dto.Insp.InspEquipSettingRecordDto>? InspEquipSettingRecordDto { get; set; }
-        //public DbSet<My_Smart_Factory.Data.Dto.Insp.InspSpecDto>? InspSpecDto { get; set; }
-        //public DbSet<My_Smart_Factory.Data.Vo.Insp.InspSpecVo>? InspSpecVo { get; set; }
+        public DbSet<My_Smart_Factory.Data.Dto.FullInspRecordDto>? FullInspRecordDto { get; set; }
+        public DbSet<My_Smart_Factory.Data.Vo.FullInsp.FullInspProdRecordVo>? FullInspProdRecordVo { get; set; }
+        public DbSet<My_Smart_Factory.Data.Vo.FullInsp.FullInspEquipRecordVo>? FullInspEquipRecordVo { get; set; }
+        public DbSet<My_Smart_Factory.Data.Dto.WorkOrderDto>? WorkOrderDto { get; set; }
+        public DbSet<My_Smart_Factory.Data.Vo.WorkOrderVo>? WorkOrderVo { get; set; }
+        public DbSet<My_Smart_Factory.Data.Vo.FullInsp.FullInspRecordVo>? FullInspRecordVo { get; set; }
+
     }
 }

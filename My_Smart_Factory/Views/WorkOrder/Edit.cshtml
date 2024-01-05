@@ -1,4 +1,5 @@
-﻿@model My_Smart_Factory.Models.Insp.InspEquipModel
+﻿@model My_Smart_Factory.Data.Dto.WorkOrderDto
+@using My_Smart_Factory.Data.Enums;
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,7 +7,7 @@
 
 <h1>Edit</h1>
 
-<h4>InspEquipModel</h4>
+<h4>WorkOrderDto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,14 +15,44 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="InspEquipName" class="control-label"></label>
-                <input asp-for="InspEquipName" class="form-control" />
-                <span asp-validation-for="InspEquipName" class="text-danger"></span>
+                <label asp-for="WorkOrderNo" class="control-label"></label>
+                <input asp-for="WorkOrderNo" class="form-control" />
+                <span asp-validation-for="WorkOrderNo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Unit" class="control-label"></label>
-                <input asp-for="Unit" class="form-control" />
-                <span asp-validation-for="Unit" class="text-danger"></span>
+                <label asp-for="WorkOrderDate" class="control-label"></label>
+                <input asp-for="WorkOrderDate" class="form-control" />
+                <span asp-validation-for="WorkOrderDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProdName" class="control-label"></label>
+                <input asp-for="ProdName" class="form-control" />
+                <span asp-validation-for="ProdName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkOrderIssuer" class="control-label"></label>
+                <input asp-for="WorkOrderIssuer" class="form-control" />
+                <span asp-validation-for="WorkOrderIssuer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkQuantity" class="control-label"></label>
+                <input asp-for="WorkQuantity" class="form-control" />
+                <span asp-validation-for="WorkQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<WorkOrderStatus>()"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrentWorkQuantity" class="control-label"></label>
+                <input asp-for="CurrentWorkQuantity" class="form-control" />
+                <span asp-validation-for="CurrentWorkQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullInspNo" class="control-label"></label>
+                <input asp-for="FullInspNo" class="form-control" />
+                <span asp-validation-for="FullInspNo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -35,5 +66,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

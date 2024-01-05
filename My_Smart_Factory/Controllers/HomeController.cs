@@ -48,7 +48,7 @@ namespace My_Smart_Factory.Controllers
             string FileName = "test.png";
             string FilePath = "qrimg";
 
-            _qrCodeService.SaveQrCode(qRCode, FilePath, FileName);
+            //_qrCodeService.SaveQrCode(FilePath, FilePath, FileName);
             //string uri = 
             //ViewBag.QrCodeUri = QrUri;
             return View();

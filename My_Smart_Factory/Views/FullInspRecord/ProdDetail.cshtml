@@ -1,0 +1,71 @@
+﻿@model IEnumerable<My_Smart_Factory.Data.Vo.FullInsp.FullInspProdRecordVo>
+
+@{
+    ViewData["Title"] = "ProdDetail";
+}
+
+<h1>ProdDetail</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProdCtrlNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProdName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InspectionDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeasuredValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpecIES)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accuracy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ETR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPassed)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProdCtrlNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProdName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InspectionDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MeasuredValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecIES)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Accuracy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ETR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPassed)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

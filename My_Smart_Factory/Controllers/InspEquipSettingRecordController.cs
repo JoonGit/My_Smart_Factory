@@ -39,7 +39,7 @@ namespace My_Smart_Factory.Controllers
             }
             return View(voList);
         }
-
+        #region create
         [HttpGet("create")]
         public IActionResult Create()
         {
@@ -69,12 +69,19 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
-
+        #endregion
+        #region Edit
         [HttpGet("edit")]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await _inspEquipSettingRecordService.GetByIdAsync(id);
-            return View(model);
+            var model = await _context.InspEquipSettingRecordModels
+                .Include(x => x.InspEquip)
+                .Include(x => x.InspSpec).Include(x => x.InspSpec.ProdInfo)
+                .Include(x => x.FullInspRecord)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+            var dto = _inspEquipSettingRecordService.ModelToDto(model);
+            return View(dto);
         }
         [HttpPost("edit")]
         public async Task<IActionResult> Edit(InspEquipSettingRecordDto requestDto)
@@ -84,7 +91,9 @@ namespace My_Smart_Factory.Controllers
                 var model = await _inspEquipSettingRecordService.GetByIdAsync(requestDto.Id);
                 InspEquipModel? InspEquip = await _context.InspEquipModels.FirstOrDefaultAsync(x => x.InspEquipName == requestDto.InspEquipName);
                 if (InspEquip == null) { BadRequest("No InspEquip"); }
-                InspSpecModel? InspSpec = await _context.InspSpecModels.FirstOrDefaultAsync(x => x.InspSpecName == requestDto.InspSpecName);
+                InspSpecModel? InspSpec = await _context.InspSpecModels
+                    .Include(x => x.ProdInfo)
+                    .FirstOrDefaultAsync(x => x.InspSpecName == requestDto.InspSpecName);
                 if (InspSpec == null) { BadRequest("No InspSpec"); }
                 FullInspRecordModel? FullInspRecord = await _context.FullInspRecordModels.FirstOrDefaultAsync(x => x.FullInspNo == requestDto.FullInspNo);
                 if (FullInspRecord == null) { BadRequest("No FullInspRecord"); }
@@ -97,6 +106,8 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
+        #endregion
+        #region Delete
         [HttpPost("delete")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -110,5 +121,6 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
+        #endregion
     }
 }

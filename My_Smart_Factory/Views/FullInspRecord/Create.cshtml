@@ -1,4 +1,4 @@
-﻿@model My_Smart_Factory.Models.Insp.InspEquipModel
+﻿@model My_Smart_Factory.Data.Dto.FullInspRecordDto
 
 @{
     ViewData["Title"] = "Create";
@@ -6,21 +6,21 @@
 
 <h1>Create</h1>
 
-<h4>InspEquipModel</h4>
+<h4>FullInspRecordDto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="InspEquipName" class="control-label"></label>
-                <input asp-for="InspEquipName" class="form-control" />
-                <span asp-validation-for="InspEquipName" class="text-danger"></span>
+                <label asp-for="FullInspeNo" class="control-label"></label>
+                <input asp-for="FullInspeNo" class="form-control" />
+                <span asp-validation-for="FullInspeNo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Unit" class="control-label"></label>
-                <input asp-for="Unit" class="form-control" />
-                <span asp-validation-for="Unit" class="text-danger"></span>
+                <label asp-for="WorkOrderNo" class="control-label"></label>
+                <input asp-for="WorkOrderNo" class="form-control" />
+                <span asp-validation-for="WorkOrderNo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

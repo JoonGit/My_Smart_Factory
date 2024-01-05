@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "3JvzrkV+MHtJ2B4lKWqg7CSOMa8vEtggcrqPM/uL6P0=",
+  "Hash": "4SM3+dHZRtzR4Qq3+TzJg3O3s6hXY2eWvwP2DNcRtck=",
   "Source": "My_Smart_Factory",
   "BasePath": "_content/My_Smart_Factory",
   "Mode": "Default",
@@ -1171,6 +1171,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\qrImg\\test.png"
+    },
+    {
+      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\qrImg\\WorkOrderNo3.png",
+      "SourceId": "My_Smart_Factory",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\",
+      "BasePath": "_content/My_Smart_Factory",
+      "RelativePath": "qrImg/WorkOrderNo3.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\qrImg\\WorkOrderNo3.png"
     }
   ]
 }

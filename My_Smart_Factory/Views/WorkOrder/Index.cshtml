@@ -1,4 +1,4 @@
-﻿@model IEnumerable<My_Smart_Factory.Models.Insp.InspEquipModel>
+﻿@model IEnumerable<My_Smart_Factory.Data.Vo.WorkOrderVo>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,33 +9,82 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table" style="text-align:center;">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.InspEquipName)
+                @Html.DisplayNameFor(model => model.WorkOrderNo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Unit)
+                @Html.DisplayNameFor(model => model.WorkOrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProdName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkOrderIssuer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentWorkQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QRURL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullInspeNoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullInspNo)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.InspEquipName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Unit)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkOrderNo)
+                </td>
+                <td style="text-align:left;">
+                    @Html.DisplayFor(modelItem => item.WorkOrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProdName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkOrderIssuer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkQuantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentWorkQuantity)
+                </td>
+                <td>
+                    <img src="@item.QRURL" alt="QR Code Image" width="100" height="100" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullInspeNoId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullInspNo)
+                </td>
+                <td style="text-align:left;" >
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-controller="FullInspRecord" asp-action="Detail" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

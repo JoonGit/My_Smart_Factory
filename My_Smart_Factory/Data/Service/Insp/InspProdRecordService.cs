@@ -55,10 +55,11 @@ namespace My_Smart_Factory.Data.Service.Insp
             return new InspProdRecordDto
             {
                 Id = model.Id,
+                FullInspNo = model.FullInspRecord.FullInspNo,
+                InspSpecName = model.InspSpec.InspSpecName,
                 ProdCtrlNo = model.ProdCtrlNo.ProdCtrlNo,
                 InspectionDateTime = model.InspectionDateTime,
-                MeasuredValue = model.MeasuredValue,
-                FullInspNo = model.FullInspRecord.FullInspNo
+                MeasuredValue = model.MeasuredValue
             };
         }
         InspProdRecordModel IInspProdRecordService.UpdateModel(InspProdRecordModel model,

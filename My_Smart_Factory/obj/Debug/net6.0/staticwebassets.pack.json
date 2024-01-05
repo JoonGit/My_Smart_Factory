@@ -265,6 +265,10 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\qrImg\\WorkOrderNo3.png",
+      "PackagePath": "staticwebassets\\qrImg\\WorkOrderNo3.png"
+    },
+    {
       "Id": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\qrImg\\test.png",
       "PackagePath": "staticwebassets\\qrImg\\test.png"
     },

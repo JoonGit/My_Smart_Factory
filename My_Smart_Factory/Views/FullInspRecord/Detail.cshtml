@@ -1,0 +1,31 @@
+﻿@model My_Smart_Factory.Data.Vo.FullInsp.FullInspRecordVo
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h1>Detail</h1>
+
+<div>
+    <h4>FullInspRecordVo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FullInspNo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FullInspNo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkOrderNo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.WorkOrderNo)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-controller="WorkOrder" asp-action="Index">Back to List</a> |
+    <a asp-action="proddetail" asp-route-id="@Model.Id">상품검사목록</a> |
+    <a asp-action="EquipDetail" asp-route-id="@Model.Id">검사장비목록</a>
+</div>

@@ -66,8 +66,13 @@ namespace My_Smart_Factory.Controllers
         [HttpGet("edit")]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await _inspSpecService.GetByIdAsync(id);
-            return View(model);
+            var model = await _context.InspSpecModels
+                .Include(x => x.ProdInfo)
+                .Include(x => x.InspEquip)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+            var dto = _inspSpecService.ModelToDto(model);
+            return View(dto);
         }
         [HttpPost("edit")]
         public async Task<IActionResult> Edit(InspSpecDto requestDto)

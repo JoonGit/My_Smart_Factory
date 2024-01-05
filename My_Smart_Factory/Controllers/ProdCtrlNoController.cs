@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using My_Smart_Factory.Data.Dto;
 using My_Smart_Factory.Data;
 using My_Smart_Factory.Data.Dto.Prod;
 using Microsoft.EntityFrameworkCore;
 using My_Smart_Factory.Data.Service.Interface.Prod;
 using My_Smart_Factory.Models.Prod;
-using My_Smart_Factory.Models.Insp;
+using My_Smart_Factory.Data.Vo.Prod;
 
 namespace My_Smart_Factory.Controllers
 {
+    [Route("ProdCtrlNo")]
     public class ProdCtrlNoController : Controller
     {
         private readonly IProdCtrlNoService _prodCtrlNoService;
@@ -20,11 +20,20 @@ namespace My_Smart_Factory.Controllers
             _prodCtrlNoService = prodCtrlNoService;
             _context = context;
         }
-        public IActionResult Index()
+        [HttpGet("index")]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var ieList = await _context.ProdCtrlNoModels
+                .Include(x => x.ProdInfo)
+                .ToListAsync();
+            var voList = new List<ProdCtrlNoVo>();
+            foreach (var item in ieList)
+            {
+                voList.Add(_prodCtrlNoService.ModelToVo(item));
+            }
+            return View(voList);
         }
-
+        #region create
         [HttpGet("create")]
         public IActionResult Create()
         {
@@ -46,17 +55,18 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpGet("read")]
-        public async Task<IActionResult> Read()
-        {
-            var ieList = await _prodCtrlNoService.GetAllAsync();
-            return View(ieList);
-        }
+        #endregion
+        #region edit
+
         [HttpGet("edit")]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await _prodCtrlNoService.GetByIdAsync(id);
-            return View(model);
+            var model = await _context.ProdCtrlNoModels
+                .Include(x => x.ProdInfo)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+            var dto = _prodCtrlNoService.ModelToDto(model);
+            return View(dto);
         }
         [HttpPost("edit")]
         public async Task<IActionResult> Edit(ProdCtrlNoDto requestDto)
@@ -74,6 +84,8 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
+        #endregion
+        #region Delete
         [HttpPost("delete")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -87,5 +99,6 @@ namespace My_Smart_Factory.Controllers
                 return BadRequest(e.Message);
             }
         }
+        #endregion
     }
 }

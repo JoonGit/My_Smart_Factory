@@ -15,10 +15,11 @@ namespace My_Smart_Factory.Data.Service
             _env = env;
         }
 
-        public string SaveQrCode(QRCodeModel qRCode, string filePath, string fileName)
+        public string SaveQrCode(string data, string fileName, string filePath = "qrimg")
         {
+            fileName += ".png";
             QRCodeGenerator QrGenerator = new QRCodeGenerator();
-            QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(qRCode.QRCodeText, QRCodeGenerator.ECCLevel.Q);
+            QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
             QRCode QrCode = new QRCode(QrCodeInfo);
             Bitmap QrBitmap = QrCode.GetGraphic(30);
             string path = Path.Combine(_env.WebRootPath, filePath, fileName);

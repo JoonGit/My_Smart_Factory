@@ -1,7 +1,7 @@
 ﻿using My_Smart_Factory.Models.Insp;
 using My_Smart_Factory.Models;
 using My_Smart_Factory.Data.Dto.Insp;
-using My_Smart_Factory.Data.Vo;
+using My_Smart_Factory.Data.Vo.FullInsp;
 
 namespace My_Smart_Factory.Data.Dto
 {
@@ -14,26 +14,33 @@ namespace My_Smart_Factory.Data.Dto
         public virtual List<InspEquipSettingRecordDto>? InspEquipSettingRecordDtos { get; set; }        // 검사장비 세팅 기록
         public virtual List<InspProdRecordDto> InspProdRecordDtos { get; set; }                         // 제품 검사 기록   
 
-        public FullInspRecordModel ToModel(WorkOrderModel WorkOrder,
-            List<InspEquipSettingRecordModel> InspEquipSettingRecords,
-            List<InspProdRecordModel> InspProdRecords)
+        public FullInspRecordModel ToModel(WorkOrderModel WorkOrder
+            )
         {
             FullInspRecordModel model = new FullInspRecordModel();
-            model.WorkOrder = WorkOrder;
-            model.InspEquipSettingRecords = InspEquipSettingRecords;
-            model.InspProdRecords = InspProdRecords;
+            model.FullInspNo = FullInspeNo;
+            if (WorkOrder == null)
+            {
+                WorkOrderModel newWorkOrder = new WorkOrderModel();
+                model.WorkOrder = newWorkOrder;
 
-            return model;
+                return model;
+            }
+            else
+            {
+                model.WorkOrder = WorkOrder;
+
+                return model;
+            }
+            
         }
         public FullInspRecordVo ToVo(FullInspRecordModel FullInspRecord)
         {
             return new FullInspRecordVo
             {
                 Id = FullInspRecord.Id,
-                FullInspectionNumber = FullInspRecord.FullInspNo,
-                WorkOrderNumber = FullInspRecord.WorkOrder.WorkOrderNo,
-                InspEquipSettingRecordDtos = FullInspRecord.InspEquipSettingRecords.Select(x => new InspEquipSettingRecordDto().ToVo(x)).ToList(),
-                InspProdRecordDtos = FullInspRecord.InspProdRecords.Select(x => new InspProdRecordDto().ToVo(x)).ToList()
+                FullInspNo = FullInspRecord.FullInspNo,
+                WorkOrderNo = FullInspRecord.WorkOrder.WorkOrderNo,
             };
         }
     }
