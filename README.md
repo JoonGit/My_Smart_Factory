@@ -2,13 +2,10 @@
 
 ## 🛠️ 기술 스택
 
-<img src="https://img.shields.io/badge/springboot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white" /> 
-<img src="https://img.shields.io/badge/springsecurity-6DB33F?style=round&logo=springsecurity&logoColor=white" />
-<img src="https://img.shields.io/badge/Java Persisitence API-6DB33F?style=round&logo=&logoColor=white" />
-<img src="https://img.shields.io/badge/junit5-25A162?style=round&logo=junit5&logoColor=white" />
-<img src="https://img.shields.io/badge/jsonwebtokens-000000?style=round&logo=jsonwebtokens&logoColor=white" /> 
-<!-- <img src="https://img.shields.io/badge/gradle-02303A?style=round&logo=gradle&logoColor=white" />  -->
+
+<img src="https://img.shields.io/badge/dotnet-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" /> 
 <img src="https://img.shields.io/badge/mysql-4479A1?style=round&logo=mysql&logoColor=white" />
+
 
 ## 🤹🏻 기술 스택 선정 이유
 
@@ -33,5 +30,5 @@
 ## 🔍 Overview
 
 ### 구현 내용
-블로그에 상세히 기능별 작성하였습니다
+블로그에 상세히 기능별 작성하였습니다<p></p>
 https://97-24.tistory.com/4
