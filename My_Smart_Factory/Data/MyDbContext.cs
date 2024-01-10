@@ -44,12 +44,5 @@ namespace My_Smart_Factory.Data
 
             builder.Entity<IdentityUserLogin<string>>().HasKey(x => new { x.ProviderKey, x.LoginProvider });
         }
-        public DbSet<My_Smart_Factory.Data.Dto.FullInspRecordDto>? FullInspRecordDto { get; set; }
-        public DbSet<My_Smart_Factory.Data.Vo.FullInsp.FullInspProdRecordVo>? FullInspProdRecordVo { get; set; }
-        public DbSet<My_Smart_Factory.Data.Vo.FullInsp.FullInspEquipRecordVo>? FullInspEquipRecordVo { get; set; }
-        public DbSet<My_Smart_Factory.Data.Dto.WorkOrderDto>? WorkOrderDto { get; set; }
-        public DbSet<My_Smart_Factory.Data.Vo.WorkOrderVo>? WorkOrderVo { get; set; }
-        public DbSet<My_Smart_Factory.Data.Vo.FullInsp.FullInspRecordVo>? FullInspRecordVo { get; set; }
-
     }
 }

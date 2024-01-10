@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4SM3+dHZRtzR4Qq3+TzJg3O3s6hXY2eWvwP2DNcRtck=",
+  "Hash": "2Q6QebOrX+jDrX2PNjhWoS5x+oGyorm5qgY7FabOuOY=",
   "Source": "My_Smart_Factory",
   "BasePath": "_content/My_Smart_Factory",
   "Mode": "Default",
@@ -1188,6 +1188,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\qrImg\\WorkOrderNo3.png"
+    },
+    {
+      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\qrImg\\장난감 생성 작업 지시 1.png",
+      "SourceId": "My_Smart_Factory",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\",
+      "BasePath": "_content/My_Smart_Factory",
+      "RelativePath": "qrImg/장난감 생성 작업 지시 1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\qrImg\\장난감 생성 작업 지시 1.png"
+    },
+    {
+      "Identity": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\qrImg\\장난감 생성 작업 지시 2.png",
+      "SourceId": "My_Smart_Factory",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\WorkSpece\\My_Smart_Factory\\My_Smart_Factory\\wwwroot\\",
+      "BasePath": "_content/My_Smart_Factory",
+      "RelativePath": "qrImg/장난감 생성 작업 지시 2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\qrImg\\장난감 생성 작업 지시 2.png"
     }
   ]
 }

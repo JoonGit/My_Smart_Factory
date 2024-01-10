@@ -24,6 +24,10 @@ namespace My_Smart_Factory.Controllers
         {
             return View();
         }
+        public IActionResult QrRead()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {

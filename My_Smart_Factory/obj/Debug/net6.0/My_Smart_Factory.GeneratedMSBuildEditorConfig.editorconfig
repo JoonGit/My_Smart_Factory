@@ -72,6 +72,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/Home/QrRead.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxRclJlYWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/WorkSpece/My_Smart_Factory/My_Smart_Factory/Views/InspEquipSettingRecord/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zcEVxdWlwU2V0dGluZ1JlY29yZFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

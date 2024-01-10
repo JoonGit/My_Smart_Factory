@@ -52,15 +52,9 @@ builder.Services.AddScoped<IProdCtrlNoService, ProdCtrlNoService>();
 builder.Services.AddScoped<IWorkOrderService, WorkOrderService>();
 builder.Services.AddScoped<QrCodeService>();
 
-
-
 //builder.Services.AddSession();
 
-
-
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

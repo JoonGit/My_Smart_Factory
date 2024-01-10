@@ -92,7 +92,7 @@ namespace BaseProject.Data
                     {
                         new InspEquipModel
                         {
-                            InspEquipName = "InspEquip",
+                            InspEquipName = "무게 측정 장비",
                             Unit = "Unit"
                         }
                     });
@@ -104,7 +104,8 @@ namespace BaseProject.Data
                     {
                         new ProdInfoModel
                         {
-                            ProdName = "ProdName",
+                            ProdName = "장난감 자동차",
+                            ProdCode = "ToyCar",
                             ProdWeight = 10
                         }
                     });
@@ -116,22 +117,10 @@ namespace BaseProject.Data
                     {
                         new InspSpecModel
                         {
-                            InspSpecName = "InspSpec",
-                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "ProdName").FirstOrDefaultAsync(),
-                            InspEquip = await context.InspEquipModels.Where(x => x.InspEquipName == "InspEquip").FirstOrDefaultAsync(),
+                            InspSpecName = "장난감 자동차 무제 측정",
+                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "장난감 자동차").FirstOrDefaultAsync(),
+                            InspEquip = await context.InspEquipModels.Where(x => x.InspEquipName == "무게 측정 장비").FirstOrDefaultAsync(),
                             ETR = 5
-                        }
-                    });
-                    await context.SaveChangesAsync();
-                }
-                if (!context.ProdInfoModels.Any())
-                {
-                    await context.ProdCtrlNoModels.AddRangeAsync(new List<ProdCtrlNoModel>()
-                    {
-                        new ProdCtrlNoModel
-                        {
-                            ProdCtrlNo = "ProdCtrlNo",
-                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "ProdName").FirstOrDefaultAsync()
                         }
                     });
                     await context.SaveChangesAsync();
@@ -142,37 +131,45 @@ namespace BaseProject.Data
                     {
                         new ProdCtrlNoModel
                         {
-                            ProdCtrlNo = "ProdCtrlNo",
-                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "ProdName").FirstOrDefaultAsync()
+                            ProdCtrlNo = "장난감 자동차 1",
+                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "장난감 자동차").FirstOrDefaultAsync()
+                        },
+                        new ProdCtrlNoModel
+                        {
+                            ProdCtrlNo = "장난감 자동차 2",
+                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "장난감 자동차").FirstOrDefaultAsync()
                         }
                     });
                     await context.SaveChangesAsync();
                 }
+               
                 if (!context.WorkOrderModels.Any())
                 {
                     await context.WorkOrderModels.AddRangeAsync(new List<WorkOrderModel>()
                     {
                         new WorkOrderModel
                         {
-                            WorkOrderNo = "WorkOrderNo",
+                            WorkOrderNo = "장난감 생성 작업 지시 1",
                             WorkOrderDate = DateTime.Now,
                             WorkQuantity = 100,
                             Status = WorkOrderStatus.Waiting,
                             CurrentWorkQuantity = 0,
                             FullInspection = null,
                             WorkOrderIssuer = await userManager.FindByNameAsync("member"),
-                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "ProdName").FirstOrDefaultAsync(),
+                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "장난감 자동차").FirstOrDefaultAsync(),
+                            QRURL = "/qrimg/장난감 생성 작업 지시 1.png"
                         },
                         new WorkOrderModel
                         {
-                            WorkOrderNo = "WorkOrderNo2",
+                            WorkOrderNo = "장난감 생성 작업 지시 2",
                             WorkOrderDate = DateTime.Now,
                             WorkQuantity = 100,
                             Status = WorkOrderStatus.Waiting,
                             CurrentWorkQuantity = 0,
                             FullInspection = null,
                             WorkOrderIssuer = await userManager.FindByNameAsync("member"),
-                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "ProdName").FirstOrDefaultAsync(),
+                            ProdInfo = await context.ProdInfoModels.Where(x => x.ProdName == "장난감 자동차").FirstOrDefaultAsync(),
+                            QRURL = "/qrimg/장난감 생성 작업 지시 2.png"
                         }
                     });
                     await context.SaveChangesAsync();
@@ -184,18 +181,18 @@ namespace BaseProject.Data
 
                         new FullInspRecordModel
                         {
-                            FullInspNo = "FullInspNo",
-                            WorkOrder = await context.WorkOrderModels.Where(w => w.WorkOrderNo == "WorkOrderNo").FirstOrDefaultAsync(),
-                            InspEquipSettingRecords = await context.InspEquipSettingRecordModels.Where(x => x.FullInspRecord.FullInspNo == "FullInspNo").ToListAsync(),
-                            InspProdRecords = await context.InspProdRecordModels.Where(x => x.FullInspRecord.FullInspNo == "FullInspNo").ToListAsync()
+                            FullInspNo = "장난감 자동차 전수 검사 번호",
+                            WorkOrder = await context.WorkOrderModels.Where(w => w.WorkOrderNo == "장난감 생성 작업 지시 1").FirstOrDefaultAsync(),
+                            InspEquipSettingRecords = await context.InspEquipSettingRecordModels.Where(x => x.FullInspRecord.FullInspNo == "장난감 자동차 전수 검사 번호").ToListAsync(),
+                            InspProdRecords = await context.InspProdRecordModels.Where(x => x.FullInspRecord.FullInspNo == "장난감 자동차 전수 검사 번호").ToListAsync()
                         }
                     });
                     await context.SaveChangesAsync();
                 }
-                var workOrder = context.WorkOrderModels.Where(w => w.WorkOrderNo == "WorkOrderNo").FirstOrDefault();
+                var workOrder = context.WorkOrderModels.Where(w => w.WorkOrderNo == "장난감 생성 작업 지시 1").FirstOrDefault();
                 if (workOrder.FullInspection == null)
                 {
-                    var fullInspRecord = context.FullInspRecordModels.Where(f => f.FullInspNo == "FullInspNo").FirstOrDefault();
+                    var fullInspRecord = context.FullInspRecordModels.Where(f => f.FullInspNo == "장난감 자동차 전수 검사 번호").FirstOrDefault();
                     workOrder.FullInspection = fullInspRecord;
 
                 }
@@ -208,9 +205,9 @@ namespace BaseProject.Data
                             InspectionDateTime = DateTime.Now,
                             IES = 5,
                             Accuracy = ((decimal)5 / (decimal)10) * 100,
-                            InspEquip = await context.InspEquipModels.Where(x => x.InspEquipName == "InspEquip").FirstOrDefaultAsync(),
-                            InspSpec = await context.InspSpecModels.Where(x => x.InspSpecName == "InspSpec").FirstOrDefaultAsync(),
-                            FullInspRecord = await context.FullInspRecordModels.Where(x => x.FullInspNo == "FullInspNo").FirstOrDefaultAsync()
+                            InspEquip = await context.InspEquipModels.Where(x => x.InspEquipName == "무게 측정 장비").FirstOrDefaultAsync(),
+                            InspSpec = await context.InspSpecModels.Where(x => x.InspSpecName == "장난감 자동차 무제 측정").FirstOrDefaultAsync(),
+                            FullInspRecord = await context.FullInspRecordModels.Where(x => x.FullInspNo == "장난감 자동차 전수 검사 번호").FirstOrDefaultAsync()
                         }
                     });
                     context.SaveChanges();
@@ -225,16 +222,26 @@ namespace BaseProject.Data
                             MeasuredValue = 5,
                             Accuracy = 50,
                             IsPassed = false,
-                            InspSpec = await context.InspSpecModels.Where(x => x.InspSpecName == "InspSpec").FirstOrDefaultAsync(),
-                            ProdCtrlNo = await context.ProdCtrlNoModels.Where(x => x.ProdCtrlNo == "ProdCtrlNo").FirstOrDefaultAsync(),
-                            FullInspRecord = await context.FullInspRecordModels.Where(x => x.FullInspNo == "FullInspNo").FirstOrDefaultAsync()
+                            InspSpec = await context.InspSpecModels.Where(x => x.InspSpecName == "장난감 자동차 무제 측정").FirstOrDefaultAsync(),
+                            ProdCtrlNo = await context.ProdCtrlNoModels.Where(x => x.ProdCtrlNo == "장난감 자동차 1").FirstOrDefaultAsync(),
+                            FullInspRecord = await context.FullInspRecordModels.Where(x => x.FullInspNo == "장난감 자동차 전수 검사 번호").FirstOrDefaultAsync()
+                        },
+                        new InspProdRecordModel
+                        {
+                            InspectionDateTime = DateTime.Now,
+                            MeasuredValue = 5,
+                            Accuracy = 50,
+                            IsPassed = false,
+                            InspSpec = await context.InspSpecModels.Where(x => x.InspSpecName == "장난감 자동차 무제 측정").FirstOrDefaultAsync(),
+                            ProdCtrlNo = await context.ProdCtrlNoModels.Where(x => x.ProdCtrlNo == "장난감 자동차 2").FirstOrDefaultAsync(),
+                            FullInspRecord = await context.FullInspRecordModels.Where(x => x.FullInspNo == "장난감 자동차 전수 검사 번호").FirstOrDefaultAsync()
                         }
                     });
                     context.SaveChanges();
                 }
-                
 
-                
+
+
 
 
 
