@@ -6,7 +6,7 @@
 <img src="https://img.shields.io/badge/dotnet-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" /> 
 <img src="https://img.shields.io/badge/mysql-4479A1?style=round&logo=mysql&logoColor=white" />
 
-
+[데모 사이트](http://13.125.205.132/)
 ## 🤹🏻 기술 스택 선정 이유
 
 - ASP.NET : C#의 웹MVC 패텅으로 웹을 제작하기 위해 사용 되었으며,<p></p>
